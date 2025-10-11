@@ -17,15 +17,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto flex justify-between items-center py-4 px-6">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center">
-            <Image
-  src="/newlogo.png"
-  alt="Barakah Travels Logo"
-  width={120}
-  height={120}
-  className="rounded-full border-2 border-yellow-500 shadow bg-white object-cover"
-  priority
-  style={{ imageRendering: 'crisp-edges' }}
-/>
+            <Image src="/newlogo.png" alt="Barakah Travels Logo" width={120} height={120} className="rounded-full border-2 border-yellow-500 shadow bg-white object-cover" priority style={{ imageRendering: 'crisp-edges' }} />
 
           <span className="text-2xl font-extrabold text-yellow-400 tracking-wide font-heading ml-2">Barakah Travels</span>
         </div>
