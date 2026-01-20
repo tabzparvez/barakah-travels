@@ -15,7 +15,7 @@ export default function Header() {
   const [profileOpen, setProfileOpen] = useState(false);
   const pathname = usePathname();
 
-  /* Close menu on route change */
+  /* Close menus on route change */
   useEffect(() => {
     setMenuOpen(false);
     setPackagesOpen(false);
@@ -29,7 +29,7 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  /* Lock body scroll only when menu is open */
+  /* Lock body scroll only on mobile menu open */
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "auto";
     return () => {
@@ -84,7 +84,7 @@ export default function Header() {
           </span>
         </Link>
 
-        {/* Hamburger */}
+        {/* Hamburger (mobile only) */}
         <button
           className="md:hidden text-white text-2xl z-50"
           onClick={() => setMenuOpen((v) => !v)}
@@ -93,81 +93,85 @@ export default function Header() {
           {menuOpen ? <FaTimes /> : <FaBars />}
         </button>
 
-        {/* Overlay */}
+        {/* Mobile overlay */}
         <AnimatePresence>
           {menuOpen && (
-            <>
-              <motion.div
-                className="fixed inset-0 bg-black/40 z-40 md:hidden"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setMenuOpen(false)}
-              />
+            <motion.div
+              className="fixed inset-0 bg-black/40 z-40 md:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMenuOpen(false)}
+            />
+          )}
+        </AnimatePresence>
 
-              <motion.nav
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="absolute md:static z-50 flex flex-col md:flex-row gap-6 px-6 py-4 rounded-xl bg-gradient-to-r from-primary/95 to-primary-dark/95 md:bg-transparent text-white right-6 top-20 md:top-auto md:right-auto"
-              >
-                {/* Packages */}
-                <div className="relative">
-                  <button
-                    onClick={() => setPackagesOpen((v) => !v)}
-                    className="flex items-center gap-1 hover:text-yellow-300"
-                  >
-                    Packages ▾
-                  </button>
+        {/* NAV — always rendered (desktop visible, mobile controlled) */}
+        <motion.nav
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={`z-50 flex flex-col md:flex-row gap-6 px-6 py-4 rounded-xl
+            bg-gradient-to-r from-primary/95 to-primary-dark/95
+            md:bg-transparent text-white
+            absolute md:static right-6 top-20 md:top-auto md:right-auto
+            ${menuOpen ? "block" : "hidden md:flex"}
+          `}
+        >
+          {/* Packages */}
+          <div className="relative">
+            <button
+              onClick={() => setPackagesOpen((v) => !v)}
+              className="flex items-center gap-1 hover:text-yellow-300"
+            >
+              Packages ▾
+            </button>
 
-                  {packagesOpen && (
-                    <div className="absolute left-0 mt-2 w-48 bg-white text-primary rounded shadow-lg flex flex-col">
-                      {packageLinks.map((link) => (
-                        <Link
-                          key={link.href}
-                          href={link.href}
-                          onClick={handleLinkClick}
-                          className="px-4 py-2 hover:bg-yellow-100"
-                        >
-                          {link.label}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {navLinks.map((link) => (
+            {packagesOpen && (
+              <div className="absolute left-0 mt-2 w-48 bg-white text-primary rounded shadow-lg flex flex-col">
+                {packageLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
                     onClick={handleLinkClick}
-                    className="hover:text-yellow-300"
+                    className="px-4 py-2 hover:bg-yellow-100"
                   >
                     {link.label}
                   </Link>
                 ))}
+              </div>
+            )}
+          </div>
 
-                {!session ? (
-                  <Link
-                    href="/login"
-                    onClick={handleLinkClick}
-                    className="bg-white text-primary font-bold px-4 py-1 rounded"
-                  >
-                    Sign In
-                  </Link>
-                ) : (
-                  <button
-                    onClick={() => signOut()}
-                    className="bg-white/20 px-3 py-1 rounded"
-                  >
-                    Sign Out
-                  </button>
-                )}
-              </motion.nav>
-            </>
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={handleLinkClick}
+              className="hover:text-yellow-300"
+            >
+              {link.label}
+            </Link>
+          ))}
+
+          {!session ? (
+            <Link
+              href="/login"
+              onClick={handleLinkClick}
+              className="bg-white text-primary font-bold px-4 py-1 rounded"
+            >
+              Sign In
+            </Link>
+          ) : (
+            <button
+              onClick={() => signOut()}
+              className="bg-white/20 px-3 py-1 rounded"
+            >
+              Sign Out
+            </button>
           )}
-        </AnimatePresence>
+        </motion.nav>
       </div>
     </header>
   );
 }
+
