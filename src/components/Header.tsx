@@ -179,6 +179,15 @@ export default function Header() {
 
               {profileOpen && (
   <div className="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg overflow-hidden text-primary">
+{session.user?.email === "info@barakahtravels.online" && (
+  <Link
+    href="/admin"
+    onClick={handleLinkClick}
+    className="block px-4 py-2 hover:bg-yellow-100 font-semibold"
+  >
+    Admin Panel
+  </Link>
+)}
 
     <Link
       href="/dashboard"
