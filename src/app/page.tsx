@@ -213,6 +213,27 @@ export default function Home() {
           </Link>
         </div>
       </section>
+      {/* ================= SEO CONTENT ================= */}
+<section className="max-w-4xl mx-auto text-sm text-secondary leading-relaxed mt-24">
+  <h2 className="text-2xl font-bold text-primary mb-4">
+    Umrah Packages & Travel Services in Pakistan
+  </h2>
+  <p className="mb-3">
+    Barakah Travels is a trusted Umrah travel agency in Pakistan providing
+    affordable and premium Umrah packages from Karachi, Lahore, Islamabad and
+    other cities. Our services include Umrah visa processing, hotels near Haram,
+    transport, and guided ziyārāt.
+  </p>
+  <p className="mb-3">
+    Whether you are planning your first Umrah or travelling with family, our
+    experienced team ensures a smooth and spiritually fulfilling journey.
+  </p>
+  <p>
+    Contact Barakah Travels today for customized Umrah packages with transparent
+    pricing and 24/7 WhatsApp support.
+  </p>
+</section>
+
     </main>
   );
 }
