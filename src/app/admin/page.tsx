@@ -10,7 +10,7 @@ export default async function AdminDashboard() {
     redirect("/login");
   }
 
-  /* 🔐 Admin role check */
+  /* 🔐 Logged in but not admin */
   if (session.user.role !== "admin") {
     redirect("/");
   }
