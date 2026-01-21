@@ -1,3 +1,5 @@
+"use client";
+
 export default function ViewInvoicePage({
   params,
 }: {
@@ -7,7 +9,7 @@ export default function ViewInvoicePage({
     <div className="bg-white max-w-4xl mx-auto p-8 shadow rounded">
       <div className="flex justify-between mb-6">
         <h1 className="text-2xl font-bold">INVOICE</h1>
-        <div className="text-sm">
+        <div className="text-sm text-right">
           <p>Invoice #: {params.id}</p>
           <p>Date: 28-10-2025</p>
         </div>
@@ -24,7 +26,7 @@ export default function ViewInvoicePage({
           <tr>
             <th className="border p-2">Description</th>
             <th className="border p-2">Qty</th>
-            <th className="border p-2">Unit</th>
+            <th className="border p-2">Unit Price</th>
             <th className="border p-2">Total</th>
           </tr>
         </thead>
@@ -38,17 +40,24 @@ export default function ViewInvoicePage({
         </tbody>
       </table>
 
-      <div className="text-right">
+      <div className="text-right space-y-1">
         <p>Total: PKR 765,000</p>
         <p>Paid: PKR 500,000</p>
         <p className="font-bold">Balance: PKR 265,000</p>
       </div>
 
-      <div className="flex gap-4 mt-6">
-        <button onClick={() => window.print()} className="px-4 py-2 bg-gray-800 text-white rounded">
+      <div className="flex gap-4 mt-8">
+        <button
+          onClick={() => window.print()}
+          className="px-4 py-2 bg-gray-800 text-white rounded"
+        >
           Print
         </button>
-        <button className="px-4 py-2 bg-[#9C7421] text-white rounded">
+
+        <button
+          onClick={() => alert("PDF download next step")}
+          className="px-4 py-2 bg-[#9C7421] text-white rounded"
+        >
           Download PDF
         </button>
       </div>
