@@ -11,20 +11,15 @@ export default async function AdminLayout({
 }) {
   const session = await getServerSession(authOptions);
 
-  // 🔐 Not logged in OR user missing
+  // 🔐 Not logged in
   if (!session || !session.user) {
     redirect("/admin/login");
   }
 
-  // 🔐 Not admin
-if (!session || !session.user) {
-  redirect("/admin/login");
-}
-
-if (session.user.email !== "info@barakahtravels.online") {
-  redirect("/");
-}
-
+  // 🔐 Not admin (email-based check)
+  if (session.user.email !== "info@barakahtravels.online") {
+    redirect("/");
+  }
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -40,10 +35,9 @@ if (session.user.email !== "info@barakahtravels.online") {
           <Link href="/admin/gallery">Gallery</Link>
           <Link href="/admin/blog">Blog</Link>
           <Link href="/admin/faq">FAQ</Link>
-          <Link href="/admin/staff">Staff</Link>
 
           <form action="/api/auth/signout" method="post">
-            <button className="text-left mt-4 text-red-300 hover:text-white">
+            <button className="text-left text-red-200 hover:text-white">
               Logout
             </button>
           </form>
