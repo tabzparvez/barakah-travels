@@ -16,14 +16,13 @@ export default async function AdminLayout({
     redirect("/admin/login");
   }
 
-  // 🔐 Not admin (email-based check)
+  // 🔐 Admin check (email-based, safe & simple)
   if (session.user.email !== "info@barakahtravels.online") {
     redirect("/");
   }
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
       <aside className="w-64 bg-primary text-white p-6">
         <h2 className="text-2xl font-bold mb-8">Barakah CRM</h2>
 
@@ -44,7 +43,6 @@ export default async function AdminLayout({
         </nav>
       </aside>
 
-      {/* Main */}
       <main className="flex-1 p-8">{children}</main>
     </div>
   );
