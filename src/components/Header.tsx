@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { FaBars, FaTimes } from "react-icons/fa";
@@ -12,14 +13,12 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [packagesOpen, setPackagesOpen] = useState(false);
   const { data: session } = useSession();
-  const [profileOpen, setProfileOpen] = useState(false);
   const pathname = usePathname();
 
-  /* Close menus on route change */
+  /* Close all menus on route change */
   useEffect(() => {
     setMenuOpen(false);
     setPackagesOpen(false);
-    setProfileOpen(false);
   }, [pathname]);
 
   /* Header shadow on scroll */
@@ -29,7 +28,7 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  /* Lock body scroll only on mobile menu open */
+  /* Lock body scroll on mobile menu */
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "auto";
     return () => {
@@ -40,7 +39,6 @@ export default function Header() {
   const handleLinkClick = () => {
     setMenuOpen(false);
     setPackagesOpen(false);
-    setProfileOpen(false);
   };
 
   const navLinks = [
@@ -54,11 +52,8 @@ export default function Header() {
     { href: "/terms", label: "Terms" },
   ];
 
-  const packageLinks = [
-    { href: "/packages/umrah", label: "Umrah" },
-    { href: "/packages/hajj", label: "Hajj" },
-    { href: "/packages/special-offers", label: "Special Offers" },
-  ];
+  /* ✅ ONLY ONE PACKAGES LINK (NO /packages/umrah) */
+  const packageLinks = [{ href: "/packages", label: "Umrah Packages" }];
 
   return (
     <header
@@ -84,7 +79,7 @@ export default function Header() {
           </span>
         </Link>
 
-        {/* Hamburger (mobile only) */}
+        {/* Mobile Hamburger */}
         <button
           className="md:hidden text-white text-2xl z-50"
           onClick={() => setMenuOpen((v) => !v)}
@@ -93,7 +88,7 @@ export default function Header() {
           {menuOpen ? <FaTimes /> : <FaBars />}
         </button>
 
-        {/* Mobile overlay */}
+        {/* Mobile Overlay */}
         <AnimatePresence>
           {menuOpen && (
             <motion.div
@@ -106,7 +101,7 @@ export default function Header() {
           )}
         </AnimatePresence>
 
-        {/* NAV — always rendered (desktop visible, mobile controlled) */}
+        {/* Navigation */}
         <motion.nav
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -174,4 +169,3 @@ export default function Header() {
     </header>
   );
 }
-
