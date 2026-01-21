@@ -46,20 +46,34 @@ footer {
    =========================== */
 
 @media print {
-  body * {
-    visibility: hidden;
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: white;
   }
 
-  #invoice-print,
-  #invoice-print * {
-    visibility: visible;
+  body {
+    overflow: visible;
+  }
+
+  nav,
+  aside,
+  footer,
+  button,
+  .no-print {
+    display: none !important;
   }
 
   #invoice-print {
-    position: absolute;
-    left: 0;
-    top: 0;
+    display: block !important;
     width: 100%;
+    padding: 20px;
+    background: white;
+  }
+
+  #invoice-print * {
+    visibility: visible !important;
   }
 }
+
 
