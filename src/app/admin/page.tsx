@@ -1,18 +1,4 @@
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
-import { authOptions } from "@/lib/auth";
-
-export default async function AdminDashboard() {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    redirect("/login");
-  }
-
-  if (session.user.role !== "admin") {
-    redirect("/");
-  }
-
+export default function AdminDashboard() {
   return (
     <main className="max-w-5xl mx-auto py-12 px-4">
       <h1 className="text-3xl font-bold mb-8 text-primary">
@@ -23,18 +9,23 @@ export default async function AdminDashboard() {
         <a href="/admin/packages" className="card btn text-center">
           Manage Packages
         </a>
+
         <a href="/admin/inquiries" className="card btn text-center">
           View Inquiries
         </a>
+
         <a href="/admin/reviews" className="card btn text-center">
           Manage Reviews
         </a>
+
         <a href="/admin/blog" className="card btn text-center">
           Manage Blog
         </a>
+
         <a href="/admin/faq" className="card btn text-center">
           Manage FAQ
         </a>
+
         <a href="/admin/gallery" className="card btn text-center">
           Manage Gallery
         </a>
