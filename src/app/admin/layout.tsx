@@ -3,6 +3,18 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
+import {
+  FaTachometerAlt,
+  FaBoxOpen,
+  FaEnvelope,
+  FaStar,
+  FaImages,
+  FaBlog,
+  FaQuestionCircle,
+  FaSignOutAlt,
+} from "react-icons/fa";
+
+const ADMIN_EMAIL = "info@barakahtravels.online";
 
 export default async function AdminLayout({
   children,
@@ -12,38 +24,56 @@ export default async function AdminLayout({
   const session = await getServerSession(authOptions);
 
   // 🔐 Not logged in
-  if (!session || !session.user) {
-    redirect("/admin/login");
+  if (!session || !session.user?.email) {
+    redirect("/login");
   }
 
-  // 🔐 Admin check (email-based, safe & simple)
-  if (session.user.email !== "info@barakahtravels.online") {
+  // 🔐 Not admin
+  if (session.user.email !== ADMIN_EMAIL) {
     redirect("/");
   }
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      <aside className="w-64 bg-primary text-white p-6">
-        <h2 className="text-2xl font-bold mb-8">Barakah CRM</h2>
+      {/* Sidebar */}
+      <aside className="w-64 bg-[#9C7421] text-white p-6 flex flex-col">
+        <h2 className="text-2xl font-extrabold mb-10">
+          Barakah CRM
+        </h2>
 
-        <nav className="flex flex-col gap-4">
-          <Link href="/admin">Dashboard</Link>
-          <Link href="/admin/packages">Packages</Link>
-          <Link href="/admin/inquiries">Inquiries</Link>
-          <Link href="/admin/reviews">Reviews</Link>
-          <Link href="/admin/gallery">Gallery</Link>
-          <Link href="/admin/blog">Blog</Link>
-          <Link href="/admin/faq">FAQ</Link>
-
-          <form action="/api/auth/signout" method="post">
-            <button className="text-left text-red-200 hover:text-white">
-              Logout
-            </button>
-          </form>
+        <nav className="flex flex-col gap-4 text-sm">
+          <Link className="flex items-center gap-2 hover:text-yellow-300" href="/admin">
+            <FaTachometerAlt /> Dashboard
+          </Link>
+          <Link className="flex items-center gap-2 hover:text-yellow-300" href="/admin/packages">
+            <FaBoxOpen /> Packages
+          </Link>
+          <Link className="flex items-center gap-2 hover:text-yellow-300" href="/admin/inquiries">
+            <FaEnvelope /> Inquiries
+          </Link>
+          <Link className="flex items-center gap-2 hover:text-yellow-300" href="/admin/reviews">
+            <FaStar /> Reviews
+          </Link>
+          <Link className="flex items-center gap-2 hover:text-yellow-300" href="/admin/gallery">
+            <FaImages /> Gallery
+          </Link>
+          <Link className="flex items-center gap-2 hover:text-yellow-300" href="/admin/blog">
+            <FaBlog /> Blog
+          </Link>
+          <Link className="flex items-center gap-2 hover:text-yellow-300" href="/admin/faq">
+            <FaQuestionCircle /> FAQ
+          </Link>
         </nav>
+
+        <form action="/api/auth/signout" method="post" className="mt-auto">
+          <button className="flex items-center gap-2 text-red-200 hover:text-white">
+            <FaSignOutAlt /> Logout
+          </button>
+        </form>
       </aside>
 
-      <main className="flex-1 p-8">{children}</main>
+      {/* Main */}
+      <main className="flex-1 p-10">{children}</main>
     </div>
   );
 }
