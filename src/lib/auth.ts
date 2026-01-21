@@ -1,7 +1,27 @@
+import GoogleProvider from "next-auth/providers/google";
+import { NextAuthOptions } from "next-auth";
 
-// Simple plaintext check for demo (replace with hash in production)
-export async function authenticate(username: string, password: string) {
-  const adminUser = process.env.ADMIN_USERNAME;
-  const adminPass = process.env.ADMIN_PASSWORD;
-  return username === adminUser && password === adminPass;
-}
+export const authOptions: NextAuthOptions = {
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+  ],
+
+  callbacks: {
+    async session({ session }) {
+      // 🔐 Admin email hardcoded for now
+      if (session.user?.email === "YOUR_EMAIL@gmail.com") {
+        session.user.role = "admin";
+      } else {
+        session.user.role = "staff";
+      }
+      return session;
+    },
+  },
+
+  pages: {
+    signIn: "/admin/login",
+  },
+};
