@@ -1,59 +1,64 @@
 import Link from "next/link";
 
-export default function AdminInvoicesPage() {
+export default function InvoicesPage() {
+  const invoices = [
+    {
+      id: "12579",
+      customer: "Muhammad Rais",
+      amount: "PKR 765,000",
+      status: "Paid",
+      date: "28 Oct 2025",
+    },
+  ];
+
   return (
     <div>
-      {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold text-primary">
-          Invoices
-        </h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-primary">Invoices</h1>
 
         <Link
           href="/admin/invoices/new"
-          className="btn bg-primary text-white"
+          className="bg-primary text-white px-4 py-2 rounded shadow hover:bg-primary-dark"
         >
           + Create Invoice
         </Link>
       </div>
 
-      {/* Invoice Table */}
-      <div className="bg-white rounded-xl shadow overflow-x-auto">
+      <div className="bg-white rounded-lg shadow overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-gray-100 text-left">
+          <thead className="bg-gray-100">
             <tr>
-              <th className="px-4 py-3">Invoice #</th>
-              <th className="px-4 py-3">Customer</th>
-              <th className="px-4 py-3">Amount</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3">Date</th>
-              <th className="px-4 py-3">Action</th>
+              <th className="p-3 text-left">Invoice #</th>
+              <th className="p-3 text-left">Customer</th>
+              <th className="p-3 text-left">Amount</th>
+              <th className="p-3 text-left">Status</th>
+              <th className="p-3 text-left">Date</th>
+              <th className="p-3 text-left">Action</th>
             </tr>
           </thead>
 
           <tbody>
-            {/* Dummy row */}
-            <tr className="border-t">
-              <td className="px-4 py-3 font-semibold">#12579</td>
-              <td className="px-4 py-3">Muhammad Rais</td>
-              <td className="px-4 py-3">PKR 765,000</td>
-              <td className="px-4 py-3">
-                <span className="px-2 py-1 rounded text-xs bg-green-100 text-green-700">
-                  Paid
-                </span>
-              </td>
-              <td className="px-4 py-3">28 Oct 2025</td>
-              <td className="px-4 py-3">
-                <Link
-                  href="/admin/invoices/12579"
-                  className="text-primary font-semibold hover:underline"
-                >
-                  View
-                </Link>
-              </td>
-            </tr>
-
-            {/* Empty state ready */}
+            {invoices.map((inv) => (
+              <tr key={inv.id} className="border-t">
+                <td className="p-3">#{inv.id}</td>
+                <td className="p-3">{inv.customer}</td>
+                <td className="p-3">{inv.amount}</td>
+                <td className="p-3">
+                  <span className="px-2 py-1 text-xs rounded bg-green-100 text-green-700">
+                    {inv.status}
+                  </span>
+                </td>
+                <td className="p-3">{inv.date}</td>
+                <td className="p-3">
+                  <Link
+                    href={`/admin/invoices/${inv.id}`}
+                    className="text-primary font-semibold hover:underline"
+                  >
+                    View
+                  </Link>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
