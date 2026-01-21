@@ -10,25 +10,28 @@ import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const [packagesOpen, setPackagesOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
   const { data: session } = useSession();
   const pathname = usePathname();
 
-  /* Close all menus on route change */
+  /* Close menus on route change */
   useEffect(() => {
     setMenuOpen(false);
     setPackagesOpen(false);
+    setProfileOpen(false);
   }, [pathname]);
 
-  /* Header shadow on scroll */
+  /* Header shadow */
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  /* Lock body scroll on mobile menu */
+  /* Lock body scroll on mobile */
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "auto";
     return () => {
@@ -39,6 +42,7 @@ export default function Header() {
   const handleLinkClick = () => {
     setMenuOpen(false);
     setPackagesOpen(false);
+    setProfileOpen(false);
   };
 
   const navLinks = [
@@ -52,29 +56,27 @@ export default function Header() {
     { href: "/terms", label: "Terms" },
   ];
 
-  /* ✅ ONLY ONE PACKAGES LINK (NO /packages/umrah) */
-  const packageLinks = [{ href: "/packages", label: "Umrah Packages" }];
-
   return (
     <header
-      className={`w-full sticky top-0 z-50 transition-shadow duration-300 ${
+      className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "shadow-xl backdrop-blur-md bg-white/30"
+          ? "bg-white/70 backdrop-blur-md shadow-xl"
           : "bg-gradient-to-r from-primary to-primary-dark"
       }`}
     >
-      <div className="max-w-7xl mx-auto flex justify-between items-center py-4 px-6 md:px-10">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2" onClick={handleLinkClick}>
+        <Link href="/" onClick={handleLinkClick} className="flex items-center gap-2">
           <Image
             src="/newlogo.png"
-            alt="Barakah Travels Logo"
-            width={120}
-            height={120}
-            className="rounded-full border-2 border-yellow-500 shadow bg-white object-cover"
+            alt="Barakah Travels"
+            width={60}
+            height={60}
+            className="rounded-full border-2 border-yellow-500 bg-white"
             priority
           />
-          <span className="text-2xl font-extrabold text-yellow-400 ml-2">
+          <span className="text-xl md:text-2xl font-extrabold text-yellow-400">
             Barakah Travels
           </span>
         </Link>
@@ -88,7 +90,7 @@ export default function Header() {
           {menuOpen ? <FaTimes /> : <FaBars />}
         </button>
 
-        {/* Mobile Overlay */}
+        {/* Overlay */}
         <AnimatePresence>
           {menuOpen && (
             <motion.div
@@ -103,12 +105,12 @@ export default function Header() {
 
         {/* Navigation */}
         <motion.nav
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`z-50 flex flex-col md:flex-row gap-6 px-6 py-4 rounded-xl
+          className={`z-50 flex flex-col md:flex-row items-start md:items-center gap-6 px-6 py-4 rounded-xl
             bg-gradient-to-r from-primary/95 to-primary-dark/95
             md:bg-transparent text-white
-            absolute md:static right-6 top-20 md:top-auto md:right-auto
+            absolute md:static right-6 top-20 md:right-auto md:top-auto
             ${menuOpen ? "block" : "hidden md:flex"}
           `}
         >
@@ -116,53 +118,76 @@ export default function Header() {
           <div className="relative">
             <button
               onClick={() => setPackagesOpen((v) => !v)}
-              className="flex items-center gap-1 hover:text-yellow-300"
+              className="hover:text-yellow-300 font-semibold"
             >
               Packages ▾
             </button>
 
             {packagesOpen && (
-              <div className="absolute left-0 mt-2 w-48 bg-white text-primary rounded shadow-lg flex flex-col">
-                {packageLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={handleLinkClick}
-                    className="px-4 py-2 hover:bg-yellow-100"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+              <div className="absolute left-0 mt-2 w-44 bg-white text-primary rounded-lg shadow-lg overflow-hidden">
+                <Link
+                  href="/packages"
+                  onClick={handleLinkClick}
+                  className="block px-4 py-2 hover:bg-yellow-100"
+                >
+                  Umrah Packages
+                </Link>
               </div>
             )}
           </div>
 
+          {/* Links */}
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={handleLinkClick}
-              className="hover:text-yellow-300"
+              className="hover:text-yellow-300 font-semibold"
             >
               {link.label}
             </Link>
           ))}
 
+          {/* Auth */}
           {!session ? (
             <Link
               href="/login"
               onClick={handleLinkClick}
-              className="bg-white text-primary font-bold px-4 py-1 rounded"
+              className="bg-white text-primary font-bold px-4 py-1 rounded shadow"
             >
               Sign In
             </Link>
           ) : (
-            <button
-              onClick={() => signOut()}
-              className="bg-white/20 px-3 py-1 rounded"
-            >
-              Sign Out
-            </button>
+            <div className="relative">
+              <button
+                onClick={() => setProfileOpen((v) => !v)}
+                className="flex items-center gap-2 bg-white/20 px-3 py-1 rounded hover:bg-white/30"
+              >
+                {session.user?.image && (
+                  <Image
+                    src={session.user.image}
+                    alt={session.user.name || "User"}
+                    width={28}
+                    height={28}
+                    className="rounded-full"
+                  />
+                )}
+                <span className="text-yellow-300 font-bold">
+                  {session.user?.name?.split(" ")[0]}
+                </span>
+              </button>
+
+              {profileOpen && (
+                <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg overflow-hidden">
+                  <button
+                    onClick={() => signOut({ callbackUrl: "/" })}
+                    className="w-full text-left px-4 py-2 hover:bg-yellow-100 text-primary font-semibold"
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
           )}
         </motion.nav>
       </div>
