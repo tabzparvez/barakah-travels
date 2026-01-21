@@ -178,15 +178,28 @@ export default function Header() {
               </button>
 
               {profileOpen && (
-                <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg overflow-hidden">
-                  <button
-                    onClick={() => signOut({ callbackUrl: "/" })}
-                    className="w-full text-left px-4 py-2 hover:bg-yellow-100 text-primary font-semibold"
-                  >
-                    Sign Out
-                  </button>
-                </div>
-              )}
+  <div className="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg overflow-hidden text-primary">
+
+    <Link
+      href="/dashboard"
+      onClick={handleLinkClick}
+      className="block px-4 py-2 hover:bg-yellow-100 font-semibold"
+    >
+      Dashboard
+    </Link>
+
+    <form action="/api/auth/signout" method="post">
+      <button
+        type="submit"
+        className="w-full text-left px-4 py-2 hover:bg-yellow-100 font-semibold"
+      >
+        Sign Out
+      </button>
+    </form>
+
+  </div>
+)}
+
             </div>
           )}
         </motion.nav>
