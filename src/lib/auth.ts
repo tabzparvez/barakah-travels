@@ -11,12 +11,18 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 
   callbacks: {
-    async session({ session }) {
-      // ✅ Admin control (abhi single admin)
-      if (session.user?.email === "YOUR_EMAIL@gmail.com") {
-        session.user.role = "admin";
+    async jwt({ token, user }) {
+      if (user) {
+        token.role = "admin"; // temporary
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.role = token.role as string;
       }
       return session;
     },
   },
 };
+
