@@ -6,63 +6,46 @@ import { useState } from "react";
 export default function NewInvoicePage() {
   const router = useRouter();
 
-  const [total, setTotal] = useState(0);
-  const [paid, setPaid] = useState(0);
+  const [name, setName] = useState("");
+  const [amount, setAmount] = useState("");
+  const [paid, setPaid] = useState("");
 
-  const balance = total - paid;
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-
-    // TEMP: fake invoice id
+  const handleSubmit = () => {
+    // ⚠️ Abhi sirf dummy ID generate
     const invoiceId = Date.now().toString();
 
     // Later yahan DB save hoga
     router.push(`/admin/invoices/${invoiceId}`);
-  }
+  };
 
   return (
-    <div className="max-w-3xl bg-white p-6 rounded shadow">
-      <h1 className="text-xl font-bold mb-6">Create New Invoice</h1>
+    <div className="card max-w-xl">
+      <h1 className="text-xl font-bold mb-4">Create New Invoice</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input className="w-full border p-2" placeholder="Customer Name" required />
-        <input className="w-full border p-2" placeholder="Phone" />
-        <input className="w-full border p-2" placeholder="Email" />
+      <input
+        placeholder="Customer Name"
+        className="input"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
 
-        <div className="grid grid-cols-2 gap-4">
-          <input
-            type="number"
-            className="border p-2"
-            placeholder="Total Amount"
-            value={total}
-            onChange={(e) => setTotal(+e.target.value)}
-          />
-          <input
-            type="number"
-            className="border p-2"
-            placeholder="Paid Amount"
-            value={paid}
-            onChange={(e) => setPaid(+e.target.value)}
-          />
-        </div>
+      <input
+        placeholder="Total Amount"
+        className="input"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+      />
 
-        <select className="w-full border p-2">
-          <option>Cash</option>
-          <option>Bank Transfer</option>
-          <option>Cash + Bank</option>
-        </select>
+      <input
+        placeholder="Paid Amount"
+        className="input"
+        value={paid}
+        onChange={(e) => setPaid(e.target.value)}
+      />
 
-        <div className="text-right text-sm">
-          <p>Total: PKR {total}</p>
-          <p>Paid: PKR {paid}</p>
-          <p className="font-bold">Balance: PKR {balance}</p>
-        </div>
-
-        <button className="bg-[#9C7421] text-white px-4 py-2 rounded">
-          Save & View Invoice
-        </button>
-      </form>
+      <button onClick={handleSubmit} className="btn mt-4">
+        Save & View Invoice
+      </button>
     </div>
   );
 }
