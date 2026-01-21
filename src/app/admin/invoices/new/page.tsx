@@ -1,83 +1,68 @@
-import Link from "next/link";
+"use client";
 
-export default function AdminInvoicesPage() {
-  // TEMP demo data (baad me DB se aayega)
-  const invoices = [
-    {
-      id: 12579,
-      customer: "Muhammad Rais",
-      amount: 765000,
-      status: "Paid",
-      date: "28 Oct 2025",
-    },
-  ];
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+export default function NewInvoicePage() {
+  const router = useRouter();
+
+  const [total, setTotal] = useState(0);
+  const [paid, setPaid] = useState(0);
+
+  const balance = total - paid;
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+
+    // TEMP: fake invoice id
+    const invoiceId = Date.now().toString();
+
+    // Later yahan DB save hoga
+    router.push(`/admin/invoices/${invoiceId}`);
+  }
 
   return (
-    <div>
-      {/* Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Invoices</h1>
+    <div className="max-w-3xl bg-white p-6 rounded shadow">
+      <h1 className="text-xl font-bold mb-6">Create New Invoice</h1>
 
-        <Link
-          href="/admin/invoices/new"
-          className="bg-primary text-white px-4 py-2 rounded shadow hover:opacity-90"
-        >
-          + Create Invoice
-        </Link>
-      </div>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input className="w-full border p-2" placeholder="Customer Name" required />
+        <input className="w-full border p-2" placeholder="Phone" />
+        <input className="w-full border p-2" placeholder="Email" />
 
-      {/* Table */}
-      <div className="bg-white rounded shadow overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="text-left px-4 py-3">Invoice #</th>
-              <th className="text-left px-4 py-3">Customer</th>
-              <th className="text-left px-4 py-3">Amount</th>
-              <th className="text-left px-4 py-3">Status</th>
-              <th className="text-left px-4 py-3">Date</th>
-              <th className="text-left px-4 py-3">Action</th>
-            </tr>
-          </thead>
+        <div className="grid grid-cols-2 gap-4">
+          <input
+            type="number"
+            className="border p-2"
+            placeholder="Total Amount"
+            value={total}
+            onChange={(e) => setTotal(+e.target.value)}
+          />
+          <input
+            type="number"
+            className="border p-2"
+            placeholder="Paid Amount"
+            value={paid}
+            onChange={(e) => setPaid(+e.target.value)}
+          />
+        </div>
 
-          <tbody>
-            {invoices.map((inv) => (
-              <tr key={inv.id} className="border-t">
-                <td className="px-4 py-3">#{inv.id}</td>
-                <td className="px-4 py-3">{inv.customer}</td>
-                <td className="px-4 py-3">
-                  PKR {inv.amount.toLocaleString()}
-                </td>
-                <td className="px-4 py-3">
-                  <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">
-                    {inv.status}
-                  </span>
-                </td>
-                <td className="px-4 py-3">{inv.date}</td>
-                <td className="px-4 py-3">
-                  <Link
-                    href={`/admin/invoices/${inv.id}`}
-                    className="text-primary font-semibold hover:underline"
-                  >
-                    View
-                  </Link>
-                </td>
-              </tr>
-            ))}
+        <select className="w-full border p-2">
+          <option>Cash</option>
+          <option>Bank Transfer</option>
+          <option>Cash + Bank</option>
+        </select>
 
-            {invoices.length === 0 && (
-              <tr>
-                <td
-                  colSpan={6}
-                  className="text-center py-10 text-gray-500"
-                >
-                  No invoices found
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+        <div className="text-right text-sm">
+          <p>Total: PKR {total}</p>
+          <p>Paid: PKR {paid}</p>
+          <p className="font-bold">Balance: PKR {balance}</p>
+        </div>
+
+        <button className="bg-[#9C7421] text-white px-4 py-2 rounded">
+          Save & View Invoice
+        </button>
+      </form>
     </div>
   );
 }
