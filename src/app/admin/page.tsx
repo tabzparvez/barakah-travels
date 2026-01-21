@@ -5,12 +5,10 @@ import { authOptions } from "@/lib/auth";
 export default async function AdminDashboard() {
   const session = await getServerSession(authOptions);
 
-  /* 🔐 Not logged in */
   if (!session) {
     redirect("/login");
   }
 
-  /* 🔐 Logged in but not admin */
   if (session.user.role !== "admin") {
     redirect("/");
   }
