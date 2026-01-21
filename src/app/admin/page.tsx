@@ -1,29 +1,54 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function AdminDashboard() {
-  const cookieStore = await cookies();
-  const adminCookie = cookieStore.get ? cookieStore.get('admin') : undefined;
-  const isAdmin = adminCookie?.value === '1';
-  if (!isAdmin) {
-    redirect('/admin/login');
+  const session = await getServerSession(authOptions);
+
+  /* 🔐 NOT LOGGED IN */
+  if (!session) {
+    redirect("/login");
   }
+
+  /* 🔐 ADMIN EMAIL CHECK */
+  const ADMIN_EMAIL = "info@barakahtravels.online";
+
+  if (session.user?.email !== ADMIN_EMAIL) {
+    redirect("/");
+  }
+
   return (
-    <main className="section">
-      <h1 className="text-3xl font-bold mb-4">Admin Dashboard</h1>
-      <ul className="mb-4">
-        <li><a href="/admin/packages" className="btn mb-2">Manage Packages</a></li>
-  <li><a href="/admin/inquiries" className="btn mb-2">View Inquiries</a></li>
-  <li><a href="/admin/testimonials" className="btn mb-2">Manage Testimonials</a></li>
-  <li><a href="/admin/gallery" className="btn mb-2">Manage Gallery</a></li>
-  <li><a href="/admin/blog" className="btn mb-2">Manage Blog</a></li>
-  <li><a href="/admin/faq" className="btn mb-2">Manage FAQ</a></li>
-  {/* Add more admin links here */}
-      </ul>
-      <form method="POST" action="/admin/logout">
-        <button className="btn mt-4" type="submit">Logout</button>
+    <main className="max-w-5xl mx-auto py-12 px-4">
+      <h1 className="text-3xl font-bold mb-8 text-primary">
+        Admin Dashboard
+      </h1>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        <a href="/admin/packages" className="card btn text-center">
+          Manage Packages
+        </a>
+        <a href="/admin/inquiries" className="card btn text-center">
+          View Inquiries
+        </a>
+        <a href="/admin/reviews" className="card btn text-center">
+          Manage Reviews
+        </a>
+        <a href="/admin/blog" className="card btn text-center">
+          Manage Blog
+        </a>
+        <a href="/admin/faq" className="card btn text-center">
+          Manage FAQ
+        </a>
+        <a href="/admin/gallery" className="card btn text-center">
+          Manage Gallery
+        </a>
+      </div>
+
+      <form action="/api/auth/signout" method="post" className="mt-10">
+        <button className="btn bg-red-600 text-white">
+          Logout
+        </button>
       </form>
-      <p>Backend integration required for full functionality.</p>
     </main>
   );
 }
