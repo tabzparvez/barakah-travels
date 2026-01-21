@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "@/lib/auth"; // we will create this
+import { authOptions } from "@/lib/auth";
 
 export default async function AdminLayout({
   children,
@@ -11,8 +11,14 @@ export default async function AdminLayout({
 }) {
   const session = await getServerSession(authOptions);
 
-  if (!session || session.user.role !== "admin") {
+  // 🔐 Not logged in OR user missing
+  if (!session || !session.user) {
     redirect("/admin/login");
+  }
+
+  // 🔐 Not admin
+  if (session.user.role !== "admin") {
+    redirect("/");
   }
 
   return (
@@ -20,6 +26,7 @@ export default async function AdminLayout({
       {/* Sidebar */}
       <aside className="w-64 bg-primary text-white p-6">
         <h2 className="text-2xl font-bold mb-8">Barakah CRM</h2>
+
         <nav className="flex flex-col gap-4">
           <Link href="/admin">Dashboard</Link>
           <Link href="/admin/packages">Packages</Link>
@@ -29,7 +36,12 @@ export default async function AdminLayout({
           <Link href="/admin/blog">Blog</Link>
           <Link href="/admin/faq">FAQ</Link>
           <Link href="/admin/staff">Staff</Link>
-          <Link href="/api/auth/signout">Logout</Link>
+
+          <form action="/api/auth/signout" method="post">
+            <button className="text-left mt-4 text-red-300 hover:text-white">
+              Logout
+            </button>
+          </form>
         </nav>
       </aside>
 
