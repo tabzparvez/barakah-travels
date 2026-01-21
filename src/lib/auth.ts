@@ -1,5 +1,5 @@
-import GoogleProvider from "next-auth/providers/google";
 import { NextAuthOptions } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -8,20 +8,15 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
 
   callbacks: {
     async session({ session }) {
-      // 🔐 Admin email hardcoded for now
+      // ✅ Admin control (abhi single admin)
       if (session.user?.email === "YOUR_EMAIL@gmail.com") {
         session.user.role = "admin";
-      } else {
-        session.user.role = "staff";
       }
       return session;
     },
-  },
-
-  pages: {
-    signIn: "/admin/login",
   },
 };
