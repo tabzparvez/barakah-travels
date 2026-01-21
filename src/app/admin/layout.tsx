@@ -17,9 +17,14 @@ export default async function AdminLayout({
   }
 
   // 🔐 Not admin
-  if (session.user.role !== "admin") {
-    redirect("/");
-  }
+if (!session || !session.user) {
+  redirect("/admin/login");
+}
+
+if (session.user.email !== "info@barakahtravels.online") {
+  redirect("/");
+}
+
 
   return (
     <div className="flex min-h-screen bg-gray-100">
