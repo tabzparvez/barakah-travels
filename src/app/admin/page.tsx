@@ -1,41 +1,84 @@
+import Link from "next/link";
+import {
+  FaBoxOpen,
+  FaEnvelopeOpenText,
+  FaStar,
+  FaImages,
+  FaBlog,
+  FaQuestionCircle,
+} from "react-icons/fa";
+
 export default function AdminDashboard() {
+  const cards = [
+    {
+      title: "Packages",
+      desc: "Create & manage Umrah packages",
+      href: "/admin/packages",
+      icon: <FaBoxOpen className="text-3xl" />,
+    },
+    {
+      title: "Inquiries",
+      desc: "View customer inquiries",
+      href: "/admin/inquiries",
+      icon: <FaEnvelopeOpenText className="text-3xl" />,
+    },
+    {
+      title: "Reviews",
+      desc: "Approve & manage reviews",
+      href: "/admin/reviews",
+      icon: <FaStar className="text-3xl" />,
+    },
+    {
+      title: "Gallery",
+      desc: "Manage website images",
+      href: "/admin/gallery",
+      icon: <FaImages className="text-3xl" />,
+    },
+    {
+      title: "Blog",
+      desc: "Create & edit blog posts",
+      href: "/admin/blog",
+      icon: <FaBlog className="text-3xl" />,
+    },
+    {
+      title: "FAQ",
+      desc: "Manage frequently asked questions",
+      href: "/admin/faq",
+      icon: <FaQuestionCircle className="text-3xl" />,
+    },
+  ];
+
   return (
-    <main className="max-w-5xl mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold mb-8 text-primary">
-        Admin Dashboard
-      </h1>
-
-      <div className="grid md:grid-cols-2 gap-6">
-        <a href="/admin/packages" className="card btn text-center">
-          Manage Packages
-        </a>
-
-        <a href="/admin/inquiries" className="card btn text-center">
-          View Inquiries
-        </a>
-
-        <a href="/admin/reviews" className="card btn text-center">
-          Manage Reviews
-        </a>
-
-        <a href="/admin/blog" className="card btn text-center">
-          Manage Blog
-        </a>
-
-        <a href="/admin/faq" className="card btn text-center">
-          Manage FAQ
-        </a>
-
-        <a href="/admin/gallery" className="card btn text-center">
-          Manage Gallery
-        </a>
+    <div>
+      {/* Page Header */}
+      <div className="mb-10">
+        <h1 className="text-3xl font-bold text-primary">Admin Dashboard</h1>
+        <p className="text-gray-600 mt-1">
+          Manage Barakah Travels website & CRM
+        </p>
       </div>
 
-      <form action="/api/auth/signout" method="post" className="mt-10">
-        <button className="btn bg-red-600 text-white">
-          Logout
-        </button>
-      </form>
-    </main>
+      {/* Dashboard Cards */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {cards.map((card) => (
+          <Link
+            key={card.title}
+            href={card.href}
+            className="bg-white rounded-2xl shadow hover:shadow-lg transition p-6 flex flex-col gap-4 border border-gray-100"
+          >
+            <div className="text-primary">{card.icon}</div>
+            <div>
+              <h2 className="text-xl font-semibold">{card.title}</h2>
+              <p className="text-sm text-gray-600">{card.desc}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
+
+      {/* Footer note */}
+      <div className="mt-12 text-sm text-gray-500">
+        Logged in as <strong>Admin</strong> • Barakah CRM
+      </div>
+    </div>
   );
 }
