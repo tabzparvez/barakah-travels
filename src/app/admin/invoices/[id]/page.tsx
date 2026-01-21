@@ -1,64 +1,51 @@
-"use client";
-
-export default function ViewInvoicePage({
+export default function InvoiceViewPage({
   params,
 }: {
   params: { id: string };
 }) {
   return (
-    <div className="bg-white max-w-4xl mx-auto p-8 shadow rounded">
+    <div id="invoice-print" className="max-w-3xl mx-auto bg-white p-8 shadow">
       <div className="flex justify-between mb-6">
-        <h1 className="text-2xl font-bold">INVOICE</h1>
-        <div className="text-sm text-right">
-          <p>Invoice #: {params.id}</p>
-          <p>Date: 28-10-2025</p>
+        <div>
+          <h2 className="text-xl font-bold">Barakah Travels</h2>
+          <p className="text-sm">Official Invoice</p>
+        </div>
+        <div className="text-right">
+          <p><strong>Invoice #</strong> {params.id}</p>
+          <p>Date: {new Date().toLocaleDateString()}</p>
         </div>
       </div>
 
-      <hr className="mb-6" />
+      <hr className="my-4" />
 
-      <p className="mb-4">
-        <strong>Customer:</strong> Muhammad Rais
-      </p>
+      <p><strong>Customer:</strong> (Dynamic later)</p>
 
-      <table className="w-full border mb-6 text-sm">
+      <table className="w-full mt-4 border text-sm">
         <thead className="bg-gray-100">
           <tr>
-            <th className="border p-2">Description</th>
-            <th className="border p-2">Qty</th>
-            <th className="border p-2">Unit Price</th>
-            <th className="border p-2">Total</th>
+            <th className="p-2">Description</th>
+            <th className="p-2">Qty</th>
+            <th className="p-2">Price</th>
+            <th className="p-2">Total</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="border p-2">Umrah Package</td>
-            <td className="border p-2">3</td>
-            <td className="border p-2">PKR 255,000</td>
-            <td className="border p-2">PKR 765,000</td>
+          <tr className="border-t">
+            <td className="p-2">Umrah Package</td>
+            <td className="p-2">1</td>
+            <td className="p-2">PKR 205,000</td>
+            <td className="p-2">PKR 205,000</td>
           </tr>
         </tbody>
       </table>
 
-      <div className="text-right space-y-1">
-        <p>Total: PKR 765,000</p>
-        <p>Paid: PKR 500,000</p>
-        <p className="font-bold">Balance: PKR 265,000</p>
+      <div className="text-right mt-4">
+        <p><strong>Total:</strong> PKR 205,000</p>
       </div>
 
-      <div className="flex gap-4 mt-8">
-        <button
-          onClick={() => window.print()}
-          className="px-4 py-2 bg-gray-800 text-white rounded"
-        >
+      <div className="flex gap-4 mt-6 no-print">
+        <button onClick={() => window.print()} className="btn">
           Print
-        </button>
-
-        <button
-          onClick={() => alert("PDF download next step")}
-          className="px-4 py-2 bg-[#9C7421] text-white rounded"
-        >
-          Download PDF
         </button>
       </div>
     </div>
