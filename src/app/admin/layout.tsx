@@ -1,3 +1,22 @@
+import { ReactNode } from "react";
+import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "@/lib/auth";
+
+import {
+  FaTachometerAlt,
+  FaBoxOpen,
+  FaEnvelope,
+  FaStar,
+  FaImages,
+  FaBlog,
+  FaQuestionCircle,
+  FaSignOutAlt,
+  FaFileInvoice,
+  FaReceipt,
+} from "react-icons/fa";
+
 {/* Sidebar */}
 <aside className="w-64 bg-[#9C7421] text-white p-6 flex flex-col shadow-xl">
   {/* Brand */}
