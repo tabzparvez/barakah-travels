@@ -69,16 +69,21 @@ export default function Header() {
         {/* Logo */}
         <Link href="/" onClick={handleLinkClick} className="flex items-center gap-2">
           <Image
-            src="/newlogo.png"
-            alt="Barakah Travels"
-            width={60}
-            height={60}
-            className="rounded-full border-2 border-yellow-500 bg-white"
-            priority
-          />
-          <span className="text-xl md:text-2xl font-extrabold text-yellow-400">
-            Barakah Travels
-          </span>
+  src="/newlogo.png"
+  alt="Barakah Travels"
+  width={90}
+  height={90}
+  priority
+  className="
+    object-contain
+    drop-shadow-lg
+  "
+/>
+
+          <span className="text-2xl md:text-3xl font-extrabold text-yellow-400 tracking-wide">
+  Barakah Travels
+</span>
+
         </Link>
 
         {/* Mobile Hamburger */}
