@@ -64,7 +64,7 @@ export default function Header() {
           : "bg-gradient-to-r from-primary to-primary-dark"
       }`}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-20 md:h-24">
 
         {/* Logo */}
         <Link href="/" onClick={handleLinkClick} className="flex items-center gap-2">
@@ -75,17 +75,19 @@ export default function Header() {
   height={120}
   priority
   className="
+    h-12 w-auto
+    md:h-16
     object-contain
-    drop-shadow-xl
-    w-[70px] h-[70px] md:w-[120px] md:h-[120px]
   "
 />
 
 
 
-          <span className="text-2xl md:text-3xl font-extrabold text-yellow-400 tracking-wide">
+
+          <span className="text-lg md:text-2xl font-extrabold text-yellow-400">
   Barakah Travels
 </span>
+
 
 
         </Link>
