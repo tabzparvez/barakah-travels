@@ -75,9 +75,9 @@ export default function Header() {
   height={120}
   priority
   className="
-    h-12 w-auto
-    md:h-16
-    object-contain
+    h-14 w-auto
+    md:h-18
+    object-contain drop-shadow-x1
   "
 />
 
