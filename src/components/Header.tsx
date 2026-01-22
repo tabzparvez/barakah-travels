@@ -77,8 +77,10 @@ export default function Header() {
   className="
     object-contain
     drop-shadow-xl
+    w-[70px] h-[70px] md:w-[120px] md:h-[120px]
   "
 />
+
 
 
           <span className="text-2xl md:text-3xl font-extrabold text-yellow-400 tracking-wide">
