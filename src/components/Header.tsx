@@ -68,17 +68,18 @@ export default function Header() {
 
         {/* Logo */}
         <Link href="/" onClick={handleLinkClick} className="flex items-center gap-2">
-          <Image
+<Image
   src="/newlogo.png"
   alt="Barakah Travels"
-  width={90}
-  height={90}
+  width={120}
+  height={120}
   priority
   className="
     object-contain
-    drop-shadow-lg
+    drop-shadow-xl
   "
 />
+
 
           <span className="text-2xl md:text-3xl font-extrabold text-yellow-400 tracking-wide">
   Barakah Travels
