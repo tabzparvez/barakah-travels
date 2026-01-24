@@ -76,4 +76,40 @@ footer {
   }
 }
 
+/* ===========================
+   INVOICE PRINT FIX (MOBILE)
+   =========================== */
+
+@media print {
+
+  /* Hide EVERYTHING by default */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* Show only invoice */
+  #invoice-print,
+  #invoice-print * {
+    visibility: visible !important;
+  }
+
+  /* Position invoice at top */
+  #invoice-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background: white;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Force hide site header/footer */
+  header,
+  nav,
+  footer {
+    display: none !important;
+  }
+
+}
 
