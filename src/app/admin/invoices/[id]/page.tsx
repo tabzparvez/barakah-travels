@@ -2,89 +2,193 @@
 
 import { amountToWords } from "@/lib/amountToWords";
 
-export default function InvoiceViewPage({ params }: { params: { id: string } }) {
-  const data =
-    typeof window !== "undefined"
-      ? JSON.parse(localStorage.getItem(`invoice-${params.id}`) || "{}")
-      : {};
+export default function InvoiceViewPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  if (typeof window === "undefined") return null;
 
-  if (!data.customer) return <p>Invoice not found.</p>;
+  const raw = localStorage.getItem(`invoice-${params.id}`);
+  if (!raw) return <p className="text-center mt-10">Invoice not found.</p>;
+
+  const data = JSON.parse(raw);
 
   return (
-    <div id="invoice-print" className="max-w-4xl mx-auto bg-white p-10 rounded-xl shadow-lg">
-      {/* HEADER */}
-      <div className="flex justify-between mb-6">
+    <div
+      id="invoice-print"
+      className="max-w-4xl mx-auto bg-white p-10 text-sm"
+    >
+      {/* ================= HEADER ================= */}
+      <div className="flex justify-between items-start mb-6">
         <div>
-          <h1 className="text-2xl font-bold">Barakah Travels</h1>
-          <p className="text-sm">Your Trusted Umrah & Travel Partner</p>
-          <p className="text-xs mt-1">Karachi, Pakistan</p>
-          <p className="text-xs">📞 +92 340 0799777 / +92 318 3548299</p>
-          <p className="text-xs">✉ info@barakahtravels.online</p>
+          <h1 className="text-2xl font-extrabold tracking-wide">
+            BARAKAH TRAVELS
+          </h1>
+          <p className="text-xs">Umrah • Visa • Travel Services</p>
+          <p className="text-xs mt-1">
+            Karachi, Pakistan
+          </p>
+          <p className="text-xs">
+            📞 +92 340 0799777 | +92 318 3548299
+          </p>
+          <p className="text-xs">
+            ✉ info@barakahtravels.online
+          </p>
           <p className="text-xs">NTN: 7933776</p>
         </div>
 
-        <div className="text-right text-sm">
-          <p className="font-bold">OFFICIAL INVOICE</p>
-          <p>Invoice #: {params.id}</p>
-          <p>Date: {new Date().toLocaleDateString()}</p>
-          <span className={`inline-block mt-2 px-2 py-1 rounded text-white ${data.balance > 0 ? "bg-red-500" : "bg-green-600"}`}>
-            {data.balance > 0 ? "Unpaid" : "Paid"}
+        <div className="text-right">
+          <p className="text-lg font-bold">INVOICE</p>
+          <p>
+            <strong>No:</strong> {params.id}
+          </p>
+          <p>
+            <strong>Date:</strong>{" "}
+            {new Date().toLocaleDateString()}
+          </p>
+          <span
+            className={`inline-block mt-2 px-3 py-1 rounded text-white text-xs ${
+              data.balance > 0
+                ? "bg-red-600"
+                : "bg-green-600"
+            }`}
+          >
+            {data.balance > 0 ? "UNPAID" : "PAID"}
           </span>
         </div>
       </div>
 
-      <hr className="my-6" />
+      <hr className="my-4" />
 
-      {/* CUSTOMER */}
-      <p><strong>Customer:</strong> {data.customer}</p>
-      <p><strong>Phone:</strong> {data.phone}</p>
-      <p><strong>Email:</strong> {data.email}</p>
+      {/* ================= CUSTOMER ================= */}
+      <div className="mb-4">
+        <p>
+          <strong>Customer Name:</strong>{" "}
+          {data.customer}
+        </p>
+        <p>
+          <strong>Phone:</strong> {data.phone}
+        </p>
+        <p>
+          <strong>Email:</strong> {data.email}
+        </p>
+      </div>
 
-      {/* TABLE */}
-      <table className="w-full border mt-6 text-sm">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="border p-2">Description</th>
-            <th className="border p-2">Qty</th>
-            <th className="border p-2">Unit Price</th>
-            <th className="border p-2">Total</th>
+      {/* ================= TABLE ================= */}
+      <table className="w-full border border-black border-collapse mb-4">
+        <thead>
+          <tr className="bg-gray-100">
+            <th className="border border-black p-2 text-left">
+              Description
+            </th>
+            <th className="border border-black p-2 text-center">
+              Qty
+            </th>
+            <th className="border border-black p-2 text-right">
+              Unit Price
+            </th>
+            <th className="border border-black p-2 text-right">
+              Amount
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td className="border p-2">{data.description}</td>
-            <td className="border p-2 text-center">{data.qty}</td>
-            <td className="border p-2">PKR {data.unitPrice}</td>
-            <td className="border p-2">PKR {data.total}</td>
+            <td className="border border-black p-2">
+              {data.description}
+            </td>
+            <td className="border border-black p-2 text-center">
+              {data.qty}
+            </td>
+            <td className="border border-black p-2 text-right">
+              PKR {Number(data.unitPrice).toLocaleString()}
+            </td>
+            <td className="border border-black p-2 text-right">
+              PKR {Number(data.total).toLocaleString()}
+            </td>
           </tr>
         </tbody>
       </table>
 
-      {/* TOTALS */}
-      <div className="text-right mt-6 text-sm">
-        <p>Subtotal: PKR {data.total}</p>
-        <p>Paid: PKR {data.paid}</p>
-        <p className="font-bold">Balance: PKR {data.balance}</p>
-        <p className="mt-2 text-xs">
-          <strong>Amount in Words:</strong> {amountToWords(data.total)}
-        </p>
-        <p className="mt-2 text-xs">Payment Method: {data.paymentMethod}</p>
+      {/* ================= TOTALS ================= */}
+      <div className="flex justify-end mb-4">
+        <table className="w-1/2 border border-black">
+          <tbody>
+            <tr>
+              <td className="border p-2">Total</td>
+              <td className="border p-2 text-right">
+                PKR {Number(data.total).toLocaleString()}
+              </td>
+            </tr>
+            <tr>
+              <td className="border p-2">Paid</td>
+              <td className="border p-2 text-right">
+                PKR {Number(data.paid).toLocaleString()}
+              </td>
+            </tr>
+            <tr>
+              <td className="border p-2 font-bold">
+                Balance
+              </td>
+              <td className="border p-2 text-right font-bold">
+                PKR {Number(data.balance).toLocaleString()}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      {/* FOOTER */}
-      <div className="mt-10 flex justify-between text-sm">
+      <p className="text-xs mb-3">
+        <strong>Amount in Words:</strong>{" "}
+        {amountToWords(Number(data.total))} only
+      </p>
+
+      <p className="text-xs mb-4">
+        <strong>Payment Method:</strong>{" "}
+        {data.paymentMethod}
+      </p>
+
+      {/* ================= TERMS ================= */}
+      <div className="text-xs mt-4">
+        <p className="font-bold mb-1">
+          Terms & Conditions:
+        </p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>
+            All payments once made are non-refundable.
+          </li>
+          <li>
+            Any increase in government taxes or airline
+            charges will be payable by customer.
+          </li>
+          <li>
+            Barakah Travels is not responsible for delays
+            due to airline, visa or weather conditions.
+          </li>
+        </ul>
+      </div>
+
+      {/* ================= SIGNATURE ================= */}
+      <div className="flex justify-between mt-10 text-xs">
         <div>
           <p>Prepared By</p>
-          <p className="font-bold">Tabish Parvez</p>
+          <p className="font-bold mt-4">
+            Tabish Parvez
+          </p>
         </div>
         <div className="text-right">
           <p>Authorized Signature</p>
-          <div className="mt-6 border-t w-40 ml-auto"></div>
+          <div className="border-t mt-6 w-40 ml-auto"></div>
         </div>
       </div>
 
-      <div className="mt-8 no-print">
-        <button onClick={() => window.print()} className="btn">
+      {/* ================= PRINT ================= */}
+      <div className="mt-6 no-print">
+        <button
+          onClick={() => window.print()}
+          className="btn"
+        >
           Print / Save PDF
         </button>
       </div>
