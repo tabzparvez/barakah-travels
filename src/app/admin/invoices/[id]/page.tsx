@@ -1,3 +1,5 @@
+"use client";
+
 export default function InvoiceViewPage({
   params,
 }: {
@@ -6,7 +8,10 @@ export default function InvoiceViewPage({
   const invoiceId = params?.id || "N/A";
 
   return (
-    <div id="invoice-print" className="max-w-4xl mx-auto bg-white p-8 shadow-lg rounded-xl">
+    <div
+      id="invoice-print"
+      className="max-w-4xl mx-auto bg-white p-8 shadow-lg rounded-xl"
+    >
       <div className="flex justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold">Barakah Travels</h1>
@@ -14,7 +19,9 @@ export default function InvoiceViewPage({
         </div>
 
         <div className="text-right text-sm">
-          <p><strong>Invoice #</strong> {invoiceId}</p>
+          <p>
+            <strong>Invoice #</strong> {invoiceId}
+          </p>
           <p>Date: {new Date().toLocaleDateString()}</p>
         </div>
       </div>
@@ -45,12 +52,19 @@ export default function InvoiceViewPage({
       </table>
 
       <div className="text-right mb-8">
-        <p><strong>Total:</strong> PKR 0</p>
-        <p><strong>Paid:</strong> PKR 0</p>
-        <p><strong>Balance:</strong> PKR 0</p>
+        <p>
+          <strong>Total:</strong> PKR 0
+        </p>
+        <p>
+          <strong>Paid:</strong> PKR 0
+        </p>
+        <p>
+          <strong>Balance:</strong> PKR 0
+        </p>
       </div>
 
-      <div className="flex gap-4 no-print">
+      {/* Buttons (print screen par, print me hide) */}
+      <div className="flex gap-4 print:hidden">
         <button onClick={() => window.print()} className="btn">
           Print
         </button>
