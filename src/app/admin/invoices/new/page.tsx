@@ -6,120 +6,67 @@ import { useState } from "react";
 export default function NewInvoicePage() {
   const router = useRouter();
 
-  const [customerName, setCustomerName] = useState("");
+  const [customer, setCustomer] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [packageName, setPackageName] = useState("");
-  const [total, setTotal] = useState<number>(0);
-  const [paid, setPaid] = useState<number>(0);
-  const [method, setMethod] = useState("Cash");
+  const [description, setDescription] = useState("Umrah Package");
+  const [qty, setQty] = useState(1);
+  const [unitPrice, setUnitPrice] = useState(0);
+  const [paid, setPaid] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState("Cash");
 
+  const total = qty * unitPrice;
   const balance = total - paid;
 
-  const handleSave = () => {
-    if (!customerName || total <= 0) {
-      alert("Customer name & total amount required");
-      return;
-    }
+  function handleSubmit() {
+    const id = Date.now().toString();
 
-    const invoiceId = Date.now().toString();
+    const data = {
+      customer,
+      phone,
+      email,
+      description,
+      qty,
+      unitPrice,
+      total,
+      paid,
+      balance,
+      paymentMethod,
+      date: new Date().toISOString(),
+    };
 
-    // TEMP STORAGE (next step DB hoga)
-    localStorage.setItem(
-      `invoice-${invoiceId}`,
-      JSON.stringify({
-        invoiceId,
-        customerName,
-        phone,
-        email,
-        packageName,
-        total,
-        paid,
-        balance,
-        method,
-        date: new Date().toISOString(),
-      })
-    );
-
-    router.push(`/admin/invoices/${invoiceId}`);
-  };
+    localStorage.setItem(`invoice-${id}`, JSON.stringify(data));
+    router.push(`/admin/invoices/${id}`);
+  }
 
   return (
-    <div className="card max-w-3xl">
+    <div className="card max-w-2xl">
       <h1 className="text-2xl font-bold mb-6">Create New Invoice</h1>
 
-      {/* CUSTOMER */}
-      <div className="grid md:grid-cols-2 gap-4">
-        <input
-          className="input"
-          placeholder="Customer Name"
-          value={customerName}
-          onChange={(e) => setCustomerName(e.target.value)}
-        />
+      <input className="input" placeholder="Customer Name" onChange={e => setCustomer(e.target.value)} />
+      <input className="input" placeholder="Phone" onChange={e => setPhone(e.target.value)} />
+      <input className="input" placeholder="Email" onChange={e => setEmail(e.target.value)} />
 
-        <input
-          className="input"
-          placeholder="Phone"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
+      <input className="input" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} />
+      <input className="input" type="number" placeholder="Quantity" value={qty} onChange={e => setQty(+e.target.value)} />
+      <input className="input" type="number" placeholder="Unit Price" onChange={e => setUnitPrice(+e.target.value)} />
 
-        <input
-          className="input md:col-span-2"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+      <select className="input" onChange={e => setPaymentMethod(e.target.value)}>
+        <option>Cash</option>
+        <option>Bank Transfer</option>
+        <option>EasyPaisa</option>
+        <option>JazzCash</option>
+      </select>
+
+      <input className="input" type="number" placeholder="Paid Amount" onChange={e => setPaid(+e.target.value)} />
+
+      <div className="mt-4 text-sm">
+        <p>Total: <strong>PKR {total}</strong></p>
+        <p>Paid: <strong>PKR {paid}</strong></p>
+        <p>Balance: <strong>PKR {balance}</strong></p>
       </div>
 
-      {/* PACKAGE */}
-      <input
-        className="input mt-3"
-        placeholder="Package / Service (Umrah / Visa etc.)"
-        value={packageName}
-        onChange={(e) => setPackageName(e.target.value)}
-      />
-
-      {/* PAYMENT */}
-      <div className="grid md:grid-cols-2 gap-4 mt-4">
-        <input
-          type="number"
-          className="input"
-          placeholder="Total Amount (PKR)"
-          value={total}
-          onChange={(e) => setTotal(Number(e.target.value))}
-        />
-
-        <input
-          type="number"
-          className="input"
-          placeholder="Paid Amount (PKR)"
-          value={paid}
-          onChange={(e) => setPaid(Number(e.target.value))}
-        />
-
-        <select
-          className="input md:col-span-2"
-          value={method}
-          onChange={(e) => setMethod(e.target.value)}
-        >
-          <option>Cash</option>
-          <option>Bank Transfer</option>
-          <option>EasyPaisa / JazzCash</option>
-          <option>Partial (Cash + Bank)</option>
-        </select>
-      </div>
-
-      {/* SUMMARY */}
-      <div className="mt-4 text-sm text-right">
-        <p><strong>Total:</strong> PKR {total}</p>
-        <p><strong>Paid:</strong> PKR {paid}</p>
-        <p className={balance > 0 ? "text-red-600" : "text-green-600"}>
-          <strong>Balance:</strong> PKR {balance}
-        </p>
-      </div>
-
-      <button onClick={handleSave} className="btn mt-6">
+      <button onClick={handleSubmit} className="btn mt-6">
         Save & View Invoice
       </button>
     </div>
