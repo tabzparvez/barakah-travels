@@ -23,6 +23,7 @@ export const metadata: Metadata = {
   },
   description:
     "Barakah Travels – Trusted Umrah, Hajj, Visa & Travel services in Pakistan. WhatsApp booking available.",
+
   openGraph: {
     title: "Barakah Travels",
     description:
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
     siteName: "Barakah Travels",
     images: [
       {
-        url: "/barakah-logo.png",
+        url: "/newlogo.png",
         width: 800,
         height: 800,
         alt: "Barakah Travels Logo",
@@ -40,11 +41,14 @@ export const metadata: Metadata = {
     locale: "en_PK",
     type: "website",
   },
+
   icons: {
-    icon: "/barakah-logo.png",
-    apple: "/barakah-logo.png",
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+    shortcut: "/favicon.png",
   },
 };
+
 
 export default function RootLayout({
   children,
