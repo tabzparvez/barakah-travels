@@ -2,18 +2,32 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
-    <loc>https://www.barakahtravels.online/</loc>
-    <priority>1.0</priority>
+    <loc>https://barakahtravels.online/</loc>
   </url>
 
   <url>
-    <loc>https://www.barakahtravels.online/packages</loc>
-    <priority>0.9</priority>
+    <loc>https://barakahtravels.online/packages</loc>
   </url>
 
   <url>
-    <loc>https://www.barakahtravels.online/contact</loc>
-    <priority>0.8</priority>
+    <loc>https://barakahtravels.online/contact</loc>
+  </url>
+
+  <url>
+    <loc>https://barakahtravels.online/about</loc>
+  </url>
+
+  <!-- NEW SEO PAGES -->
+  <url>
+    <loc>https://barakahtravels.online/umrah-packages-from-karachi</loc>
+  </url>
+
+  <url>
+    <loc>https://barakahtravels.online/cheap-umrah-packages-pakistan</loc>
+  </url>
+
+  <url>
+    <loc>https://barakahtravels.online/umrah-visa-service-pakistan</loc>
   </url>
 
 </urlset>
