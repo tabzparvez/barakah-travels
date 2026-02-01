@@ -29,16 +29,6 @@ function ReviewsSlider() {
     },
   ];
 
-      >
-        <Image src={d.img} alt={d.title} width={300} height={160} className="rounded mb-4"/>
-        <h3 className="text-xl font-bold text-primary mb-2">{d.title}</h3>
-        <Link href="/contact" className="btn">Explore</Link>
-      </div>
-    ))}
-  </div>
-</section>
-
-
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -112,7 +102,7 @@ export default function Home() {
         <ReviewsSlider />
       </section>
 
-       {/* POPULAR DESTINATIONS */}
+   {/* POPULAR DESTINATIONS */}
 <section className="mb-24">
   <h2 className="text-3xl font-bold text-center text-primary mb-10">
     Popular Destinations
@@ -131,6 +121,15 @@ export default function Home() {
         className={`card text-center p-4 ${
           i % 2 === 0 ? "slide-left" : "slide-right"
         }`}
+      >
+        <Image src={d.img} alt={d.title} width={300} height={160} className="rounded mb-4"/>
+        <h3 className="text-xl font-bold text-primary mb-2">{d.title}</h3>
+        <Link href="/contact" className="btn">Explore</Link>
+      </div>
+    ))}
+  </div>
+</section>
+
 
       {/* UMRAH JOURNEY */}
       <section className="mb-24 max-w-6xl mx-auto">
