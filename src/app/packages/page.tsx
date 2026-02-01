@@ -102,6 +102,15 @@ export default function PackagesPage() {
         </div>
       </section>
 
+      <div className="mt-6 text-center">
+  <a
+    href="/umrah-packages-from-karachi"
+    className="text-yellow-600 font-semibold underline"
+  >
+    View Detailed Umrah Packages from Karachi →
+  </a>
+</div>
+
       {/* ================= STATES ================= */}
       {loading && <div className="text-center">Loading packages…</div>}
       {error && (
