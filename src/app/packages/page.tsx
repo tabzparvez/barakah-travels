@@ -1,9 +1,6 @@
 "use client";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-<Link href="/umrah-packages-from-karachi" className="text-yellow-600 underline">
-  View Umrah Packages from Karachi
-</Link>
 
 /* ================= TYPES ================= */
 type Package = {
