@@ -3,62 +3,9 @@ import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
-/* ================= TYPES ================= */
-interface Testimonial {
-  name: string;
-  city?: string;
-  rating: number;
-  review: string;
-}
-
-/* ================= DESTINATION CARD ================= */
-function DestinationCard({
-  title,
-  image,
-  description,
-  link,
-}: {
-  title: string;
-  image: string;
-  description: string;
-  link: string;
-}) {
-  return (
-    <div className="card group overflow-hidden hover:shadow-xl transition">
-      <div className="relative h-40">
-        <Image
-          src={image}
-          alt={title}
-          fill
-          className="object-cover group-hover:scale-105 transition"
-        />
-      </div>
-      <div className="p-4 text-center flex flex-col flex-1">
-        <h3 className="text-xl font-bold text-primary mb-2">{title}</h3>
-        <p className="text-secondary mb-4 flex-1">{description}</p>
-        <Link href={link} className="btn bg-primary text-white">
-          Explore
-        </Link>
-      </div>
-    </div>
-  );
-}
-
-/* ================= REVIEWS SLIDER ================= */
+/* ================= REVIEWS AUTO SLIDER ================= */
 function ReviewsSlider() {
-  const [clientReviews, setClientReviews] = useState<Testimonial[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("/api/reviews")
-      .then((res) => res.json())
-      .then((data) => {
-        setClientReviews(data);
-        setLoading(false);
-      });
-  }, []);
-
-  const fallback = [
+  const reviews = [
     {
       name: "Ayesha Siddiqui",
       city: "Lahore",
@@ -69,7 +16,7 @@ function ReviewsSlider() {
     {
       name: "Imran Qureshi",
       city: "Karachi",
-      rating: 4,
+      rating: 5,
       review:
         "Excellent visa guidance and fast WhatsApp support. Will book again.",
     },
@@ -82,157 +29,132 @@ function ReviewsSlider() {
     },
   ];
 
-  const reviews = [...clientReviews, ...fallback];
   const [index, setIndex] = useState(0);
-  if (loading) return <div className="text-center">Loading reviews…</div>;
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setIndex((i) => (i + 1) % reviews.length);
+    }, 3500);
+    return () => clearInterval(t);
+  }, []);
 
   const r = reviews[index];
 
   return (
-    <div className="max-w-xl mx-auto text-center">
-      <div className="card mb-4">
-        <div className="flex justify-center mb-2">
-          {Array.from({ length: r.rating }).map((_, i) => (
-            <span key={i} className="text-yellow-400 text-lg">★</span>
-          ))}
-        </div>
-        <p className="italic text-secondary-dark mb-2">“{r.review}”</p>
-        <p className="font-bold text-primary">
-          — {r.name}{r.city && `, ${r.city}`}
-        </p>
+    <div className="max-w-xl mx-auto text-center card">
+      <div className="flex justify-center mb-2">
+        {Array.from({ length: r.rating }).map((_, i) => (
+          <span key={i} className="text-yellow-400 text-lg">★</span>
+        ))}
       </div>
-      <div className="flex justify-center gap-4">
-        <button onClick={() => setIndex(i => i === 0 ? reviews.length - 1 : i - 1)} className="btn px-4 py-1">
-          Prev
-        </button>
-        <button onClick={() => setIndex(i => i === reviews.length - 1 ? 0 : i + 1)} className="btn px-4 py-1">
-          Next
-        </button>
-      </div>
+      <p className="italic text-secondary-dark mb-2">“{r.review}”</p>
+      <p className="font-bold text-primary">
+        — {r.name}, {r.city}
+      </p>
     </div>
   );
 }
 
-/* ================= HOME PAGE ================= */
+/* ================= HOME ================= */
 export default function Home() {
   return (
     <main>
 
-      {/* ================= HERO ================= */}
-      <section className="relative min-h-[65vh] rounded-2xl overflow-hidden shadow-card mb-16 mt-8">
+      {/* HERO */}
+      <section className="relative min-h-[75vh] rounded-2xl overflow-hidden shadow-card mb-20 mt-8">
         <Image
           src="/umrah2.png"
-          alt="Umrah"
+          alt="Kaaba"
           fill
-          className="object-cover opacity-30"
+          className="object-cover opacity-25"
         />
-        <div className="relative z-10 text-center py-20 px-4">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-primary mb-4">
-            Barakah Travels
+        <div className="relative z-10 text-center py-28 px-6">
+          <h1 className="text-5xl md:text-6xl font-extrabold text-primary mb-6">
+            Answer the Call for Umrah with Peace of Mind
           </h1>
-          <p className="text-xl md:text-2xl text-secondary-dark mb-6">
-            Trusted Umrah & Visa Services — From Pakistan to Makkah & Madinah
+
+          <p className="text-xl text-secondary-dark mb-8 max-w-3xl mx-auto">
+            Complete Umrah visa, hotels near Haram, flights and transport —
+            handled by Barakah Travels with 24/7 WhatsApp support.
           </p>
+
           <a
             href="https://wa.me/923183548299"
             className="btn text-lg px-8 py-3"
           >
-            Get Umrah Quote on WhatsApp
+            Get Latest Umrah Price on WhatsApp
           </a>
 
-          {/* TRUST STRIP */}
-          <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm font-semibold text-primary">
-            <span>✔ Visa Included</span>
-            <span>✔ Hotels Near Haram</span>
-            <span>✔ 24/7 WhatsApp Support</span>
+          {/* TRUST COUNTERS */}
+          <div className="mt-10 flex flex-wrap justify-center gap-10 text-primary font-bold">
+            <span>500+ Pilgrims Served</span>
+            <span>Visa in 48 Hours</span>
+            <span>Hotels Within 300m of Haram</span>
           </div>
         </div>
       </section>
 
-      {/* ================= REVIEWS ================= */}
-      <section className="mb-20">
+      {/* REVIEWS */}
+      <section className="mb-24">
         <h2 className="text-3xl font-bold text-center text-primary mb-8">
           What Our Clients Say
         </h2>
         <ReviewsSlider />
       </section>
 
-      {/* ================= DESTINATIONS ================= */}
-      <section className="mb-20">
-        <h2 className="text-3xl font-bold text-center text-primary mb-10">
-          Popular Destinations
+      {/* UMRAH JOURNEY */}
+      <section className="mb-24 max-w-6xl mx-auto">
+        <h2 className="text-3xl font-bold text-center text-primary mb-12">
+          Your Umrah Journey With Barakah Travels
         </h2>
-        <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-5">
-          <DestinationCard
-            title="Umrah"
-            image="/umrah2.png"
-            description="Complete Umrah packages with visa & hotels."
-            link="/packages"
-          />
-          <DestinationCard
-            title="Dubai"
-            image="/dubai.jpg"
-            description="Luxury tours and shopping experiences."
-            link="/contact"
-          />
-          <DestinationCard
-            title="Turkey"
-            image="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=400&q=80"
-            description="Explore Istanbul & Cappadocia."
-            link="/contact"
-          />
-          <DestinationCard
-            title="Thailand"
-            image="/thailand.jpg"
-            description="Beautiful beaches and nightlife."
-            link="/contact"
-          />
-          <DestinationCard
-            title="Baku"
-            image="https://images.unsplash.com/photo-1505761671935-60b3a7427bad?w=400&q=80"
-            description="Caspian coast & culture."
-            link="/contact"
-          />
+
+        <div className="grid md:grid-cols-4 gap-8 text-center">
+          <div className="card">
+            <h3 className="font-bold text-lg mb-2">1. Contact on WhatsApp</h3>
+            <p>Get complete package details instantly.</p>
+          </div>
+          <div className="card">
+            <h3 className="font-bold text-lg mb-2">2. Visa Processing</h3>
+            <p>Fast and hassle-free Umrah visa service.</p>
+          </div>
+          <div className="card">
+            <h3 className="font-bold text-lg mb-2">3. Flights & Hotels</h3>
+            <p>Stay near Haram with comfortable transport.</p>
+          </div>
+          <div className="card">
+            <h3 className="font-bold text-lg mb-2">4. Perform Umrah Peacefully</h3>
+            <p>Guidance and support throughout your journey.</p>
+          </div>
         </div>
       </section>
 
-      {/* ================= SERVICES ================= */}
-      <section className="grid gap-8 md:grid-cols-2 mb-20">
-        <div className="card">
-          <h3 className="text-2xl font-bold text-primary mb-2">Umrah Packages</h3>
-          <p className="mb-4">Visa, hotels, transport & Ziyārāt included.</p>
-          <Link href="/packages" className="btn bg-primary text-white">
-            View Packages
-          </Link>
-        </div>
-        <div className="card">
-          <h3 className="text-2xl font-bold text-primary mb-2">Visa Guidance</h3>
-          <p className="mb-4">Umrah, tourist & family visa assistance.</p>
-          <Link href="/contact" className="btn bg-primary text-white">
-            Contact Us
-          </Link>
-        </div>
+      {/* CTA */}
+      <section className="text-center mb-24">
+        <h2 className="text-3xl font-bold text-primary mb-6">
+          Ready for Your Umrah Journey?
+        </h2>
+        <a
+          href="https://wa.me/923183548299"
+          className="btn text-lg px-8 py-3"
+        >
+          Contact on WhatsApp Now
+        </a>
       </section>
-      {/* ================= SEO CONTENT ================= */}
-<section className="max-w-4xl mx-auto text-sm text-secondary leading-relaxed mt-24">
-  <h2 className="text-2xl font-bold text-primary mb-4">
-    Umrah Packages & Travel Services in Pakistan
-  </h2>
-  <p className="mb-3">
-    Barakah Travels is a trusted Umrah travel agency in Pakistan providing
-    affordable and premium Umrah packages from Karachi, Lahore, Islamabad and
-    other cities. Our services include Umrah visa processing, hotels near Haram,
-    transport, and guided ziyārāt.
-  </p>
-  <p className="mb-3">
-    Whether you are planning your first Umrah or travelling with family, our
-    experienced team ensures a smooth and spiritually fulfilling journey.
-  </p>
-  <p>
-    Contact Barakah Travels today for customized Umrah packages with transparent
-    pricing and 24/7 WhatsApp support.
-  </p>
-</section>
+
+      {/* SEO CONTENT */}
+      <section className="max-w-4xl mx-auto text-sm text-secondary leading-relaxed mt-24">
+        <h2 className="text-2xl font-bold text-primary mb-4">
+          Umrah Packages & Travel Services in Pakistan
+        </h2>
+        <p className="mb-3">
+          Barakah Travels provides affordable and premium Umrah packages from Karachi,
+          Lahore and Islamabad including visa, hotels near Haram and transport.
+        </p>
+        <p>
+          Our experienced team ensures a smooth and spiritually fulfilling Umrah
+          journey with transparent pricing and 24/7 WhatsApp support.
+        </p>
+      </section>
 
     </main>
   );
