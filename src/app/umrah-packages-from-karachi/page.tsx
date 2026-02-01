@@ -3,24 +3,33 @@ import Link from "next/link";
 export const metadata = {
   title: "Umrah Packages from Karachi | Visa, Hotels & Transport – Barakah Travels",
   description:
-    "Affordable Umrah packages from Karachi with visa, hotels near Haram, flights and transport. Book your Umrah with Barakah Travels Pakistan.",
+    "Affordable Umrah packages from Karachi with visa, hotels near Haram, flights and transport between Makkah and Madinah.",
 };
 
 export default function Page() {
   return (
-    <div className="container mx-auto px-6 py-16">
-      <h1 className="text-4xl font-bold mb-6 text-center">
-        Umrah Packages from Karachi
-      </h1>
+    <main className="max-w-7xl mx-auto px-4 py-12">
 
-      <p className="text-lg mb-6 text-center">
-        Complete Umrah visa, hotel accommodation near Haram, return flights and
-        transport between Makkah and Madinah.
-      </p>
+      <section className="mb-14 text-center">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-primary mb-4">
+          Umrah Packages from Karachi
+        </h1>
 
-      <div className="space-y-6 text-lg leading-8">
-        <h2 className="text-2xl font-semibold">What’s Included</h2>
-        <ul className="list-disc ml-6">
+        <p className="text-lg text-secondary max-w-3xl mx-auto">
+          Complete Umrah visa, hotel accommodation near Haram, return flights
+          and transport between Makkah and Madinah.
+        </p>
+
+        <div className="mt-6 flex flex-wrap justify-center gap-6 text-sm font-semibold text-primary">
+          <span>✔ Visa Included</span>
+          <span>✔ Hotels Near Haram</span>
+          <span>✔ 24/7 WhatsApp Support</span>
+        </div>
+      </section>
+
+      <section className="max-w-4xl mx-auto text-sm text-secondary leading-relaxed space-y-6">
+        <h2 className="text-2xl font-bold text-primary">What’s Included</h2>
+        <ul className="list-disc pl-5">
           <li>Umrah Visa Processing</li>
           <li>Hotels near Masjid al Haram & Masjid an Nabawi</li>
           <li>Return Flights from Karachi</li>
@@ -28,26 +37,29 @@ export default function Page() {
           <li>Guidance for first-time pilgrims</li>
         </ul>
 
-        <h2 className="text-2xl font-semibold">Hotel Options</h2>
-        <p>3 Star, 4 Star and 5 Star options within walking distance of Haram.</p>
+        <h2 className="text-2xl font-bold text-primary">Hotel Options</h2>
+        <p>3 Star, 4 Star and 5 Star hotels within walking distance of Haram.</p>
 
-        <h2 className="text-2xl font-semibold">Why Choose Barakah Travels?</h2>
+        <h2 className="text-2xl font-bold text-primary">Why Choose Barakah Travels?</h2>
         <p>
-          Trusted Umrah travel agency in Karachi with transparent pricing and
-          fast visa processing.
+          Trusted Umrah travel agency in Karachi with transparent pricing and fast visa processing.
         </p>
 
-        <h2 className="text-2xl font-semibold">FAQs</h2>
+        <h2 className="text-2xl font-bold text-primary">FAQs</h2>
         <p><b>How much does Umrah cost from Karachi?</b><br/>Depends on hotel & dates. Contact us on WhatsApp.</p>
         <p><b>Is visa included?</b><br/>Yes, complete visa processing included.</p>
         <p><b>How many days required?</b><br/>10, 15 and 21 days packages available.</p>
-      </div>
+      </section>
 
       <div className="text-center mt-10">
-        <Link href="/contact" className="bg-yellow-600 text-white px-6 py-3 rounded-lg">
+        <Link
+          href="/contact"
+          className="bg-yellow-600 text-white px-6 py-3 rounded-lg"
+        >
           Contact Us for Latest Prices
         </Link>
       </div>
-    </div>
+
+    </main>
   );
 }
