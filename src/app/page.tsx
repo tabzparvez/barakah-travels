@@ -29,25 +29,6 @@ function ReviewsSlider() {
     },
   ];
 
-  {/* POPULAR DESTINATIONS */}
-<section className="mb-24">
-  <h2 className="text-3xl font-bold text-center text-primary mb-10">
-    Popular Destinations
-  </h2>
-
-  <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-5">
-    {[
-      { title: "Umrah", img: "/umrah2.png" },
-      { title: "Dubai", img: "/dubai.jpg" },
-      { title: "Turkey", img: "/turkey.jpg" },
-      { title: "Thailand", img: "/thailand.jpg" },
-      { title: "Baku", img: "/baku.jpg" },
-    ].map((d, i) => (
-      <div
-        key={i}
-        className={`card text-center p-4 ${
-          i % 2 === 0 ? "slide-left" : "slide-right"
-        }`}
       >
         <Image src={d.img} alt={d.title} width={300} height={160} className="rounded mb-4"/>
         <h3 className="text-xl font-bold text-primary mb-2">{d.title}</h3>
@@ -130,6 +111,26 @@ export default function Home() {
         </h2>
         <ReviewsSlider />
       </section>
+
+       {/* POPULAR DESTINATIONS */}
+<section className="mb-24">
+  <h2 className="text-3xl font-bold text-center text-primary mb-10">
+    Popular Destinations
+  </h2>
+
+  <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-5">
+    {[
+      { title: "Umrah", img: "/umrah2.png" },
+      { title: "Dubai", img: "/dubai.jpg" },
+      { title: "Turkey", img: "/turkey.jpg" },
+      { title: "Thailand", img: "/thailand.jpg" },
+      { title: "Baku", img: "/baku.jpg" },
+    ].map((d, i) => (
+      <div
+        key={i}
+        className={`card text-center p-4 ${
+          i % 2 === 0 ? "slide-left" : "slide-right"
+        }`}
 
       {/* UMRAH JOURNEY */}
       <section className="mb-24 max-w-6xl mx-auto">
