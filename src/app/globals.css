@@ -145,3 +145,14 @@ footer {
   animation: slideRight 1s ease forwards;
 }
 
+.reveal {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 0.8s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
