@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getAdminAuthHeaders } from "@/lib/admin-session";
 
 const initialQuotation = {
   client: { name: "", phone: "", persons: "" },
@@ -43,7 +42,7 @@ export default function AdminQuotations() {
   const [status, setStatus] = useState("");
 
   useEffect(() => {
-    fetch("/api/admin/quotations", { headers: getAdminAuthHeaders() })
+    fetch("/api/admin/quotations")
       .then((res) => res.json())
       .then(setQuotations);
   }, []);
@@ -52,7 +51,7 @@ export default function AdminQuotations() {
     event.preventDefault();
     const response = await fetch("/api/admin/quotations", {
       method: "POST",
-      headers: { "Content-Type": "application/json", ...getAdminAuthHeaders() },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
     });
     const data = await response.json();
@@ -64,7 +63,7 @@ export default function AdminQuotations() {
     setStatus("Generating invoice...");
     await fetch("/api/admin/invoices", {
       method: "POST",
-      headers: { "Content-Type": "application/json", ...getAdminAuthHeaders() },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         quotationId: quote.id,
         client: {

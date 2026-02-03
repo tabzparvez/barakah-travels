@@ -1,23 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
-import { authorizeAdminRequest } from "@/lib/admin-auth";
-import { createId, writeAdminData } from "@/lib/local-data";
+import { createId, readAdminData, writeAdminData } from "@/lib/local-data";
+import { requireAdminSession } from "@/lib/admin-access";
 
-export async function GET(req: NextRequest) {
-  const auth = await authorizeAdminRequest(req, {
-    requirePermission: "quotations",
-  });
-  if (auth.response) return auth.response;
-  return NextResponse.json(auth.data.quotations);
+export async function GET() {
+  const session = await requireAdminSession();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const data = await readAdminData();
+  return NextResponse.json(data.quotations);
 }
 
 export async function POST(req: NextRequest) {
-  const auth = await authorizeAdminRequest(req, {
-    requirePermission: "quotations",
-  });
-  if (auth.response) return auth.response;
+  const session = await requireAdminSession();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   const payload = await req.json();
-  const data = auth.data;
+  const data = await readAdminData();
 
   const quotation = {
     id: createId("qt"),

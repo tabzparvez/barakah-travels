@@ -1,61 +1,48 @@
 import { NextRequest, NextResponse } from "next/server";
-import { authorizeAdminRequest } from "@/lib/admin-auth";
-import {
-  createId,
-  createTemporaryPassword,
-  sanitizeUser,
-  writeAdminData,
-} from "@/lib/local-data";
+import { createId, readAdminData, writeAdminData } from "@/lib/local-data";
+import { requireAdminSession } from "@/lib/admin-access";
 
-export async function GET(req: NextRequest) {
-  const auth = await authorizeAdminRequest(req, {
-    requireRole: "Super Admin",
-  });
-  if (auth.response) return auth.response;
-  return NextResponse.json(auth.data.users.map(sanitizeUser));
+export async function GET() {
+  const session = await requireAdminSession();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const data = await readAdminData();
+  return NextResponse.json(data.users);
 }
 
 export async function POST(req: NextRequest) {
-  const auth = await authorizeAdminRequest(req, {
-    requireRole: "Super Admin",
-  });
-  if (auth.response) return auth.response;
+  const session = await requireAdminSession();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   const payload = await req.json();
-  const data = auth.data;
-  const password = payload.password?.trim()
-    ? payload.password
-    : createTemporaryPassword();
+  const data = await readAdminData();
 
   const newUser = {
     id: createId("user"),
     name: payload.name,
     email: payload.email,
     role: payload.role,
-    password,
     permissions: payload.permissions,
   };
 
   data.users.push(newUser);
   await writeAdminData(data);
 
-  return NextResponse.json(
-    {
-      user: sanitizeUser(newUser),
-      temporaryPassword: payload.password ? null : password,
-    },
-    { status: 201 }
-  );
+  return NextResponse.json({ user: newUser }, { status: 201 });
 }
 
 export async function PUT(req: NextRequest) {
-  const auth = await authorizeAdminRequest(req, {
-    requireRole: "Super Admin",
-  });
-  if (auth.response) return auth.response;
+  const session = await requireAdminSession();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   const payload = await req.json();
-  const data = auth.data;
+  const data = await readAdminData();
   const index = data.users.findIndex((item) => item.id === payload.id);
 
   if (index === -1) {
@@ -68,18 +55,17 @@ export async function PUT(req: NextRequest) {
     email: payload.email,
     role: payload.role,
     permissions: payload.permissions,
-    password: payload.password || data.users[index].password,
   };
 
   await writeAdminData(data);
-  return NextResponse.json({ user: sanitizeUser(data.users[index]) });
+  return NextResponse.json({ user: data.users[index] });
 }
 
 export async function DELETE(req: NextRequest) {
-  const auth = await authorizeAdminRequest(req, {
-    requireRole: "Super Admin",
-  });
-  if (auth.response) return auth.response;
+  const session = await requireAdminSession();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
@@ -87,7 +73,7 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ error: "Missing id" }, { status: 400 });
   }
 
-  const data = auth.data;
+  const data = await readAdminData();
   data.users = data.users.filter((item) => item.id !== id);
   await writeAdminData(data);
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getAdminAuthHeaders } from "@/lib/admin-session";
 
 type Invoice = {
   id: string;
@@ -34,11 +33,11 @@ export default function AdminInvoices() {
   const [quotations, setQuotations] = useState<Quotation[]>([]);
 
   useEffect(() => {
-    fetch("/api/admin/invoices", { headers: getAdminAuthHeaders() })
+    fetch("/api/admin/invoices")
       .then((res) => res.json())
       .then(setInvoices);
 
-    fetch("/api/admin/quotations", { headers: getAdminAuthHeaders() })
+    fetch("/api/admin/quotations")
       .then((res) => res.json())
       .then(setQuotations);
   }, []);
@@ -47,7 +46,7 @@ export default function AdminInvoices() {
     event.preventDefault();
     const response = await fetch("/api/admin/invoices", {
       method: "POST",
-      headers: { "Content-Type": "application/json", ...getAdminAuthHeaders() },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),
     });
     const data = await response.json();

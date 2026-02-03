@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { authorizeAdminRequest } from "@/lib/admin-auth";
-import { createId, writeAdminData } from "@/lib/local-data";
+import { createId, readAdminData, writeAdminData } from "@/lib/local-data";
+import { requireAdminSession } from "@/lib/admin-access";
 
 function getInvoiceNumber() {
   return `INV-${new Date().getFullYear()}-${Math.floor(
@@ -8,22 +8,24 @@ function getInvoiceNumber() {
   )}`;
 }
 
-export async function GET(req: NextRequest) {
-  const auth = await authorizeAdminRequest(req, {
-    requirePermission: "invoices",
-  });
-  if (auth.response) return auth.response;
-  return NextResponse.json(auth.data.invoices);
+export async function GET() {
+  const session = await requireAdminSession();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const data = await readAdminData();
+  return NextResponse.json(data.invoices);
 }
 
 export async function POST(req: NextRequest) {
-  const auth = await authorizeAdminRequest(req, {
-    requirePermission: "invoices",
-  });
-  if (auth.response) return auth.response;
+  const session = await requireAdminSession();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   const payload = await req.json();
-  const data = auth.data;
+  const data = await readAdminData();
 
   const invoice = {
     id: createId("inv"),

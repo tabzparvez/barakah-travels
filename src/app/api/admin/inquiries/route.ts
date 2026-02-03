@@ -1,10 +1,13 @@
-import { NextRequest, NextResponse } from "next/server";
-import { authorizeAdminRequest } from "@/lib/admin-auth";
+import { NextResponse } from "next/server";
+import { readAdminData } from "@/lib/local-data";
+import { requireAdminSession } from "@/lib/admin-access";
 
-export async function GET(req: NextRequest) {
-  const auth = await authorizeAdminRequest(req, {
-    requirePermission: "inquiries",
-  });
-  if (auth.response) return auth.response;
-  return NextResponse.json(auth.data.inquiries);
+export async function GET() {
+  const session = await requireAdminSession();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  const data = await readAdminData();
+  return NextResponse.json(data.inquiries);
 }

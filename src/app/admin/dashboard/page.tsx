@@ -8,7 +8,6 @@ import {
   FaFileInvoiceDollar,
   FaFileSignature,
 } from "react-icons/fa";
-import { getAdminAuthHeaders } from "@/lib/admin-session";
 
 const statCards = [
   { key: "packages", label: "Total Packages", icon: FaBoxOpen },
@@ -34,13 +33,12 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     async function loadStats() {
-      const authHeaders = getAdminAuthHeaders();
       const [packagesRes, inquiriesRes, quotationsRes, invoicesRes] =
         await Promise.all([
-          fetch("/api/admin/packages", { headers: authHeaders }),
-          fetch("/api/admin/inquiries", { headers: authHeaders }),
-          fetch("/api/admin/quotations", { headers: authHeaders }),
-          fetch("/api/admin/invoices", { headers: authHeaders }),
+          fetch("/api/admin/packages"),
+          fetch("/api/admin/inquiries"),
+          fetch("/api/admin/quotations"),
+          fetch("/api/admin/invoices"),
         ]);
 
       const packagesData = await packagesRes.json();

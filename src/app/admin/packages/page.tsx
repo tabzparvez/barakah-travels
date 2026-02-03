@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { getAdminAuthHeaders } from "@/lib/admin-session";
 
 type PackageItem = {
   id: string;
@@ -39,7 +38,7 @@ export default function AdminPackages() {
   const [editing, setEditing] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/admin/packages", { headers: getAdminAuthHeaders() })
+    fetch("/api/admin/packages")
       .then((res) => res.json())
       .then(setPackages);
   }, []);
@@ -56,7 +55,7 @@ export default function AdminPackages() {
 
     const response = await fetch("/api/admin/packages", {
       method: editing ? "PUT" : "POST",
-      headers: { "Content-Type": "application/json", ...getAdminAuthHeaders() },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(editing ? { ...payload, id: editing } : payload),
     });
     const data = await response.json();
@@ -80,7 +79,6 @@ export default function AdminPackages() {
   async function handleDelete(category: "umrah" | "tours", id: string) {
     await fetch(`/api/admin/packages?id=${id}&category=${category}`, {
       method: "DELETE",
-      headers: getAdminAuthHeaders(),
     });
     setPackages((prev) => ({
       ...prev,
