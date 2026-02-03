@@ -44,6 +44,7 @@ export default function Header() {
 
   const navLinks = [
     { href: "/", label: "Home" },
+    { href: "/about", label: "About" },
     { href: "/packages", label: "Umrah Packages" },
     { href: "/contact?destination=Turkey", label: "Turkey" },
     { href: "/contact?destination=Baku", label: "Baku" },
@@ -58,6 +59,13 @@ export default function Header() {
           : "bg-white"
       }`}
     >
+      <div className="bg-primary text-white text-xs sm:text-sm">
+        <div className="max-w-7xl mx-auto px-6 py-2.5 flex flex-wrap items-center justify-center gap-3">
+          <span className="font-semibold">Trusted Umrah & Travel Support</span>
+          <span className="hidden sm:inline">•</span>
+          <span>WhatsApp: +92 318 3548299</span>
+        </div>
+      </div>
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-20 md:h-24">
 
         {/* Logo */}

@@ -24,12 +24,12 @@ type QuotationRecord = {
 };
 
 const formatMasked = (value: string | number, revealed: boolean) => {
-  if (!revealed) return "******";
+  if (!revealed) return "*****";
   return value.toString();
 };
 
 const formatCurrency = (value: number, revealed: boolean) => {
-  if (!revealed) return "******";
+  if (!revealed) return "*****";
   return `PKR ${Number(value || 0).toLocaleString()}`;
 };
 

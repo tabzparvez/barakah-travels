@@ -28,7 +28,12 @@ export default function SubmitReview() {
   }
 
   if (status === "loading") return <div>Loading...</div>;
-  if (!session) return <div className="max-w-xl mx-auto mt-10 text-center">Please sign in to submit a review.</div>;
+  if (!session)
+    return (
+      <div className="max-w-xl mx-auto mt-10 text-center">
+        Please sign in with Google to submit a review.
+      </div>
+    );
 
   return (
     <main className="max-w-md mx-auto mt-10">

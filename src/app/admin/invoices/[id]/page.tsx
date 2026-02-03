@@ -24,18 +24,25 @@ export default function InvoiceViewPage({
       className="max-w-4xl mx-auto bg-white p-10 text-sm"
     >
       {/* ================= HEADER ================= */}
-      <div className="flex justify-between items-start mb-6">
-        <div>
-          <h1 className="text-2xl font-extrabold tracking-wide">
-            BARAKAH TRAVELS
-          </h1>
-          <p className="text-xs">Umrah • Visa • Travel Services</p>
-          <p className="text-xs mt-1">Karachi, Pakistan</p>
-          <p className="text-xs">
-            📞 +92 340 0799777 | +92 318 3548299
-          </p>
-          <p className="text-xs">✉ info@barakahtravels.online</p>
-          <p className="text-xs">NTN: 7933776</p>
+      <div className="flex justify-between items-start mb-6 border-b border-gray-200 pb-4">
+        <div className="flex items-start gap-4">
+          <img
+            src="/newlogo.png"
+            alt="Barakah Travels"
+            className="h-14 w-auto object-contain"
+          />
+          <div>
+            <h1 className="text-2xl font-extrabold tracking-wide text-primary">
+              BARAKAH TRAVELS
+            </h1>
+            <p className="text-xs">Umrah • Visa • Travel Services</p>
+            <p className="text-xs mt-1">Karachi, Pakistan</p>
+            <p className="text-xs">
+              +92 340 0799777 | +92 318 3548299
+            </p>
+            <p className="text-xs">info@barakahtravels.online</p>
+            <p className="text-xs">NTN: 7933776</p>
+          </div>
         </div>
 
         <div className="text-right">
