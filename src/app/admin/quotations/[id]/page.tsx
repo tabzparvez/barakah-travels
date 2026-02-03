@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 type QuotationData = {
@@ -118,9 +119,11 @@ export default function QuotationViewPage({
       <div id="quotation-print" className="card">
         <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between mb-6">
           <div className="flex items-start gap-4">
-            <img
+            <Image
               src="/newlogo.png"
               alt="Barakah Travels Logo"
+              width={96}
+              height={96}
               className="h-16 w-auto"
             />
             <div>

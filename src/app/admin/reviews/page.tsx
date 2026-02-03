@@ -31,8 +31,17 @@ export default async function AdminReviewsPage() {
   }
 
   await connectDB();
-  const reviews = await Review.find().sort({ createdAt: -1 });
-  const serialized = reviews.map((review: any) => ({
+  type ReviewRecord = {
+    _id: mongoose.Types.ObjectId;
+    name?: string;
+    email?: string;
+    review: string;
+    approved: boolean;
+    createdAt?: Date;
+  };
+
+  const reviews = await Review.find().sort({ createdAt: -1 }).lean<ReviewRecord[]>();
+  const serialized = reviews.map((review) => ({
     _id: review._id.toString(),
     name: review.name,
     email: review.email,

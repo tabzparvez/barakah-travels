@@ -5,19 +5,42 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import InquiryForm from "@/components/InquiryForm";
 
+const FALLBACK_REVIEWS = [
+  {
+    name: "Ayesha Siddiqui",
+    city: "Lahore",
+    review:
+      "Barakah Travels made our Umrah journey smooth and stress-free. Highly recommended!",
+  },
+  {
+    name: "Imran Qureshi",
+    city: "Karachi",
+    review:
+      "Excellent visa guidance and fast WhatsApp support. Will book again.",
+  },
+  {
+    name: "Fatima Noor",
+    city: "Islamabad",
+    review:
+      "Professional team and excellent hotel arrangements near Haram.",
+  },
+];
+
 /* ================= REVIEWS AUTO SLIDER ================= */
 function ReviewsSlider({ reviews }: { reviews: { name: string; city?: string; review: string }[] }) {
   const [index, setIndex] = useState(0);
-  if (!reviews.length) return null;
 
   const r = reviews[index];
 
   useEffect(() => {
+    if (!reviews.length) return;
     const t = setInterval(() => {
       setIndex((i) => (i + 1) % reviews.length);
     }, 3500);
     return () => clearInterval(t);
   }, [reviews.length]);
+
+  if (!reviews.length) return null;
 
   return (
     <div className="max-w-xl mx-auto text-center card reveal">
@@ -37,27 +60,7 @@ function ReviewsSlider({ reviews }: { reviews: { name: string; city?: string; re
 /* ================= HOME ================= */
 export default function Home() {
   const { data: session } = useSession();
-  const fallbackReviews = [
-    {
-      name: "Ayesha Siddiqui",
-      city: "Lahore",
-      review:
-        "Barakah Travels made our Umrah journey smooth and stress-free. Highly recommended!",
-    },
-    {
-      name: "Imran Qureshi",
-      city: "Karachi",
-      review:
-        "Excellent visa guidance and fast WhatsApp support. Will book again.",
-    },
-    {
-      name: "Fatima Noor",
-      city: "Islamabad",
-      review:
-        "Professional team and excellent hotel arrangements near Haram.",
-    },
-  ];
-  const [reviews, setReviews] = useState(fallbackReviews);
+  const [reviews, setReviews] = useState(FALLBACK_REVIEWS);
   const [reviewsLoading, setReviewsLoading] = useState(true);
 
   useEffect(() => {
@@ -69,7 +72,7 @@ export default function Home() {
         }
       })
       .catch(() => {
-        setReviews(fallbackReviews);
+        setReviews(FALLBACK_REVIEWS);
       })
       .finally(() => setReviewsLoading(false));
   }, []);
