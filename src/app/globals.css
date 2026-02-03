@@ -4,30 +4,49 @@
 
 
 body {
-  @apply bg-white text-secondary font-sans min-h-screen;
+  @apply bg-[#f7f4ee] text-secondary font-sans min-h-screen antialiased;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  @apply font-heading;
+  @apply font-heading tracking-tight;
+}
+
+.section {
+  @apply max-w-6xl mx-auto px-5 md:px-8 py-10 md:py-14;
+}
+
+.section-surface {
+  @apply bg-[#fbf8f2] border border-primary/10 rounded-[28px] shadow-[0_12px_30px_rgba(22,22,22,0.06)] p-6 md:p-10;
 }
 
 .btn {
-  @apply bg-primary text-white font-bold py-2 px-6 rounded-xl shadow transition hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary-dark;
+  @apply inline-flex items-center justify-center gap-2 rounded-full bg-primary text-white font-semibold py-2.5 px-6 shadow-[0_10px_20px_rgba(182,134,44,0.25)] transition hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary-dark focus:ring-offset-2;
 }
 
+.btn-outline {
+  @apply inline-flex items-center justify-center gap-2 rounded-full border border-primary/40 text-primary font-semibold py-2.5 px-6 transition hover:bg-primary/10 shadow-[0_8px_18px_rgba(22,22,22,0.08)];
+}
 
 .card {
-  @apply bg-white rounded-xl shadow-card p-6 border border-gray-100 transition-shadow duration-200;
+  @apply bg-white rounded-2xl shadow-[0_12px_30px_rgba(22,22,22,0.08)] p-6 border border-primary/15 transition-shadow duration-200;
 }
 
 @media (min-width: 768px) {
   .card {
-    @apply hover:shadow-lg mx-2 my-4;
+    @apply hover:shadow-lg;
   }
 }
 
-.form .input, .form input, .form select, .form textarea {
-  @apply w-full border border-gray-300 rounded-xl px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-primary;
+.badge {
+  @apply inline-flex items-center rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-semibold;
+}
+
+.form .input,
+.form input,
+.form select,
+.form textarea,
+.input {
+  @apply w-full border border-primary/15 rounded-2xl px-4 py-2.5 mb-3 bg-white focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/60 shadow-[0_6px_16px_rgba(22,22,22,0.05)];
 }
 
 .form button[type="submit"] {
@@ -39,7 +58,7 @@ nav {
 }
 
 footer {
-  @apply bg-gray-100 text-center py-6 mt-12 text-sm text-secondary;
+  @apply bg-gray-50 text-center py-8 mt-16 text-sm text-secondary;
 }
 /* ===========================
    PRINT STYLES (INVOICE ONLY)
@@ -64,14 +83,16 @@ footer {
     display: none !important;
   }
 
-  #invoice-print {
+  #invoice-print,
+  #quotation-print {
     display: block !important;
     width: 100%;
     padding: 20px;
     background: white;
   }
 
-  #invoice-print * {
+  #invoice-print *,
+  #quotation-print * {
     visibility: visible !important;
   }
 }
@@ -89,12 +110,15 @@ footer {
 
   /* Show only invoice */
   #invoice-print,
-  #invoice-print * {
+  #invoice-print *,
+  #quotation-print,
+  #quotation-print * {
     visibility: visible !important;
   }
 
   /* Position invoice at top */
-  #invoice-print {
+  #invoice-print,
+  #quotation-print {
     position: absolute;
     left: 0;
     top: 0;

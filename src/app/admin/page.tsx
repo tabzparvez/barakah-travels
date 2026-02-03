@@ -1,83 +1,113 @@
-import Link from "next/link";
-import {
-  FaBoxOpen,
-  FaEnvelopeOpenText,
-  FaStar,
-  FaImages,
-  FaBlog,
-  FaQuestionCircle,
-} from "react-icons/fa";
+"use client";
+
+import { useEffect, useState } from "react";
+import { FaEnvelopeOpenText, FaFileInvoice, FaFileSignature, FaWallet } from "react-icons/fa";
 
 export default function AdminDashboard() {
-  const cards = [
-    {
-      title: "Packages",
-      desc: "Create & manage Umrah packages",
-      href: "/admin/packages",
-      icon: <FaBoxOpen className="text-3xl" />,
-    },
-    {
-      title: "Inquiries",
-      desc: "View customer inquiries",
-      href: "/admin/inquiries",
-      icon: <FaEnvelopeOpenText className="text-3xl" />,
-    },
-    {
-      title: "Reviews",
-      desc: "Approve & manage reviews",
-      href: "/admin/reviews",
-      icon: <FaStar className="text-3xl" />,
-    },
-    {
-      title: "Gallery",
-      desc: "Manage website images",
-      href: "/admin/gallery",
-      icon: <FaImages className="text-3xl" />,
-    },
-    {
-      title: "Blog",
-      desc: "Create & edit blog posts",
-      href: "/admin/blog",
-      icon: <FaBlog className="text-3xl" />,
-    },
-    {
-      title: "FAQ",
-      desc: "Manage frequently asked questions",
-      href: "/admin/faq",
-      icon: <FaQuestionCircle className="text-3xl" />,
-    },
-  ];
+  const [totals, setTotals] = useState({
+    inquiries: 0,
+    quotations: 0,
+    invoices: 0,
+    pendingPayments: 0,
+  });
+
+  useEffect(() => {
+    let pendingPayments = 0;
+    let quotations = 0;
+    let invoices = 0;
+
+    if (typeof window !== "undefined") {
+      const quotationKeys = Object.keys(localStorage).filter((k) =>
+        k.startsWith("quotation-")
+      );
+      quotations = quotationKeys.length;
+
+      const invoiceKeys = Object.keys(localStorage).filter((k) =>
+        k.startsWith("invoice-")
+      );
+      invoices = invoiceKeys.length;
+      pendingPayments = invoiceKeys.reduce((total, key) => {
+        const raw = localStorage.getItem(key);
+        if (!raw) return total;
+        const data = JSON.parse(raw);
+        return data.balance > 0 ? total + 1 : total;
+      }, 0);
+    }
+
+    fetch("/api/inquiries")
+      .then((res) => res.json())
+      .then((data) => {
+        setTotals({
+          inquiries: data.length || 0,
+          quotations,
+          invoices,
+          pendingPayments,
+        });
+      })
+      .catch(() => {
+        setTotals({
+          inquiries: 0,
+          quotations,
+          invoices,
+          pendingPayments,
+        });
+      });
+  }, []);
 
   return (
     <div>
       {/* Page Header */}
       <div className="mb-10">
-        <h1 className="text-3xl font-bold text-primary">Admin Dashboard</h1>
+        <h1 className="text-3xl font-bold text-primary">Dashboard</h1>
         <p className="text-gray-600 mt-1">
-          Manage Barakah Travels website & CRM
+          Umrah sales activity at a glance
         </p>
       </div>
 
-      {/* Dashboard Cards */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {cards.map((card) => (
-          <Link
-            key={card.title}
-            href={card.href}
-            className="bg-white rounded-2xl shadow hover:shadow-lg transition p-6 flex flex-col gap-4 border border-gray-100"
+      {/* Summary Cards */}
+      <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        {[
+          {
+            label: "Total Inquiries",
+            value: totals.inquiries,
+            icon: <FaEnvelopeOpenText className="text-2xl" />,
+          },
+          {
+            label: "Total Quotations",
+            value: totals.quotations,
+            icon: <FaFileSignature className="text-2xl" />,
+          },
+          {
+            label: "Total Invoices",
+            value: totals.invoices,
+            icon: <FaFileInvoice className="text-2xl" />,
+          },
+          {
+            label: "Pending Payments",
+            value: totals.pendingPayments,
+            icon: <FaWallet className="text-2xl" />,
+          },
+        ].map((card) => (
+          <div
+            key={card.label}
+            className="card flex items-center justify-between gap-6"
           >
-            <div className="text-primary">{card.icon}</div>
             <div>
-              <h2 className="text-xl font-semibold">{card.title}</h2>
-              <p className="text-sm text-gray-600">{card.desc}</p>
+              <p className="text-sm text-gray-500">{card.label}</p>
+              <p className="text-3xl font-bold text-primary mt-2">
+                {card.value}
+              </p>
             </div>
-          </Link>
+            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
+              {card.icon}
+            </div>
+          </div>
         ))}
       </div>
 
       {/* Footer note */}
       <div className="mt-12 text-sm text-gray-500">
-        Logged in as <strong>Admin</strong> • Barakah CRM
+        Logged in as <strong>Admin</strong> • Barakah Umrah CRM
       </div>
     </div>
   );

@@ -75,13 +75,13 @@ export default function AdminPackages() {
   }
 
   return (
-    <main className="section max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Manage Packages</h1>
+    <main className="section max-w-3xl mx-auto">
+      <h1 className="text-2xl font-bold text-primary mb-4">Umrah Packages</h1>
       {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4">{error}</div>}
       <form className="form mb-8" onSubmit={handleSubmit}>
         <input className="input mb-2" placeholder="Name" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required />
         <input className="input mb-2" placeholder="Days" type="number" value={form.days} onChange={e => setForm(f => ({ ...f, days: e.target.value }))} required />
-        <input className="input mb-2" placeholder="Type (Economy, Standard, VIP)" value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))} required />
+        <input className="input mb-2" placeholder="Type (Economy, Standard, Comfort)" value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))} required />
         <input className="input mb-2" placeholder="Price" type="number" value={form.price} onChange={e => setForm(f => ({ ...f, price: e.target.value }))} />
         <input className="input mb-2" placeholder="Image URL" value={form.image} onChange={e => setForm(f => ({ ...f, image: e.target.value }))} />
         <textarea className="input mb-2" placeholder="Description" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />

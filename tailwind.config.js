@@ -10,8 +10,8 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#b6862c', // Barakah gold
-          dark: '#8a671f',
+          DEFAULT: '#b1822a', // Barakah gold
+          dark: '#8a6a1f',
           light: '#f5e7c0',
         },
         secondary: {

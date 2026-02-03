@@ -6,7 +6,7 @@ import { useState } from "react";
 export default function NewInvoicePage() {
   const router = useRouter();
 
-  const [customer, setCustomer] = useState("");
+  const [customerName, setCustomerName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("Umrah Package");
@@ -19,10 +19,11 @@ export default function NewInvoicePage() {
   const balance = total - paid;
 
   function handleSubmit() {
-    const id = Date.now().toString();
+    const id = `INV-${Date.now()}`;
 
     const data = {
-      customer,
+      invoiceId: id,
+      customerName,
       phone,
       email,
       description,
@@ -43,7 +44,7 @@ export default function NewInvoicePage() {
     <div className="card max-w-2xl">
       <h1 className="text-2xl font-bold mb-6">Create New Invoice</h1>
 
-      <input className="input" placeholder="Customer Name" onChange={e => setCustomer(e.target.value)} />
+      <input className="input" placeholder="Customer Name" onChange={e => setCustomerName(e.target.value)} />
       <input className="input" placeholder="Phone" onChange={e => setPhone(e.target.value)} />
       <input className="input" placeholder="Email" onChange={e => setEmail(e.target.value)} />
 

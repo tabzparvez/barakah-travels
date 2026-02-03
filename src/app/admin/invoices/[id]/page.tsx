@@ -1,18 +1,80 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { amountToWords } from "@/lib/amountToWords";
+
+type InvoiceData = {
+  invoiceId: string;
+  customerName: string;
+  phone: string;
+  email: string;
+  description: string;
+  qty: number;
+  unitPrice: number;
+  total: number;
+  paid: number;
+  balance: number;
+  paymentMethod: string;
+  date: string;
+  quotationId?: string;
+  notes?: string;
+};
 
 export default function InvoiceViewPage({
   params,
 }: {
   params: { id: string };
 }) {
-  if (typeof window === "undefined") return null;
+  const [invoice, setInvoice] = useState<InvoiceData | null>(null);
+  const [editData, setEditData] = useState<InvoiceData | null>(null);
+  const [status, setStatus] = useState("Unpaid");
+  const [isEditing, setIsEditing] = useState(false);
 
-  const raw = localStorage.getItem(`invoice-${params.id}`);
-  if (!raw) return <p className="text-center mt-10">Invoice not found.</p>;
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const raw = localStorage.getItem(`invoice-${params.id}`);
+    if (!raw) {
+      setInvoice(null);
+      setEditData(null);
+      return;
+    }
+    const parsed = JSON.parse(raw) as InvoiceData;
+    setInvoice(parsed);
+    setEditData(parsed);
+    setStatus(parsed.balance > 0 ? "Unpaid" : "Paid");
+  }, [params.id]);
 
-  const data = JSON.parse(raw);
+  if (!invoice || !editData) {
+    return <p className="text-center mt-10">Invoice not found.</p>;
+  }
+
+  const displayData = isEditing ? editData : invoice;
+  const invoiceNumber = displayData.invoiceId || params.id;
+
+  const handleSaveChanges = () => {
+    const total = Number(editData.total || 0);
+    const qty = Number(editData.qty || 1);
+    const paid = status === "Paid" ? total : 0;
+    const balance = status === "Paid" ? 0 : total;
+    const unitPrice = qty > 0 ? total / qty : total;
+    const updated = {
+      ...editData,
+      total,
+      paid,
+      balance,
+      unitPrice,
+    };
+    localStorage.setItem(`invoice-${params.id}`, JSON.stringify(updated));
+    setInvoice(updated);
+    setEditData(updated);
+    setIsEditing(false);
+  };
+
+  const handleCancelEdit = () => {
+    setEditData(invoice);
+    setStatus(invoice.balance > 0 ? "Unpaid" : "Paid");
+    setIsEditing(false);
+  };
 
   return (
     <div
@@ -20,41 +82,42 @@ export default function InvoiceViewPage({
       className="max-w-4xl mx-auto bg-white p-10 text-sm"
     >
       {/* ================= HEADER ================= */}
-      <div className="flex justify-between items-start mb-6">
-        <div>
-          <h1 className="text-2xl font-extrabold tracking-wide">
-            BARAKAH TRAVELS
-          </h1>
-          <p className="text-xs">Umrah • Visa • Travel Services</p>
-          <p className="text-xs mt-1">
-            Karachi, Pakistan
-          </p>
-          <p className="text-xs">
-            📞 +92 340 0799777 | +92 318 3548299
-          </p>
-          <p className="text-xs">
-            ✉ info@barakahtravels.online
-          </p>
-          <p className="text-xs">NTN: 7933776</p>
+      <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between mb-6">
+        <div className="flex items-start gap-4">
+          <img
+            src="/newlogo.png"
+            alt="Barakah Travels Logo"
+            className="h-16 w-auto"
+          />
+          <div>
+            <h1 className="text-2xl font-extrabold tracking-wide">
+              BARAKAH TRAVELS
+            </h1>
+            <p className="text-xs">Umrah • Visa • Travel Services</p>
+            <p className="text-xs mt-1">Karachi, Pakistan</p>
+            <p className="text-xs">
+              +92 340 0799777 | +92 318 3548299
+            </p>
+            <p className="text-xs">info@barakahtravels.online</p>
+            <p className="text-xs">NTN: 7933776</p>
+          </div>
         </div>
 
         <div className="text-right">
           <p className="text-lg font-bold">INVOICE</p>
           <p>
-            <strong>No:</strong> {params.id}
+            <strong>No:</strong> {invoiceNumber}
           </p>
           <p>
             <strong>Date:</strong>{" "}
-            {new Date().toLocaleDateString()}
+            {new Date(displayData.date || new Date().toISOString()).toLocaleDateString()}
           </p>
           <span
             className={`inline-block mt-2 px-3 py-1 rounded text-white text-xs ${
-              data.balance > 0
-                ? "bg-red-600"
-                : "bg-green-600"
+              displayData.balance > 0 ? "bg-red-600" : "bg-green-600"
             }`}
           >
-            {data.balance > 0 ? "UNPAID" : "PAID"}
+            {displayData.balance > 0 ? "UNPAID" : "PAID"}
           </span>
         </div>
       </div>
@@ -62,17 +125,25 @@ export default function InvoiceViewPage({
       <hr className="my-4" />
 
       {/* ================= CUSTOMER ================= */}
-      <div className="mb-4">
+      <div className="mb-4 border border-gray-200 rounded-xl p-4">
+        <h2 className="font-semibold text-sm text-primary mb-2">
+          Client Details
+        </h2>
         <p>
           <strong>Customer Name:</strong>{" "}
-          {data.customer}
+          {displayData.customerName}
         </p>
         <p>
-          <strong>Phone:</strong> {data.phone}
+          <strong>Phone:</strong> {displayData.phone}
         </p>
         <p>
-          <strong>Email:</strong> {data.email}
+          <strong>Email:</strong> {displayData.email}
         </p>
+        {displayData.quotationId && (
+          <p>
+            <strong>Quotation:</strong> {displayData.quotationId}
+          </p>
+        )}
       </div>
 
       {/* ================= TABLE ================= */}
@@ -96,16 +167,16 @@ export default function InvoiceViewPage({
         <tbody>
           <tr>
             <td className="border border-black p-2">
-              {data.description}
+              {displayData.description}
             </td>
             <td className="border border-black p-2 text-center">
-              {data.qty}
+              {displayData.qty}
             </td>
             <td className="border border-black p-2 text-right">
-              PKR {Number(data.unitPrice).toLocaleString()}
+              PKR {Number(displayData.unitPrice).toLocaleString()}
             </td>
             <td className="border border-black p-2 text-right">
-              PKR {Number(data.total).toLocaleString()}
+              PKR {Number(displayData.total).toLocaleString()}
             </td>
           </tr>
         </tbody>
@@ -118,13 +189,27 @@ export default function InvoiceViewPage({
             <tr>
               <td className="border p-2">Total</td>
               <td className="border p-2 text-right">
-                PKR {Number(data.total).toLocaleString()}
+                {isEditing ? (
+                  <input
+                    className="input text-right"
+                    type="number"
+                    value={editData.total}
+                    onChange={(e) =>
+                      setEditData({
+                        ...editData,
+                        total: Number(e.target.value),
+                      })
+                    }
+                  />
+                ) : (
+                  <>PKR {Number(displayData.total).toLocaleString()}</>
+                )}
               </td>
             </tr>
             <tr>
               <td className="border p-2">Paid</td>
               <td className="border p-2 text-right">
-                PKR {Number(data.paid).toLocaleString()}
+                PKR {Number(displayData.paid).toLocaleString()}
               </td>
             </tr>
             <tr>
@@ -132,7 +217,7 @@ export default function InvoiceViewPage({
                 Balance
               </td>
               <td className="border p-2 text-right font-bold">
-                PKR {Number(data.balance).toLocaleString()}
+                PKR {Number(displayData.balance).toLocaleString()}
               </td>
             </tr>
           </tbody>
@@ -141,13 +226,49 @@ export default function InvoiceViewPage({
 
       <p className="text-xs mb-3">
         <strong>Amount in Words:</strong>{" "}
-        {amountToWords(Number(data.total))} only
+        {amountToWords(Number(displayData.total))} only
       </p>
 
-      <p className="text-xs mb-4">
-        <strong>Payment Method:</strong>{" "}
-        {data.paymentMethod}
-      </p>
+      <div className="text-xs mb-4 border border-gray-200 rounded-xl p-4">
+        <p>
+          <strong>Payment Method:</strong>{" "}
+          {displayData.paymentMethod}
+        </p>
+        {isEditing && (
+          <div className="mt-3">
+            <label className="block text-xs font-semibold mb-2">
+              Status
+            </label>
+            <select
+              className="input"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option>Paid</option>
+              <option>Unpaid</option>
+            </select>
+          </div>
+        )}
+      </div>
+
+      <div className="text-xs mb-4">
+        <p className="font-bold mb-2">Notes:</p>
+        {isEditing ? (
+          <textarea
+            className="input"
+            rows={3}
+            value={editData.notes || ""}
+            onChange={(e) =>
+              setEditData({
+                ...editData,
+                notes: e.target.value,
+              })
+            }
+          />
+        ) : (
+          <p className="text-xs">{displayData.notes || "—"}</p>
+        )}
+      </div>
 
       {/* ================= TERMS ================= */}
       <div className="text-xs mt-4">
@@ -185,12 +306,34 @@ export default function InvoiceViewPage({
 
       {/* ================= PRINT ================= */}
       <div className="mt-6 no-print">
-        <button
-          onClick={() => window.print()}
-          className="btn"
-        >
-          Print / Save PDF
-        </button>
+        {isEditing ? (
+          <div className="flex flex-wrap gap-3">
+            <button onClick={handleSaveChanges} className="btn">
+              Save Changes
+            </button>
+            <button onClick={handleCancelEdit} className="btn-outline">
+              Cancel
+            </button>
+          </div>
+        ) : (
+          <div className="flex flex-wrap gap-3">
+            <button onClick={() => setIsEditing(true)} className="btn">
+              Edit Invoice
+            </button>
+            <button
+              onClick={() => window.print()}
+              className="btn-outline"
+            >
+              Print Invoice
+            </button>
+            <button
+              onClick={() => window.print()}
+              className="btn-outline"
+            >
+              Download PDF
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
