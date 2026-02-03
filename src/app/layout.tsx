@@ -64,7 +64,7 @@ export default function RootLayout({
           <Header />
 
           {/* MAIN CONTENT */}
-          <main className="w-full flex-1">
+          <main className="w-full flex-1 pt-24 md:pt-28">
             <div className="max-w-7xl mx-auto px-4">{children}</div>
           </main>
         </SessionWrapper>
