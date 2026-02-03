@@ -41,7 +41,7 @@ export default function InvoicesPage() {
         <div>
           <h1 className="text-2xl font-bold text-primary">Invoices</h1>
           <p className="text-sm text-gray-500">
-            Auto-generated invoices from quotations.
+            Track payments and update invoice status.
           </p>
         </div>
         <Link href="/admin/invoices/new" className="btn">
@@ -50,9 +50,7 @@ export default function InvoicesPage() {
       </div>
 
       {invoices.length === 0 ? (
-        <p className="text-gray-500 text-sm">
-          No invoices created yet
-        </p>
+        <p className="text-gray-500 text-sm">No invoices created yet</p>
       ) : (
         <table className="w-full text-sm border border-gray-200 rounded-xl overflow-hidden">
           <thead className="bg-gray-50">
@@ -61,7 +59,7 @@ export default function InvoicesPage() {
               <th className="p-2 text-left">Customer</th>
               <th className="p-2 text-left">Amount</th>
               <th className="p-2 text-left">Status</th>
-              <th className="p-2 text-left">Action</th>
+              <th className="p-2 text-left">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -69,25 +67,29 @@ export default function InvoicesPage() {
               <tr key={inv.invoiceId} className="border-t border-gray-200">
                 <td className="p-2">#{inv.invoiceId}</td>
                 <td className="p-2">{inv.customerName}</td>
-                <td className="p-2">PKR {inv.total}</td>
+                <td className="p-2">PKR {Number(inv.total).toLocaleString()}</td>
                 <td className="p-2">
                   {inv.balance > 0 ? (
-                    <span className="text-red-600 font-semibold">
-                      Unpaid
-                    </span>
+                    <span className="text-red-600 font-semibold">Pending</span>
                   ) : (
-                    <span className="text-green-600 font-semibold">
-                      Paid
-                    </span>
+                    <span className="text-green-600 font-semibold">Paid</span>
                   )}
                 </td>
                 <td className="p-2">
-                  <Link
-                    href={`/admin/invoices/${inv.invoiceId}`}
-                    className="text-primary font-semibold"
-                  >
-                    View
-                  </Link>
+                  <div className="flex flex-wrap gap-2">
+                    <Link
+                      href={`/admin/invoices/${inv.invoiceId}`}
+                      className="text-primary font-semibold"
+                    >
+                      View
+                    </Link>
+                    <Link
+                      href={`/admin/invoices/${inv.invoiceId}/edit`}
+                      className="text-primary font-semibold"
+                    >
+                      Edit
+                    </Link>
+                  </div>
                 </td>
               </tr>
             ))}

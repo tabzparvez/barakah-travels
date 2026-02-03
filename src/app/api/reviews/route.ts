@@ -25,9 +25,11 @@ function containsAbuse(text: string) {
   return BAD_WORDS.some(word => text.toLowerCase().includes(word));
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   await connectDB();
-  const reviews = await Review.find({ approved: true }).sort({ createdAt: -1 }).limit(20);
+  const showAll = req.nextUrl.searchParams.get('all') === 'true';
+  const query = showAll ? {} : { approved: true };
+  const reviews = await Review.find(query).sort({ createdAt: -1 }).limit(showAll ? 0 : 20);
   return NextResponse.json(reviews);
 }
 

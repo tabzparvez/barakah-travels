@@ -8,6 +8,11 @@ type QuotationData = {
   phone: string;
   email: string;
   persons: number;
+  service?: string;
+  travelFrom?: string;
+  travelTo?: string;
+  inquiryNotes?: string;
+  status?: string;
   goingFlight: {
     date: string;
     departure: string;
@@ -49,6 +54,12 @@ type QuotationData = {
   createdAt: string;
 };
 
+const statusStyles: Record<string, string> = {
+  Draft: "bg-gray-100 text-gray-600",
+  Sent: "bg-blue-100 text-blue-700",
+  Accepted: "bg-green-100 text-green-700",
+};
+
 export default function QuotationViewPage({ params }: { params: { id: string } }) {
   const router = useRouter();
 
@@ -60,6 +71,7 @@ export default function QuotationViewPage({ params }: { params: { id: string } }
   }
 
   const data = JSON.parse(raw) as QuotationData;
+  const status = data.status || "Draft";
 
   const handleConvertToInvoice = () => {
     const invoiceId = `INV-${Date.now()}`;
@@ -88,9 +100,18 @@ export default function QuotationViewPage({ params }: { params: { id: string } }
       <div id="quotation-print" className="card">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-primary">
-              Quotation #{data.id}
-            </h1>
+            <div className="flex flex-wrap items-center gap-3">
+              <h1 className="text-2xl font-bold text-primary">
+                Quotation #{data.id}
+              </h1>
+              <span
+                className={`text-xs px-2 py-1 rounded-full ${
+                  statusStyles[status] || "bg-gray-100 text-gray-600"
+                }`}
+              >
+                {status}
+              </span>
+            </div>
             <p className="text-sm text-gray-500">
               Created {new Date(data.createdAt).toLocaleString()}
             </p>
@@ -123,15 +144,32 @@ export default function QuotationViewPage({ params }: { params: { id: string } }
             </div>
           </div>
 
+          <div className="rounded-2xl border border-primary/10 p-4">
+            <h2 className="text-sm font-semibold text-primary mb-3">
+              Trip Overview
+            </h2>
+            <p className="text-sm">Service: {data.service || "Umrah"}</p>
+            <p className="text-sm">
+              Route: {data.travelFrom || "—"} → {data.travelTo || "—"}
+            </p>
+            <p className="text-sm text-gray-600 whitespace-pre-line">
+              Notes: {data.inquiryNotes || "—"}
+            </p>
+          </div>
+
           <div className="grid gap-6 md:grid-cols-2">
             <div className="rounded-2xl border border-primary/10 p-4">
               <h2 className="text-sm font-semibold text-primary mb-3">
                 Flights (Going)
               </h2>
               <p className="text-sm">Date: {data.goingFlight.date}</p>
-              <p className="text-sm">Route: {data.goingFlight.departure} → {data.goingFlight.arrival}</p>
+              <p className="text-sm">
+                Route: {data.goingFlight.departure} → {data.goingFlight.arrival}
+              </p>
               <p className="text-sm">Airline: {data.goingFlight.airline}</p>
-              <p className="text-sm">Flight #: {data.goingFlight.flightNumber}</p>
+              <p className="text-sm">
+                Flight #: {data.goingFlight.flightNumber}
+              </p>
               <p className="text-sm">Type: {data.goingFlight.routeType}</p>
             </div>
             <div className="rounded-2xl border border-primary/10 p-4">
@@ -139,9 +177,13 @@ export default function QuotationViewPage({ params }: { params: { id: string } }
                 Flights (Return)
               </h2>
               <p className="text-sm">Date: {data.returnFlight.date}</p>
-              <p className="text-sm">Route: {data.returnFlight.departure} → {data.returnFlight.arrival}</p>
+              <p className="text-sm">
+                Route: {data.returnFlight.departure} → {data.returnFlight.arrival}
+              </p>
               <p className="text-sm">Airline: {data.returnFlight.airline}</p>
-              <p className="text-sm">Flight #: {data.returnFlight.flightNumber}</p>
+              <p className="text-sm">
+                Flight #: {data.returnFlight.flightNumber}
+              </p>
               <p className="text-sm">Type: {data.returnFlight.routeType}</p>
             </div>
           </div>
@@ -168,13 +210,17 @@ export default function QuotationViewPage({ params }: { params: { id: string } }
           </div>
 
           <div className="rounded-2xl border border-primary/10 p-4">
-            <h2 className="text-sm font-semibold text-primary mb-3">
-              Transport
-            </h2>
+            <h2 className="text-sm font-semibold text-primary mb-3">Transport</h2>
             <p className="text-sm">Type: {data.transport.type}</p>
-            <p className="text-sm">Airport → Makkah: {data.transport.airportToMakkah}</p>
-            <p className="text-sm">Makkah → Madinah: {data.transport.makkahToMadinah}</p>
-            <p className="text-sm">Madinah → Airport: {data.transport.madinahToAirport}</p>
+            <p className="text-sm">
+              Airport → Makkah: {data.transport.airportToMakkah}
+            </p>
+            <p className="text-sm">
+              Makkah → Madinah: {data.transport.makkahToMadinah}
+            </p>
+            <p className="text-sm">
+              Madinah → Airport: {data.transport.madinahToAirport}
+            </p>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
@@ -197,9 +243,7 @@ export default function QuotationViewPage({ params }: { params: { id: string } }
           </div>
 
           <div className="rounded-2xl border border-primary/10 p-4">
-            <h2 className="text-sm font-semibold text-primary mb-3">
-              Notes
-            </h2>
+            <h2 className="text-sm font-semibold text-primary mb-3">Notes</h2>
             <p className="text-sm text-gray-600 whitespace-pre-line">
               {data.notes || "—"}
             </p>
@@ -213,6 +257,12 @@ export default function QuotationViewPage({ params }: { params: { id: string } }
         </button>
         <button onClick={() => window.print()} className="btn-outline">
           Download PDF
+        </button>
+        <button
+          onClick={() => router.push(`/admin/quotations/${params.id}/edit`)}
+          className="btn-outline"
+        >
+          Edit Quotation
         </button>
         <button onClick={handleConvertToInvoice} className="btn">
           Convert to Invoice

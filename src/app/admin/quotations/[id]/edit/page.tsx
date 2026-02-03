@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 type FlightDetails = {
   date: string;
@@ -26,9 +26,33 @@ type TransportDetails = {
   madinahToAirport: string;
 };
 
-export default function NewQuotationPage() {
+type QuotationData = {
+  id: string;
+  clientName: string;
+  phone: string;
+  email: string;
+  persons: number;
+  service?: string;
+  travelFrom?: string;
+  travelTo?: string;
+  inquiryNotes?: string;
+  status?: string;
+  goingFlight: FlightDetails;
+  returnFlight: FlightDetails;
+  makkahHotel: HotelDetails;
+  madinahHotel: HotelDetails;
+  transport: TransportDetails;
+  price: number;
+  inclusions: string;
+  exclusions: string;
+  notes: string;
+  createdAt: string;
+};
+
+export default function EditQuotationPage({ params }: { params: { id: string } }) {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const [loaded, setLoaded] = useState(false);
+  const [notFound, setNotFound] = useState(false);
 
   const [clientName, setClientName] = useState("");
   const [phone, setPhone] = useState("");
@@ -81,29 +105,43 @@ export default function NewQuotationPage() {
   const [inclusions, setInclusions] = useState("");
   const [exclusions, setExclusions] = useState("");
   const [notes, setNotes] = useState("");
+  const [createdAt, setCreatedAt] = useState("");
 
   useEffect(() => {
-    const name = searchParams.get("name");
-    const phoneParam = searchParams.get("phone");
-    const emailParam = searchParams.get("email");
-    const serviceParam = searchParams.get("service");
-    const fromParam = searchParams.get("from");
-    const toParam = searchParams.get("to");
-    const notesParam = searchParams.get("notes");
+    if (typeof window === "undefined") return;
+    const raw = localStorage.getItem(`quotation-${params.id}`);
+    if (!raw) {
+      setNotFound(true);
+      setLoaded(true);
+      return;
+    }
 
-    if (name) setClientName(name);
-    if (phoneParam) setPhone(phoneParam);
-    if (emailParam) setEmail(emailParam);
-    if (serviceParam) setService(serviceParam);
-    if (fromParam) setTravelFrom(fromParam);
-    if (toParam) setTravelTo(toParam);
-    if (notesParam) setInquiryNotes(notesParam);
-  }, [searchParams]);
+    const data = JSON.parse(raw) as QuotationData;
+    setClientName(data.clientName || "");
+    setPhone(data.phone || "");
+    setEmail(data.email || "");
+    setPersons(String(data.persons || 0));
+    setService(data.service || "Umrah");
+    setTravelFrom(data.travelFrom || "");
+    setTravelTo(data.travelTo || "");
+    setInquiryNotes(data.inquiryNotes || "");
+    setStatus(data.status || "Draft");
+    setGoingFlight(data.goingFlight || goingFlight);
+    setReturnFlight(data.returnFlight || returnFlight);
+    setMakkahHotel(data.makkahHotel || makkahHotel);
+    setMadinahHotel(data.madinahHotel || madinahHotel);
+    setTransport(data.transport || transport);
+    setPrice(String(data.price || 0));
+    setInclusions(data.inclusions || "");
+    setExclusions(data.exclusions || "");
+    setNotes(data.notes || "");
+    setCreatedAt(data.createdAt || "");
+    setLoaded(true);
+  }, [params.id]);
 
   const handleSave = () => {
-    const id = `QT-${Date.now()}`;
-    const data = {
-      id,
+    const data: QuotationData = {
+      id: params.id,
       clientName,
       phone,
       email,
@@ -122,19 +160,27 @@ export default function NewQuotationPage() {
       inclusions,
       exclusions,
       notes,
-      createdAt: new Date().toISOString(),
+      createdAt: createdAt || new Date().toISOString(),
     };
 
-    localStorage.setItem(`quotation-${id}`, JSON.stringify(data));
-    router.push(`/admin/quotations/${id}`);
+    localStorage.setItem(`quotation-${params.id}`, JSON.stringify(data));
+    router.push(`/admin/quotations/${params.id}`);
   };
+
+  if (!loaded) {
+    return <p className="text-center mt-10">Loading quotation...</p>;
+  }
+
+  if (notFound) {
+    return <p className="text-center mt-10">Quotation not found.</p>;
+  }
 
   return (
     <main className="section max-w-5xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-primary">New Quotation</h1>
+        <h1 className="text-2xl font-bold text-primary">Edit Quotation</h1>
         <p className="text-sm text-gray-500">
-          Capture detailed Umrah requirements for your client.
+          Update client requirements and quotation status.
         </p>
       </div>
 
@@ -513,13 +559,13 @@ export default function NewQuotationPage() {
 
       <div className="mt-8 flex flex-wrap gap-3">
         <button onClick={handleSave} className="btn">
-          Save Quotation
+          Save Changes
         </button>
         <button
-          onClick={() => router.push("/admin/quotations")}
+          onClick={() => router.push(`/admin/quotations/${params.id}`)}
           className="btn-outline"
         >
-          Back to Quotations
+          Back to Quotation
         </button>
       </div>
     </main>
