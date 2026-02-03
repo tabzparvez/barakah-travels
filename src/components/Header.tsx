@@ -20,9 +20,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
-  if (pathname?.startsWith("/admin")) {
-    return null;
-  }
+  const isAdminRoute = pathname?.startsWith("/admin");
 
   useEffect(() => {
     setMenuOpen(false);
@@ -40,6 +38,10 @@ export default function Header() {
       document.body.style.overflow = "auto";
     };
   }, [menuOpen]);
+
+  if (isAdminRoute) {
+    return null;
+  }
 
   return (
     <header

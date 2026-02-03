@@ -3,18 +3,28 @@ import { generateId, readData, writeData } from "@/lib/data-store";
 
 const FILE = "users.json";
 
+type UserRecord = {
+  id: string;
+  name: string;
+  email: string;
+  username: string;
+  password?: string;
+  role: string;
+  permissions: string[];
+};
+
 export async function GET() {
-  const users = await readData(FILE, []);
-  const sanitized = users.map((user: any) => {
-    const { password, ...rest } = user;
+  const users = await readData<UserRecord[]>(FILE, []);
+  const sanitized = users.map((user) => {
+    const { password: _password, ...rest } = user;
     return rest;
   });
   return NextResponse.json(sanitized);
 }
 
 export async function POST(req: NextRequest) {
-  const data = await req.json();
-  const users = await readData(FILE, []);
+  const data = (await req.json()) as UserRecord;
+  const users = await readData<UserRecord[]>(FILE, []);
   const next = {
     id: generateId("user"),
     ...data,
@@ -30,11 +40,11 @@ export async function PUT(req: NextRequest) {
   if (!id) {
     return NextResponse.json({ error: "Missing id" }, { status: 400 });
   }
-  const data = await req.json();
-  const users = await readData(FILE, []);
-  const updated = users.map((user: any) => (user.id === id ? { ...user, ...data } : user));
+  const data = (await req.json()) as Partial<UserRecord>;
+  const users = await readData<UserRecord[]>(FILE, []);
+  const updated = users.map((user) => (user.id === id ? { ...user, ...data } : user));
   await writeData(FILE, updated);
-  const found = updated.find((user: any) => user.id === id);
+  const found = updated.find((user) => user.id === id);
   return NextResponse.json(found ?? { error: "User not found" }, { status: found ? 200 : 404 });
 }
 
@@ -44,8 +54,8 @@ export async function DELETE(req: NextRequest) {
   if (!id) {
     return NextResponse.json({ error: "Missing id" }, { status: 400 });
   }
-  const users = await readData(FILE, []);
-  const filtered = users.filter((user: any) => user.id !== id);
+  const users = await readData<UserRecord[]>(FILE, []);
+  const filtered = users.filter((user) => user.id !== id);
   await writeData(FILE, filtered);
   return NextResponse.json({ success: true });
 }

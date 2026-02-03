@@ -37,14 +37,21 @@ const initialForm = {
   },
 };
 
+type FormState = typeof initialForm;
+type SectionKey = keyof FormState;
+
 export default function NewQuotationPage() {
   const [form, setForm] = useState(initialForm);
   const router = useRouter();
 
-  const handleChange = (section: string, field: string, value: string) => {
+  const handleChange = <K extends SectionKey>(
+    section: K,
+    field: keyof FormState[K],
+    value: string
+  ) => {
     setForm((prev) => ({
       ...prev,
-      [section]: { ...(prev as any)[section], [field]: value },
+      [section]: { ...prev[section], [field]: value },
     }));
   };
 

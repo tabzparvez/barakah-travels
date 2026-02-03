@@ -4,16 +4,46 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 
+type FlightSegment = {
+  date?: string;
+  departure?: string;
+  arrival?: string;
+  airline?: string;
+  flightNumber?: string;
+  routeType?: string;
+};
+
+type HotelStay = {
+  name?: string;
+  distance?: string;
+  roomType?: string;
+  nights?: string;
+};
+
+type TransportDetails = {
+  type?: string;
+  airportToMakkah?: string;
+  makkahToMadinah?: string;
+  madinahToAirport?: string;
+};
+
+type PackageDetails = {
+  price?: string;
+  notes?: string;
+  inclusions?: string[];
+  exclusions?: string[];
+};
+
 type Quotation = {
   id: string;
-  client: { name: string; phone: string; persons: string };
-  flightGoing: any;
-  flightReturn: any;
-  makkahHotel: any;
-  madinahHotel: any;
-  transport: any;
-  packageDetails: any;
-  createdAt: string;
+  client?: { name?: string; phone?: string; persons?: string };
+  flightGoing?: FlightSegment;
+  flightReturn?: FlightSegment;
+  makkahHotel?: HotelStay;
+  madinahHotel?: HotelStay;
+  transport?: TransportDetails;
+  packageDetails?: PackageDetails;
+  createdAt?: string;
 };
 
 export default function QuotationDetailPage() {

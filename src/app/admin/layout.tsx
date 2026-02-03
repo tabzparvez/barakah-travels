@@ -13,6 +13,11 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 
+type AdminUser = {
+  name: string;
+  role: string;
+};
+
 const navItems = [
   { href: "/admin/dashboard", label: "Dashboard", icon: <FaChartPie /> },
   { href: "/admin/users", label: "Users", icon: <FaUsers /> },
@@ -23,7 +28,7 @@ const navItems = [
 ];
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
-  const [adminUser, setAdminUser] = useState<any>(null);
+  const [adminUser, setAdminUser] = useState<AdminUser | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
