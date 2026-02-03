@@ -1,14 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createId, readAdminData, writeAdminData } from "@/lib/local-data";
+import { authorizeAdminRequest } from "@/lib/admin-auth";
+import { createId, writeAdminData } from "@/lib/local-data";
 
-export async function GET() {
-  const data = await readAdminData();
-  return NextResponse.json(data.packages);
+export async function GET(req: NextRequest) {
+  const auth = await authorizeAdminRequest(req, {
+    requirePermission: "packages",
+  });
+  if (auth.response) return auth.response;
+  return NextResponse.json(auth.data.packages);
 }
 
 export async function POST(req: NextRequest) {
+  const auth = await authorizeAdminRequest(req, {
+    requirePermission: "packages",
+  });
+  if (auth.response) return auth.response;
+
   const payload = await req.json();
-  const data = await readAdminData();
+  const data = auth.data;
   const category = payload.category === "tours" ? "tours" : "umrah";
 
   const newPackage = {
@@ -30,8 +39,13 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
+  const auth = await authorizeAdminRequest(req, {
+    requirePermission: "packages",
+  });
+  if (auth.response) return auth.response;
+
   const payload = await req.json();
-  const data = await readAdminData();
+  const data = auth.data;
   const category = payload.category === "tours" ? "tours" : "umrah";
   const index = data.packages[category].findIndex(
     (item) => item.id === payload.id
@@ -58,6 +72,11 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  const auth = await authorizeAdminRequest(req, {
+    requirePermission: "packages",
+  });
+  if (auth.response) return auth.response;
+
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
   const category = searchParams.get("category") === "tours" ? "tours" : "umrah";
@@ -66,7 +85,7 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ error: "Missing id" }, { status: 400 });
   }
 
-  const data = await readAdminData();
+  const data = auth.data;
   data.packages[category] = data.packages[category].filter(
     (item) => item.id !== id
   );

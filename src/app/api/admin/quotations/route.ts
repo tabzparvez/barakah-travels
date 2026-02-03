@@ -1,14 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createId, readAdminData, writeAdminData } from "@/lib/local-data";
+import { authorizeAdminRequest } from "@/lib/admin-auth";
+import { createId, writeAdminData } from "@/lib/local-data";
 
-export async function GET() {
-  const data = await readAdminData();
-  return NextResponse.json(data.quotations);
+export async function GET(req: NextRequest) {
+  const auth = await authorizeAdminRequest(req, {
+    requirePermission: "quotations",
+  });
+  if (auth.response) return auth.response;
+  return NextResponse.json(auth.data.quotations);
 }
 
 export async function POST(req: NextRequest) {
+  const auth = await authorizeAdminRequest(req, {
+    requirePermission: "quotations",
+  });
+  if (auth.response) return auth.response;
+
   const payload = await req.json();
-  const data = await readAdminData();
+  const data = auth.data;
 
   const quotation = {
     id: createId("qt"),

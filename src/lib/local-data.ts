@@ -152,6 +152,10 @@ export function createId(prefix: string) {
   return `${prefix}-${randomUUID()}`;
 }
 
+export function createTemporaryPassword() {
+  return `temp-${randomUUID().slice(0, 8)}`;
+}
+
 export function sanitizeUser(user: AdminUser) {
   const { password: _password, ...rest } = user;
   return rest;

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { getAdminAuthHeaders } from "@/lib/admin-session";
 
 const emptyForm = {
   name: "",
@@ -33,7 +34,7 @@ export default function AdminInquiries() {
   const [form, setForm] = useState(emptyForm);
 
   useEffect(() => {
-    fetch("/api/admin/inquiries")
+    fetch("/api/admin/inquiries", { headers: getAdminAuthHeaders() })
       .then((res) => res.json())
       .then(setInquiries);
   }, []);
@@ -90,7 +91,7 @@ export default function AdminInquiries() {
 
     await fetch("/api/admin/quotations", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...getAdminAuthHeaders() },
       body: JSON.stringify(payload),
     });
   }

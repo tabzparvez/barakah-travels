@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { getAdminAuthHeaders } from "@/lib/admin-session";
 
 type PermissionSet = {
   packages: boolean;
@@ -34,9 +35,10 @@ export default function AdminUsers() {
     permissions: defaultPermissions,
   });
   const [editing, setEditing] = useState<string | null>(null);
+  const [temporaryPassword, setTemporaryPassword] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/admin/users")
+    fetch("/api/admin/users", { headers: getAdminAuthHeaders() })
       .then((res) => res.json())
       .then(setUsers);
   }, []);
@@ -45,12 +47,13 @@ export default function AdminUsers() {
     event.preventDefault();
     const response = await fetch("/api/admin/users", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...getAdminAuthHeaders() },
       body: JSON.stringify(form),
     });
 
     const data = await response.json();
     setUsers((prev) => [data.user, ...prev]);
+    setTemporaryPassword(data.temporaryPassword ?? null);
     setForm({
       name: "",
       email: "",
@@ -65,7 +68,7 @@ export default function AdminUsers() {
     if (!editing) return;
     const response = await fetch("/api/admin/users", {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...getAdminAuthHeaders() },
       body: JSON.stringify({ ...form, id: editing }),
     });
     const data = await response.json();
@@ -81,7 +84,10 @@ export default function AdminUsers() {
   }
 
   async function handleDelete(id: string) {
-    await fetch(`/api/admin/users?id=${id}`, { method: "DELETE" });
+    await fetch(`/api/admin/users?id=${id}`, {
+      method: "DELETE",
+      headers: getAdminAuthHeaders(),
+    });
     setUsers((prev) => prev.filter((user) => user.id !== id));
   }
 
@@ -110,6 +116,12 @@ export default function AdminUsers() {
         onSubmit={editing ? handleUpdate : handleSubmit}
         className="rounded-3xl border border-white/10 bg-white/5 p-6 grid gap-4 md:grid-cols-2"
       >
+        {temporaryPassword && (
+          <div className="md:col-span-2 rounded-2xl border border-yellow-400/30 bg-yellow-400/10 px-4 py-3 text-sm text-yellow-200">
+            Temporary password generated:{" "}
+            <span className="font-semibold">{temporaryPassword}</span>
+          </div>
+        )}
         <div>
           <label className="text-sm text-white/70">Full Name</label>
           <input

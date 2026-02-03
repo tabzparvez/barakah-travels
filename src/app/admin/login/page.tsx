@@ -58,7 +58,7 @@ export default function AdminLogin() {
               <p className="text-sm text-white/70">
                 superadmin@barakahtravels.online
               </p>
-              <p className="text-sm text-white/70">Password: barakah@2025</p>
+              <p className="text-sm text-white/70">Password: demo-admin</p>
             </div>
           </div>
         </div>

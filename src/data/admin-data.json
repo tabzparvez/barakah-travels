@@ -5,7 +5,7 @@
       "name": "Aisha Malik",
       "email": "superadmin@barakahtravels.online",
       "role": "Super Admin",
-      "password": "barakah@2025",
+      "password": "demo-admin",
       "permissions": {
         "packages": true,
         "inquiries": true,
@@ -18,7 +18,7 @@
       "name": "Hassan Raza",
       "email": "admin@barakahtravels.online",
       "role": "Admin",
-      "password": "barakah@2025",
+      "password": "demo-admin",
       "permissions": {
         "packages": true,
         "inquiries": true,
@@ -31,7 +31,7 @@
       "name": "Fatima Noor",
       "email": "employee@barakahtravels.online",
       "role": "Employee",
-      "password": "barakah@2025",
+      "password": "demo-admin",
       "permissions": {
         "packages": false,
         "inquiries": true,

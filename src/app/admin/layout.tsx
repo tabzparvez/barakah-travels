@@ -12,6 +12,7 @@ import {
   FaFileSignature,
   FaSignOutAlt,
 } from "react-icons/fa";
+import { AdminSession, getAdminSession } from "@/lib/admin-session";
 
 const navItems = [
   { href: "/admin/dashboard", label: "Dashboard", icon: FaTachometerAlt },
@@ -22,18 +23,6 @@ const navItems = [
   { href: "/admin/invoices", label: "Invoices", icon: FaFileInvoiceDollar },
 ];
 
-type AdminSession = {
-  name: string;
-  email: string;
-  role: string;
-  permissions: {
-    packages: boolean;
-    inquiries: boolean;
-    quotations: boolean;
-    invoices: boolean;
-  };
-};
-
 export default function AdminLayout({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<AdminSession | null>(null);
   const pathname = usePathname();
@@ -43,13 +32,36 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     if (pathname === "/admin/login" || pathname === "/admin/logout") {
       return;
     }
-    const stored = localStorage.getItem("barakahAdminSession");
+    const stored = getAdminSession();
     if (!stored) {
       router.replace("/admin/login");
       return;
     }
-    setSession(JSON.parse(stored) as AdminSession);
+    setSession(stored);
   }, [pathname, router]);
+
+  useEffect(() => {
+    if (!session) return;
+    if (pathname.startsWith("/admin/users") && session.role !== "Super Admin") {
+      router.replace("/admin/dashboard");
+      return;
+    }
+    if (pathname.startsWith("/admin/packages") && !session.permissions.packages) {
+      router.replace("/admin/dashboard");
+      return;
+    }
+    if (pathname.startsWith("/admin/inquiries") && !session.permissions.inquiries) {
+      router.replace("/admin/dashboard");
+      return;
+    }
+    if (pathname.startsWith("/admin/quotations") && !session.permissions.quotations) {
+      router.replace("/admin/dashboard");
+      return;
+    }
+    if (pathname.startsWith("/admin/invoices") && !session.permissions.invoices) {
+      router.replace("/admin/dashboard");
+    }
+  }, [pathname, router, session]);
 
   const filteredNav = useMemo(() => {
     if (!session) return [];
