@@ -58,11 +58,11 @@ export default function PackagesPage() {
     },
     {
       _id: "demo2",
-      name: "Premium Umrah Package",
+      name: "Comfort Umrah Package",
       days: 10,
-      type: "Premium",
+      type: "Comfort",
       description:
-        "Premium Umrah package with 5-star hotel, private transport & support.",
+        "Comfort Umrah package with 5-star hotel, private transport & support.",
       price: 185000,
       features: [
         "Visa Included",
@@ -89,7 +89,7 @@ export default function PackagesPage() {
           Umrah Packages from Pakistan
         </h1>
         <p className="text-lg text-secondary max-w-3xl mx-auto">
-          Affordable and premium Umrah packages with visa, hotels near Haram,
+          Affordable and comfortable Umrah packages with visa, hotels near Haram,
           transport and complete guidance. Book with confidence through
           Barakah Travels.
         </p>
@@ -103,13 +103,13 @@ export default function PackagesPage() {
       </section>
 
       <div className="mt-6 text-center">
-  <a
-    href="/umrah-packages-from-karachi"
-    className="text-yellow-600 font-semibold underline"
-  >
-    View Detailed Umrah Packages from Karachi →
-  </a>
-</div>
+        <a
+          href="/umrah-packages-from-karachi"
+          className="text-primary font-semibold underline"
+        >
+          View Detailed Umrah Packages from Karachi →
+        </a>
+      </div>
 
       {/* ================= STATES ================= */}
       {loading && <div className="text-center">Loading packages…</div>}
@@ -132,7 +132,7 @@ export default function PackagesPage() {
                     src={pkg.image}
                     alt={`${pkg.name} Umrah Package`}
                     fill
-                    className="object-cover rounded"
+                  className="object-cover rounded-xl"
                   />
                 </div>
               )}
