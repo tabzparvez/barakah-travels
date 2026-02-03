@@ -2,6 +2,7 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 /* ================= REVIEWS AUTO SLIDER ================= */
 function ReviewsSlider() {
@@ -57,6 +58,61 @@ function ReviewsSlider() {
 
 /* ================= HOME ================= */
 export default function Home() {
+  const { data: session } = useSession();
+  const [formState, setFormState] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    service: "Umrah",
+    from: "",
+    to: "",
+    notes: "",
+  });
+  const [formStatus, setFormStatus] = useState({
+    loading: false,
+    success: false,
+    error: "",
+  });
+
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+    setFormState((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleInquirySubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+    setFormStatus({ loading: true, success: false, error: "" });
+
+    const response = await fetch("/api/inquiry", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formState),
+    });
+
+    if (!response.ok) {
+      setFormStatus({
+        loading: false,
+        success: false,
+        error: "Something went wrong. Please try again.",
+      });
+      return;
+    }
+
+    setFormStatus({ loading: false, success: true, error: "" });
+    setFormState({
+      name: "",
+      phone: "",
+      email: "",
+      service: "Umrah",
+      from: "",
+      to: "",
+      notes: "",
+    });
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -86,9 +142,9 @@ export default function Home() {
           src="/umrah2.png"
           alt="Kaaba"
           fill
-          className="object-cover opacity-25"
+          className="object-cover opacity-45"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/80 to-white/95" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/65 to-white/80" />
         <div className="relative z-10 text-center py-24 md:py-28 px-6">
           <span className="badge mb-4">Trusted Umrah Support</span>
           <h1 className="text-4xl md:text-6xl font-extrabold text-primary mb-6">
@@ -120,12 +176,131 @@ export default function Home() {
         </div>
       </section>
 
+      {/* INQUIRY FORM */}
+      <section className="mb-24 reveal">
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-start">
+          <div className="card">
+            <h2 className="text-2xl font-bold text-primary mb-2">
+              Umrah Inquiry Form
+            </h2>
+            <p className="text-sm text-secondary-dark mb-6">
+              Tell us your travel preferences and our team will send the best
+              Umrah package options within 24 hours.
+            </p>
+            <form className="form" onSubmit={handleInquirySubmit}>
+              <div className="grid gap-4 md:grid-cols-2">
+                <input
+                  className="input"
+                  name="name"
+                  placeholder="Full Name"
+                  value={formState.name}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  className="input"
+                  name="phone"
+                  placeholder="Phone / WhatsApp"
+                  value={formState.phone}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <input
+                  className="input"
+                  type="email"
+                  name="email"
+                  placeholder="Email Address"
+                  value={formState.email}
+                  onChange={handleInputChange}
+                />
+                <select
+                  className="input"
+                  name="service"
+                  value={formState.service}
+                  onChange={handleInputChange}
+                >
+                  <option>Umrah</option>
+                  <option>Dubai</option>
+                  <option>Turkey</option>
+                  <option>Baku</option>
+                </select>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <input
+                  className="input"
+                  name="from"
+                  placeholder="Traveling From"
+                  value={formState.from}
+                  onChange={handleInputChange}
+                />
+                <input
+                  className="input"
+                  name="to"
+                  placeholder="Preferred Dates / Month"
+                  value={formState.to}
+                  onChange={handleInputChange}
+                />
+              </div>
+              <textarea
+                className="input min-h-[120px]"
+                name="notes"
+                placeholder="Special requests, hotel preferences, or notes"
+                value={formState.notes}
+                onChange={handleInputChange}
+              />
+              <div className="flex flex-wrap items-center gap-3">
+                <button className="btn" type="submit" disabled={formStatus.loading}>
+                  {formStatus.loading ? "Submitting..." : "Submit Inquiry"}
+                </button>
+                {formStatus.success && (
+                  <span className="text-sm text-green-600">
+                    Inquiry sent! We will contact you shortly.
+                  </span>
+                )}
+                {formStatus.error && (
+                  <span className="text-sm text-red-600">{formStatus.error}</span>
+                )}
+              </div>
+            </form>
+          </div>
+          <div className="card space-y-4">
+            <h3 className="text-xl font-semibold text-primary">
+              Why pilgrims choose Barakah Travels
+            </h3>
+            <ul className="space-y-3 text-sm text-secondary-dark">
+              <li>• Saudi visa processing with real-time updates.</li>
+              <li>• Hand-picked hotels within walking distance of Haram.</li>
+              <li>• Dedicated WhatsApp support before and during travel.</li>
+              <li>• Flexible packages for families, groups, and seniors.</li>
+            </ul>
+            <a
+              href="https://wa.me/923183548299"
+              className="btn-outline w-full justify-center"
+            >
+              Get Instant WhatsApp Quote
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* REVIEWS */}
       <section className="mb-24 reveal">
         <h2 className="text-3xl font-bold text-center text-primary mb-8">
           What Our Clients Say
         </h2>
         <ReviewsSlider />
+        <div className="mt-8 text-center space-y-3">
+          <Link href="/submit-review" className="btn-outline">
+            Add Review
+          </Link>
+          {!session && (
+            <p className="text-sm text-gray-500">
+              Please sign in with Google to leave a review
+            </p>
+          )}
+        </div>
       </section>
 
       {/* POPULAR DESTINATIONS */}
@@ -142,10 +317,22 @@ export default function Home() {
             { title: "Thailand", img: "/thailand.jpg" },
             { title: "Baku", img: "/baku.jpg" },
           ].map((d, i) => (
-            <div key={i} className="card text-center p-4 reveal">
-              <Image src={d.img} alt={d.title} width={300} height={160} className="rounded-xl mb-4"/>
+            <div
+              key={i}
+              className="card text-center p-4 reveal flex flex-col h-full"
+            >
+              <div className="relative w-full aspect-[4/3] mb-4">
+                <Image
+                  src={d.img}
+                  alt={d.title}
+                  fill
+                  className="rounded-xl object-cover"
+                />
+              </div>
               <h3 className="text-xl font-bold text-primary mb-2">{d.title}</h3>
-              <Link href="/contact" className="btn">Explore</Link>
+              <Link href="/contact" className="btn mt-auto">
+                Explore
+              </Link>
             </div>
           ))}
         </div>

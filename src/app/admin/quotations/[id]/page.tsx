@@ -98,6 +98,31 @@ export default function QuotationViewPage({ params }: { params: { id: string } }
   return (
     <main className="section max-w-5xl mx-auto">
       <div id="quotation-print" className="card">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between border-b border-primary/10 pb-4 mb-6">
+          <div className="flex items-center gap-4">
+            <img
+              src="/newlogo.png"
+              alt="Barakah Travels"
+              className="h-14 w-auto object-contain"
+            />
+            <div>
+              <p className="text-xs uppercase tracking-wide text-gray-500">
+                Barakah Travels
+              </p>
+              <p className="text-sm text-gray-600">Umrah • Visa • Travel</p>
+              <p className="text-xs text-gray-500">
+                +92 318 3548299 • info@barakahtravels.online
+              </p>
+            </div>
+          </div>
+          <div className="text-right">
+            <p className="text-sm font-semibold text-primary">Quotation</p>
+            <p className="text-xs text-gray-500">
+              Created {new Date(data.createdAt).toLocaleString()}
+            </p>
+          </div>
+        </div>
+
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between mb-6">
           <div>
             <div className="flex flex-wrap items-center gap-3">
@@ -113,7 +138,7 @@ export default function QuotationViewPage({ params }: { params: { id: string } }
               </span>
             </div>
             <p className="text-sm text-gray-500">
-              Created {new Date(data.createdAt).toLocaleString()}
+              Prepared for {data.clientName}
             </p>
           </div>
           <div className="text-right">

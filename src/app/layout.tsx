@@ -58,13 +58,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white text-black min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#fbf7ef] text-secondary min-h-screen flex flex-col`}
       >
         <SessionWrapper>
           <Header />
 
           {/* MAIN CONTENT */}
-          <main className="w-full flex-1 pt-24 md:pt-28">
+          <main className="w-full flex-1 pt-28 md:pt-32">
             <div className="max-w-7xl mx-auto px-4">{children}</div>
           </main>
         </SessionWrapper>
