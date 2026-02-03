@@ -1,54 +1,135 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { FaBoxOpen, FaEnvelopeOpenText, FaStar, FaImages, FaBlog, FaQuestionCircle, FaSignOutAlt } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import {
+  FaBoxOpen,
+  FaEnvelopeOpenText,
+  FaFileInvoiceDollar,
+  FaFileSignature,
+} from "react-icons/fa";
+
+const statCards = [
+  { key: "packages", label: "Total Packages", icon: FaBoxOpen },
+  { key: "inquiries", label: "Total Inquiries", icon: FaEnvelopeOpenText },
+  { key: "quotations", label: "Total Quotations", icon: FaFileSignature },
+  { key: "invoices", label: "Total Invoices", icon: FaFileInvoiceDollar },
+];
+
+type DashboardStats = {
+  packages: number;
+  inquiries: number;
+  quotations: number;
+  invoices: number;
+};
 
 export default function AdminDashboard() {
-  const router = useRouter();
+  const [stats, setStats] = useState<DashboardStats>({
+    packages: 0,
+    inquiries: 0,
+    quotations: 0,
+    invoices: 0,
+  });
+
   useEffect(() => {
-    // Simple check for admin session (cookie or localStorage)
-    const isAdmin = localStorage.getItem("isAdmin");
-    if (!isAdmin) {
-      router.push("/admin/login");
+    async function loadStats() {
+      const [packagesRes, inquiriesRes, quotationsRes, invoicesRes] =
+        await Promise.all([
+          fetch("/api/admin/packages"),
+          fetch("/api/admin/inquiries"),
+          fetch("/api/admin/quotations"),
+          fetch("/api/admin/invoices"),
+        ]);
+
+      const packagesData = await packagesRes.json();
+      const inquiriesData = await inquiriesRes.json();
+      const quotationsData = await quotationsRes.json();
+      const invoicesData = await invoicesRes.json();
+
+      const totalPackages =
+        packagesData.umrah.length + packagesData.tours.length;
+
+      setStats({
+        packages: totalPackages,
+        inquiries: inquiriesData.length,
+        quotations: quotationsData.length,
+        invoices: invoicesData.length,
+      });
     }
-  }, [router]);
+
+    loadStats();
+  }, []);
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-primary-light to-primary-dark px-2">
-      <div className="bg-white rounded-3xl shadow-2xl p-10 w-full max-w-xl flex flex-col items-center border border-primary/10">
-        <h1 className="text-4xl font-extrabold mb-8 text-primary font-heading text-center drop-shadow">Admin Dashboard</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full mb-10">
-          <a href="/admin/packages" className="flex flex-col items-center justify-center p-6 rounded-xl shadow-card bg-primary-light hover:bg-primary transition-all duration-200 group cursor-pointer">
-            <FaBoxOpen className="text-3xl mb-2 text-primary group-hover:text-white transition" />
-            <span className="font-semibold text-primary group-hover:text-white transition">Manage Packages</span>
-          </a>
-          <a href="/admin/inquiries" className="flex flex-col items-center justify-center p-6 rounded-xl shadow-card bg-primary-light hover:bg-primary transition-all duration-200 group cursor-pointer">
-            <FaEnvelopeOpenText className="text-3xl mb-2 text-primary group-hover:text-white transition" />
-            <span className="font-semibold text-primary group-hover:text-white transition">View Inquiries</span>
-          </a>
-          <a href="/admin/testimonials" className="flex flex-col items-center justify-center p-6 rounded-xl shadow-card bg-primary-light hover:bg-primary transition-all duration-200 group cursor-pointer">
-            <FaStar className="text-3xl mb-2 text-primary group-hover:text-white transition" />
-            <span className="font-semibold text-primary group-hover:text-white transition">Manage Testimonials</span>
-          </a>
-          <a href="/admin/gallery" className="flex flex-col items-center justify-center p-6 rounded-xl shadow-card bg-primary-light hover:bg-primary transition-all duration-200 group cursor-pointer">
-            <FaImages className="text-3xl mb-2 text-primary group-hover:text-white transition" />
-            <span className="font-semibold text-primary group-hover:text-white transition">Manage Gallery</span>
-          </a>
-          <a href="/admin/blog" className="flex flex-col items-center justify-center p-6 rounded-xl shadow-card bg-primary-light hover:bg-primary transition-all duration-200 group cursor-pointer">
-            <FaBlog className="text-3xl mb-2 text-primary group-hover:text-white transition" />
-            <span className="font-semibold text-primary group-hover:text-white transition">Manage Blog</span>
-          </a>
-          <a href="/admin/faq" className="flex flex-col items-center justify-center p-6 rounded-xl shadow-card bg-primary-light hover:bg-primary transition-all duration-200 group cursor-pointer">
-            <FaQuestionCircle className="text-3xl mb-2 text-primary group-hover:text-white transition" />
-            <span className="font-semibold text-primary group-hover:text-white transition">Manage FAQ</span>
-          </a>
-        </div>
-        <a href="/admin/logout" className="flex items-center gap-2 justify-center mt-2 px-6 py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold shadow-card transition-all duration-200 w-full max-w-xs">
-          <FaSignOutAlt className="text-lg" /> Logout
-        </a>
+    <div className="space-y-10">
+      <div>
+        <h1 className="text-3xl font-semibold text-white">Dashboard</h1>
+        <p className="text-white/70 mt-2">
+          Real-time overview of packages, inquiries, quotations, and invoices.
+        </p>
       </div>
-  {/* Button style is now global in globals.css for consistency */}
-    </main>
+
+      <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        {statCards.map((card) => {
+          const Icon = card.icon;
+          return (
+            <div
+              key={card.key}
+              className="rounded-3xl border border-white/10 bg-white/5 p-6 flex items-center justify-between"
+            >
+              <div>
+                <p className="text-sm text-white/60">{card.label}</p>
+                <p className="text-3xl font-semibold text-white mt-2">
+                  {stats[card.key as keyof DashboardStats]}
+                </p>
+              </div>
+              <div className="h-12 w-12 rounded-2xl bg-yellow-400/10 text-yellow-300 flex items-center justify-center">
+                <Icon />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-3">
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <h2 className="text-lg font-semibold">Today&apos;s Focus</h2>
+          <ul className="mt-4 space-y-3 text-sm text-white/70">
+            <li>Follow up on new Umrah inquiries within 30 minutes.</li>
+            <li>Send Turkey tour quotation drafts for approvals.</li>
+            <li>Review unpaid invoices and send reminders.</li>
+          </ul>
+        </div>
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <h2 className="text-lg font-semibold">Team Activity</h2>
+          <p className="text-sm text-white/70 mt-3">
+            6 inquiries were received in the last 24 hours. 3 quotations were
+            generated. 1 invoice marked as paid.
+          </p>
+        </div>
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <h2 className="text-lg font-semibold">Quick Actions</h2>
+          <div className="mt-4 flex flex-col gap-3 text-sm">
+            <a
+              href="/admin/quotations"
+              className="rounded-xl border border-yellow-400/40 px-4 py-2 text-yellow-300 hover:bg-yellow-400/10"
+            >
+              Create new quotation
+            </a>
+            <a
+              href="/admin/inquiries"
+              className="rounded-xl border border-white/10 px-4 py-2 hover:bg-white/5"
+            >
+              Review new inquiries
+            </a>
+            <a
+              href="/admin/invoices"
+              className="rounded-xl border border-white/10 px-4 py-2 hover:bg-white/5"
+            >
+              Send invoice reminders
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

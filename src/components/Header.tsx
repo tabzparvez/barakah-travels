@@ -2,36 +2,27 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { useState, useEffect } from "react";
-import { useSession, signOut } from "next-auth/react";
-import { motion, AnimatePresence } from "framer-motion";
-import { usePathname } from "next/navigation";
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/#umrah-packages", label: "Umrah Packages" },
+  { href: "/#turkey", label: "Turkey" },
+  { href: "/#baku", label: "Baku" },
+  { href: "/contact", label: "Contact" },
+];
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [packagesOpen, setPackagesOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const { data: session } = useSession();
-  const pathname = usePathname();
-
-  /* Close menus on route change */
   useEffect(() => {
-    setMenuOpen(false);
-    setPackagesOpen(false);
-    setProfileOpen(false);
-  }, [pathname]);
-
-  /* Header shadow */
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  /* Lock body scroll on mobile */
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "auto";
     return () => {
@@ -39,191 +30,83 @@ export default function Header() {
     };
   }, [menuOpen]);
 
-  const handleLinkClick = () => {
-    setMenuOpen(false);
-    setPackagesOpen(false);
-    setProfileOpen(false);
-  };
-
-  const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
-    { href: "/gallery", label: "Gallery" },
-    { href: "/blog", label: "Blog" },
-    { href: "/faq", label: "FAQ" },
-    { href: "/contact", label: "Contact" },
-    { href: "/privacy-policy", label: "Privacy" },
-    { href: "/terms", label: "Terms" },
-  ];
-
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 z-50 transition-all ${
         scrolled
-          ? "bg-white/70 backdrop-blur-md shadow-xl"
-          : "bg-gradient-to-r from-primary to-primary-dark"
+          ? "bg-[#0b0b0c]/90 backdrop-blur border-b border-white/10"
+          : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-20 md:h-24">
-
-        {/* Logo */}
-        <Link href="/" onClick={handleLinkClick} className="flex items-center gap-2">
-<Image
-  src="/newlogo.png"
-  alt="Barakah Travels"
-  width={120}
-  height={120}
-  priority
-  className="
-    h-20 w-auto
-    md:h-18
-    object-contain drop-shadow-x1
-  "
-/>
-
-
-
-
-          <span className="text-lg md:text-2xl font-extrabold text-yellow-400">
-  Barakah Travels
-</span>
-
-
-
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4">
+        <Link href="/" className="flex items-center gap-3">
+          <Image
+            src="/newlogo.png"
+            alt="Barakah Travels"
+            width={56}
+            height={56}
+            className="rounded-full border border-yellow-400/40"
+          />
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-yellow-400">
+              Barakah Travels
+            </p>
+            <p className="text-lg font-semibold text-white">
+              Premium Travel Agency
+            </p>
+          </div>
         </Link>
 
-        {/* Mobile Hamburger */}
-        <button
-          className="md:hidden text-white text-2xl z-50"
-          onClick={() => setMenuOpen((v) => !v)}
-          aria-label="Toggle Menu"
-        >
-          {menuOpen ? <FaTimes /> : <FaBars />}
-        </button>
-
-        {/* Overlay */}
-        <AnimatePresence>
-          {menuOpen && (
-            <motion.div
-              className="fixed inset-0 bg-black/40 z-40 md:hidden"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setMenuOpen(false)}
-            />
-          )}
-        </AnimatePresence>
-
-        {/* Navigation */}
-        <motion.nav
-          initial={{ opacity: 0, y: -15 }}
-          animate={{ opacity: 1, y: 0 }}
-          className={`z-50 flex flex-col md:flex-row items-start md:items-center gap-6 px-6 py-4 rounded-xl
-            bg-gradient-to-r from-primary/95 to-primary-dark/95
-            md:bg-transparent text-white
-            absolute md:static right-6 top-20 md:right-auto md:top-auto
-            ${menuOpen ? "block" : "hidden md:flex"}
-          `}
-        >
-          {/* Packages */}
-          <div className="relative">
-            <button
-              onClick={() => setPackagesOpen((v) => !v)}
-              className="hover:text-yellow-300 font-semibold"
-            >
-              Packages ▾
-            </button>
-
-            {packagesOpen && (
-              <div className="absolute left-0 mt-2 w-44 bg-white text-primary rounded-lg shadow-lg overflow-hidden">
-                <Link
-                  href="/packages"
-                  onClick={handleLinkClick}
-                  className="block px-4 py-2 hover:bg-yellow-100"
-                >
-                  Umrah Packages
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Links */}
+        <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-white">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              onClick={handleLinkClick}
-              className="hover:text-yellow-300 font-semibold"
+              className="hover:text-yellow-300 transition"
             >
               {link.label}
             </Link>
           ))}
+        </nav>
 
-          {/* Auth */}
-          {!session ? (
-            <Link
-              href="/login"
-              onClick={handleLinkClick}
-              className="bg-white text-primary font-bold px-4 py-1 rounded shadow"
-            >
-              Sign In
-            </Link>
-          ) : (
-            <div className="relative">
-              <button
-                onClick={() => setProfileOpen((v) => !v)}
-                className="flex items-center gap-2 bg-white/20 px-3 py-1 rounded hover:bg-white/30"
-              >
-                {session.user?.image && (
-                  <Image
-                    src={session.user.image}
-                    alt={session.user.name || "User"}
-                    width={28}
-                    height={28}
-                    className="rounded-full"
-                  />
-                )}
-                <span className="text-yellow-300 font-bold">
-                  {session.user?.name?.split(" ")[0]}
-                </span>
-              </button>
+        <div className="hidden md:flex items-center gap-4">
+          <a
+            href="https://wa.me/923183548299"
+            className="rounded-full border border-yellow-400/70 px-5 py-2 text-sm font-semibold text-yellow-300 hover:bg-yellow-400/10"
+          >
+            WhatsApp Concierge
+          </a>
+        </div>
 
-              {profileOpen && (
-  <div className="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg overflow-hidden text-primary">
-{session.user?.email === "info@barakahtravels.online" && (
-  <Link
-    href="/admin"
-    onClick={handleLinkClick}
-    className="block px-4 py-2 hover:bg-yellow-100 font-semibold"
-  >
-    Admin Panel
-  </Link>
-)}
-
-    <Link
-      href="/dashboard"
-      onClick={handleLinkClick}
-      className="block px-4 py-2 hover:bg-yellow-100 font-semibold"
-    >
-      Dashboard
-    </Link>
-
-    <form action="/api/auth/signout" method="post">
-      <button
-        type="submit"
-        className="w-full text-left px-4 py-2 hover:bg-yellow-100 font-semibold"
-      >
-        Sign Out
-      </button>
-    </form>
-
-  </div>
-)}
-
-            </div>
-          )}
-        </motion.nav>
+        <button
+          onClick={() => setMenuOpen((prev) => !prev)}
+          className="md:hidden text-white text-2xl"
+          aria-label="Toggle navigation"
+        >
+          {menuOpen ? <FaTimes /> : <FaBars />}
+        </button>
       </div>
+
+      {menuOpen && (
+        <div className="md:hidden bg-[#0b0b0c] border-t border-white/10 px-6 py-6 space-y-4 text-white">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="block text-lg font-semibold"
+              onClick={() => setMenuOpen(false)}
+            >
+              {link.label}
+            </Link>
+          ))}
+          <a
+            href="https://wa.me/923183548299"
+            className="inline-flex items-center justify-center rounded-full border border-yellow-400/70 px-5 py-2 text-sm font-semibold text-yellow-300"
+          >
+            WhatsApp Concierge
+          </a>
+        </div>
+      )}
     </header>
   );
 }
