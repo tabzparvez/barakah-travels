@@ -1,190 +1,301 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
+import { useEffect, useState } from "react";
+import Image from "next/image";
 
-type Package = {
-  _id: string;
-  name: string;
-  days: number;
-  type: string;
-  description?: string;
-  price?: number;
-  features?: string[];
-  image?: string;
-  createdAt?: string;
+type PackageItem = {
+  id: string;
+  title: string;
+  images: string[];
+  price: number;
+  duration: string;
+  inclusions: string[];
+  exclusions: string[];
+  itinerary: string;
+  status: string;
 };
-import { useRouter } from 'next/navigation';
+
+type PackageData = {
+  umrah: PackageItem[];
+  tours: PackageItem[];
+};
+
+const initialForm = {
+  title: "",
+  price: "",
+  duration: "",
+  inclusions: "",
+  exclusions: "",
+  itinerary: "",
+  images: "",
+  status: "Active",
+  category: "umrah",
+};
 
 export default function AdminPackages() {
-  const [packages, setPackages] = useState<Package[]>([]);
-  const [form, setForm] = useState({ name: '', days: '', type: '', description: '', price: '', features: '', image: '' });
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [editForm, setEditForm] = useState({ name: '', days: '', type: '', description: '', price: '', features: '', image: '' });
-  const router = useRouter();
-
+  const [packages, setPackages] = useState<PackageData>({ umrah: [], tours: [] });
+  const [form, setForm] = useState(initialForm);
+  const [editing, setEditing] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/api/packages')
-      .then(async res => {
-        if (!res.ok) throw new Error('Failed to fetch packages');
-        try {
-          return await res.json();
-        } catch {
-          throw new Error('Invalid JSON response');
-        }
-      })
-      .then(setPackages)
-
-      .catch((err: unknown) => {
-        if (err instanceof Error) setError(err.message);
-        else setError('Unknown error');
-      });
+    fetch("/api/admin/packages")
+      .then((res) => res.json())
+      .then(setPackages);
   }, []);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch('/api/packages', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...form,
-          days: Number(form.days),
-          price: Number(form.price),
-          features: form.features.split(',').map(f => f.trim()),
-        }),
-      });
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.error || 'Failed to add package');
-      }
-      setForm({ name: '', days: '', type: '', description: '', price: '', features: '', image: '' });
-      router.refresh();
-    } catch (err) {
-      if (err instanceof Error) setError(err.message);
-      else setError('Unknown error');
-    } finally {
-      setLoading(false);
+  async function handleSubmit(event: React.FormEvent) {
+    event.preventDefault();
+    const payload = {
+      ...form,
+      price: Number(form.price),
+      images: form.images.split(",").map((item) => item.trim()).filter(Boolean),
+      inclusions: form.inclusions.split(",").map((item) => item.trim()).filter(Boolean),
+      exclusions: form.exclusions.split(",").map((item) => item.trim()).filter(Boolean),
+    };
+
+    const response = await fetch("/api/admin/packages", {
+      method: editing ? "PUT" : "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(editing ? { ...payload, id: editing } : payload),
+    });
+    const data = await response.json();
+    if (editing) {
+      setPackages((prev) => ({
+        ...prev,
+        [form.category]: prev[form.category as keyof PackageData].map((item) =>
+          item.id === editing ? data.package : item
+        ),
+      }));
+    } else {
+      setPackages((prev) => ({
+        ...prev,
+        [form.category]: [data.package, ...prev[form.category as keyof PackageData]],
+      }));
     }
+    setForm(initialForm);
+    setEditing(null);
   }
 
-  return (
-    <main className="section max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Manage Packages</h1>
-      {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4">{error}</div>}
-      <form className="form mb-8" onSubmit={handleSubmit}>
-        <input className="input mb-2" placeholder="Name" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required />
-        <input className="input mb-2" placeholder="Days" type="number" value={form.days} onChange={e => setForm(f => ({ ...f, days: e.target.value }))} required />
-        <input className="input mb-2" placeholder="Type (Economy, Standard, VIP)" value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))} required />
-        <input className="input mb-2" placeholder="Price" type="number" value={form.price} onChange={e => setForm(f => ({ ...f, price: e.target.value }))} />
-        <input className="input mb-2" placeholder="Image URL" value={form.image} onChange={e => setForm(f => ({ ...f, image: e.target.value }))} />
-        <textarea className="input mb-2" placeholder="Description" value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} />
-        <input className="input mb-2" placeholder="Features (comma separated)" value={form.features} onChange={e => setForm(f => ({ ...f, features: e.target.value }))} />
-        <button className="btn" type="submit" disabled={loading}>{loading ? 'Saving...' : 'Add Package'}</button>
-      </form>
-      <h2 className="text-xl font-bold mb-2">All Packages</h2>
-
-      <ul>
-        {packages.map(pkg => (
-          <li key={pkg._id} className="card mb-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            {editingId === pkg._id ? (
-              <form className="flex-1" onSubmit={e => handleEditSubmit(e, pkg._id)}>
-                <div className="font-bold mb-2">Editing: {pkg.name}</div>
-                <input className="input mb-2" placeholder="Name" value={editForm.name} onChange={e => setEditForm(f => ({ ...f, name: e.target.value }))} required />
-                <input className="input mb-2" placeholder="Days" type="number" value={editForm.days} onChange={e => setEditForm(f => ({ ...f, days: e.target.value }))} required />
-                <input className="input mb-2" placeholder="Type" value={editForm.type} onChange={e => setEditForm(f => ({ ...f, type: e.target.value }))} required />
-                <input className="input mb-2" placeholder="Price" type="number" value={editForm.price} onChange={e => setEditForm(f => ({ ...f, price: e.target.value }))} />
-                <input className="input mb-2" placeholder="Image URL" value={editForm.image} onChange={e => setEditForm(f => ({ ...f, image: e.target.value }))} />
-                <textarea className="input mb-2" placeholder="Description" value={editForm.description} onChange={e => setEditForm(f => ({ ...f, description: e.target.value }))} />
-                <input className="input mb-2" placeholder="Features (comma separated)" value={editForm.features} onChange={e => setEditForm(f => ({ ...f, features: e.target.value }))} />
-                <div className="flex gap-2 mt-2">
-                  <button className="btn bg-green-600 hover:bg-green-700 text-white" type="submit" disabled={loading}>{loading ? 'Saving...' : 'Save'}</button>
-                  <button className="btn bg-gray-400 hover:bg-gray-500 text-white" type="button" onClick={() => setEditingId(null)}>Cancel</button>
-                </div>
-              </form>
-            ) : (
-              <>
-                <div>
-                  <div className="font-bold">{pkg.name} ({pkg.days} days, {pkg.type})</div>
-                  <div>{pkg.description}</div>
-                  <div>Price: {pkg.price}</div>
-                  <div>Features: {pkg.features?.join(', ')}</div>
-                  {pkg.image && <Image src={pkg.image} alt={pkg.name} width={128} height={80} className="w-32 h-20 object-cover mt-2" />}
-                </div>
-                <div className="flex gap-2 mt-2 sm:mt-0">
-                  <button className="btn bg-yellow-500 hover:bg-yellow-600 text-white" onClick={() => handleEdit(pkg)}>Edit</button>
-                  <button className="btn bg-red-500 hover:bg-red-600 text-white" onClick={() => handleDelete(pkg._id)}>Delete</button>
-                </div>
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
-    </main>
-  );
-
-  // Handle delete
-  async function handleDelete(id: string) {
-    if (!window.confirm('Are you sure you want to delete this package?')) return;
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch(`/api/packages?id=${id}`, { method: 'DELETE' });
-      if (!res.ok) throw new Error('Failed to delete package');
-      setPackages(pkgs => pkgs.filter(p => p._id !== id));
-    } catch (err) {
-      if (err instanceof Error) setError(err.message);
-      else setError('Unknown error');
-    } finally {
-      setLoading(false);
-    }
+  async function handleDelete(category: "umrah" | "tours", id: string) {
+    await fetch(`/api/admin/packages?id=${id}&category=${category}`, {
+      method: "DELETE",
+    });
+    setPackages((prev) => ({
+      ...prev,
+      [category]: prev[category].filter((item) => item.id !== id),
+    }));
   }
 
-  // Start editing a package
-  function handleEdit(pkg: Package) {
-    setEditingId(pkg._id);
-    setEditForm({
-      name: pkg.name || '',
-      days: pkg.days?.toString() || '',
-      type: pkg.type || '',
-      description: pkg.description || '',
-      price: pkg.price?.toString() || '',
-      features: pkg.features?.join(', ') || '',
-      image: pkg.image || '',
+  function startEdit(category: "umrah" | "tours", item: PackageItem) {
+    setEditing(item.id);
+    setForm({
+      title: item.title,
+      price: item.price.toString(),
+      duration: item.duration,
+      inclusions: item.inclusions.join(", "),
+      exclusions: item.exclusions.join(", "),
+      itinerary: item.itinerary,
+      images: item.images.join(", "),
+      status: item.status,
+      category,
     });
   }
 
-  // Submit edit
-  async function handleEditSubmit(e: React.FormEvent<HTMLFormElement>, id: string) {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch(`/api/packages?id=${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...editForm,
-          days: Number(editForm.days),
-          price: Number(editForm.price),
-          features: editForm.features.split(',').map(f => f.trim()),
-        }),
-      });
-      if (!res.ok) throw new Error('Failed to update package');
-      // Update local state
-      setPackages(pkgs => pkgs.map(p => p._id === id ? { ...p, ...editForm, days: Number(editForm.days), price: Number(editForm.price), features: editForm.features.split(',').map(f => f.trim()) } : p));
-      setEditingId(null);
-    } catch (err) {
-      if (err instanceof Error) setError(err.message);
-      else setError('Unknown error');
-    } finally {
-      setLoading(false);
-    }
-  }
+  return (
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-3xl font-semibold">Package Management</h1>
+        <p className="text-white/70 mt-2">
+          Manage Umrah packages and international tour offerings with images,
+          pricing, and itinerary details.
+        </p>
+      </div>
+
+      <form
+        onSubmit={handleSubmit}
+        className="rounded-3xl border border-white/10 bg-white/5 p-6 grid gap-4 md:grid-cols-2"
+      >
+        <div>
+          <label className="text-sm text-white/70">Title</label>
+          <input
+            value={form.title}
+            onChange={(event) =>
+              setForm((prev) => ({ ...prev, title: event.target.value }))
+            }
+            className="mt-2 w-full rounded-xl bg-black/40 border border-white/10 px-4 py-2 text-white"
+            required
+          />
+        </div>
+        <div>
+          <label className="text-sm text-white/70">Category</label>
+          <select
+            value={form.category}
+            onChange={(event) =>
+              setForm((prev) => ({ ...prev, category: event.target.value }))
+            }
+            className="mt-2 w-full rounded-xl bg-black/40 border border-white/10 px-4 py-2 text-white"
+          >
+            <option value="umrah">Umrah Package</option>
+            <option value="tours">International Tour</option>
+          </select>
+        </div>
+        <div>
+          <label className="text-sm text-white/70">Price (PKR)</label>
+          <input
+            type="number"
+            value={form.price}
+            onChange={(event) =>
+              setForm((prev) => ({ ...prev, price: event.target.value }))
+            }
+            className="mt-2 w-full rounded-xl bg-black/40 border border-white/10 px-4 py-2 text-white"
+            required
+          />
+        </div>
+        <div>
+          <label className="text-sm text-white/70">Duration</label>
+          <input
+            value={form.duration}
+            onChange={(event) =>
+              setForm((prev) => ({ ...prev, duration: event.target.value }))
+            }
+            className="mt-2 w-full rounded-xl bg-black/40 border border-white/10 px-4 py-2 text-white"
+            placeholder="7 Nights"
+          />
+        </div>
+        <div>
+          <label className="text-sm text-white/70">Inclusions</label>
+          <input
+            value={form.inclusions}
+            onChange={(event) =>
+              setForm((prev) => ({ ...prev, inclusions: event.target.value }))
+            }
+            className="mt-2 w-full rounded-xl bg-black/40 border border-white/10 px-4 py-2 text-white"
+            placeholder="Visa, Hotels, Transfers"
+          />
+        </div>
+        <div>
+          <label className="text-sm text-white/70">Exclusions</label>
+          <input
+            value={form.exclusions}
+            onChange={(event) =>
+              setForm((prev) => ({ ...prev, exclusions: event.target.value }))
+            }
+            className="mt-2 w-full rounded-xl bg-black/40 border border-white/10 px-4 py-2 text-white"
+            placeholder="Personal expenses"
+          />
+        </div>
+        <div>
+          <label className="text-sm text-white/70">Images (comma separated)</label>
+          <input
+            value={form.images}
+            onChange={(event) =>
+              setForm((prev) => ({ ...prev, images: event.target.value }))
+            }
+            className="mt-2 w-full rounded-xl bg-black/40 border border-white/10 px-4 py-2 text-white"
+          />
+        </div>
+        <div>
+          <label className="text-sm text-white/70">Status</label>
+          <select
+            value={form.status}
+            onChange={(event) =>
+              setForm((prev) => ({ ...prev, status: event.target.value }))
+            }
+            className="mt-2 w-full rounded-xl bg-black/40 border border-white/10 px-4 py-2 text-white"
+          >
+            <option>Active</option>
+            <option>Draft</option>
+          </select>
+        </div>
+        <div className="md:col-span-2">
+          <label className="text-sm text-white/70">Itinerary</label>
+          <textarea
+            value={form.itinerary}
+            onChange={(event) =>
+              setForm((prev) => ({ ...prev, itinerary: event.target.value }))
+            }
+            className="mt-2 w-full rounded-xl bg-black/40 border border-white/10 px-4 py-2 text-white"
+            rows={3}
+          />
+        </div>
+        <div className="md:col-span-2 flex gap-3">
+          <button
+            type="submit"
+            className="rounded-xl bg-yellow-400 text-black px-6 py-2 font-semibold"
+          >
+            {editing ? "Update package" : "Add package"}
+          </button>
+          {editing && (
+            <button
+              type="button"
+              onClick={() => {
+                setEditing(null);
+                setForm(initialForm);
+              }}
+              className="rounded-xl border border-white/20 px-6 py-2 text-white"
+            >
+              Cancel
+            </button>
+          )}
+        </div>
+      </form>
+
+      {(["umrah", "tours"] as const).map((category) => (
+        <div
+          key={category}
+          className="rounded-3xl border border-white/10 bg-white/5 p-6"
+        >
+          <h2 className="text-lg font-semibold mb-4">
+            {category === "umrah" ? "Umrah Packages" : "International Tours"}
+          </h2>
+          <div className="grid gap-4 md:grid-cols-2">
+            {packages[category].map((item) => (
+              <div
+                key={item.id}
+                className="rounded-2xl border border-white/10 bg-black/40 p-4 flex flex-col gap-4"
+              >
+                <div className="flex items-center gap-4">
+                  {item.images[0] && (
+                    <Image
+                      src={item.images[0]}
+                      alt={item.title}
+                      width={120}
+                      height={80}
+                      className="rounded-xl object-cover"
+                    />
+                  )}
+                  <div>
+                    <p className="font-semibold">{item.title}</p>
+                    <p className="text-sm text-white/70">
+                      {item.duration} • PKR {item.price.toLocaleString()}
+                    </p>
+                  </div>
+                </div>
+                <p className="text-sm text-white/70">{item.itinerary}</p>
+                <div className="flex flex-wrap gap-2 text-xs text-white/60">
+                  <span className="rounded-full border border-white/10 px-3 py-1">
+                    {item.status}
+                  </span>
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => startEdit(category, item)}
+                    className="rounded-xl border border-white/20 px-4 py-2 text-sm"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(category, item.id)}
+                    className="rounded-xl border border-red-400/40 px-4 py-2 text-sm text-red-200"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }

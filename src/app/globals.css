@@ -2,60 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
-  @apply bg-white text-secondary font-sans min-h-screen;
+  @apply bg-[#0b0b0c] text-white font-sans min-h-screen;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   @apply font-heading;
 }
 
 .btn {
-  @apply bg-primary text-white font-bold py-2 px-6 rounded-xl shadow transition hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary-dark;
+  @apply rounded-full bg-yellow-400 text-black font-semibold px-6 py-2 transition hover:bg-yellow-300;
 }
-
 
 .card {
-  @apply bg-white rounded-xl shadow-card p-6 border border-gray-100 transition-shadow duration-200;
+  @apply rounded-2xl border border-white/10 bg-white/5 p-6 shadow-card;
 }
 
-@media (min-width: 768px) {
-  .card {
-    @apply hover:shadow-lg mx-2 my-4;
-  }
-}
-
-.form .input, .form input, .form select, .form textarea {
-  @apply w-full border border-gray-300 rounded-xl px-4 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-primary;
+.form .input,
+.form input,
+.form select,
+.form textarea {
+  @apply w-full border border-white/10 rounded-xl px-4 py-2 mb-2 bg-black/40 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400;
 }
 
 .form button[type="submit"] {
   @apply mt-2;
 }
 
-nav {
-  @apply flex items-center justify-between py-4 px-8 bg-white shadow-card mb-8;
-}
-
-footer {
-  @apply bg-gray-100 text-center py-6 mt-12 text-sm text-secondary;
-}
-/* ===========================
+/* ==========================
    PRINT STYLES (INVOICE ONLY)
-   =========================== */
+   ========================== */
 
 @media print {
-  html, body {
+  html,
+  body {
     margin: 0;
     padding: 0;
     background: white;
+    color: #000;
   }
 
   body {
     overflow: visible;
   }
 
+  header,
   nav,
   aside,
   footer,
@@ -63,94 +59,4 @@ footer {
   .no-print {
     display: none !important;
   }
-
-  #invoice-print {
-    display: block !important;
-    width: 100%;
-    padding: 20px;
-    background: white;
-  }
-
-  #invoice-print * {
-    visibility: visible !important;
-  }
-}
-
-/* ===========================
-   INVOICE PRINT FIX (MOBILE)
-   =========================== */
-
-@media print {
-
-  /* Hide EVERYTHING by default */
-  body * {
-    visibility: hidden !important;
-  }
-
-  /* Show only invoice */
-  #invoice-print,
-  #invoice-print * {
-    visibility: visible !important;
-  }
-
-  /* Position invoice at top */
-  #invoice-print {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    background: white;
-    margin: 0;
-    padding: 0;
-  }
-
-  /* Force hide site header/footer */
-  header,
-  nav,
-  footer {
-    display: none !important;
-  }
-
-}
-
-/* ================= HOME PAGE ANIMATIONS ================= */
-
-@keyframes slideLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-80px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideRight {
-  from {
-    opacity: 0;
-    transform: translateX(80px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.slide-left {
-  animation: slideLeft 1s ease forwards;
-}
-
-.slide-right {
-  animation: slideRight 1s ease forwards;
-}
-
-.reveal {
-  opacity: 1;
-  transform: translateY(16px);
-  transition: all 0.8s ease;
-}
-
-.reveal.active {
-  transform: translateY(0);
 }

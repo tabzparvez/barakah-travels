@@ -1,0 +1,82 @@
+{
+  "users": [
+    {
+      "id": "user-super-admin",
+      "name": "Aisha Malik",
+      "email": "superadmin@barakahtravels.online",
+      "role": "Super Admin",
+      "permissions": {
+        "packages": true,
+        "inquiries": true,
+        "quotations": true,
+        "invoices": true
+      }
+    },
+    {
+      "id": "user-admin",
+      "name": "Hassan Raza",
+      "email": "admin@barakahtravels.online",
+      "role": "Admin",
+      "permissions": {
+        "packages": true,
+        "inquiries": true,
+        "quotations": true,
+        "invoices": true
+      }
+    },
+    {
+      "id": "user-employee",
+      "name": "Fatima Noor",
+      "email": "employee@barakahtravels.online",
+      "role": "Employee",
+      "permissions": {
+        "packages": false,
+        "inquiries": true,
+        "quotations": true,
+        "invoices": false
+      }
+    }
+  ],
+  "packages": {
+    "umrah": [
+      {
+        "id": "pkg-umrah-premium",
+        "title": "Premium 12 Nights Umrah",
+        "images": ["/umrah2.png"],
+        "price": 325000,
+        "duration": "12 Nights",
+        "inclusions": ["Umrah visa", "5-star hotels", "Direct flights", "Luxury transport"],
+        "exclusions": ["Personal expenses", "Qurbani"],
+        "itinerary": "3 nights in Madinah, 7 nights in Makkah, city ziarat, guided support.",
+        "status": "Active"
+      }
+    ],
+    "tours": [
+      {
+        "id": "pkg-turkey-elegance",
+        "title": "Turkey Elegance Tour",
+        "images": ["/turkey.jpg"],
+        "price": 185000,
+        "duration": "7 Days",
+        "inclusions": ["Boutique hotels", "City tours", "Airport transfers"],
+        "exclusions": ["Visa fees", "Meals"],
+        "itinerary": "Istanbul city tour, Bosphorus cruise, Bursa day trip.",
+        "status": "Active"
+      },
+      {
+        "id": "pkg-baku-escape",
+        "title": "Baku Luxury Escape",
+        "images": ["/baku.jpg"],
+        "price": 155000,
+        "duration": "5 Days",
+        "inclusions": ["4-star hotel", "Guided tours", "Transfers"],
+        "exclusions": ["Visa", "Personal expenses"],
+        "itinerary": "Baku old city, Flame Towers, Gobustan excursion.",
+        "status": "Active"
+      }
+    ]
+  },
+  "inquiries": [],
+  "quotations": [],
+  "invoices": []
+}
