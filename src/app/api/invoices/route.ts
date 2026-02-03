@@ -1,23 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateId, readData, writeData } from "@/lib/data-store";
 
-const FILE = "inquiries.json";
+const FILE = "invoices.json";
 
 export async function GET() {
-  const inquiries = await readData(FILE, []);
-  return NextResponse.json(inquiries);
+  const invoices = await readData(FILE, []);
+  return NextResponse.json(invoices);
 }
 
 export async function POST(req: NextRequest) {
   const data = await req.json();
-  const inquiries = await readData(FILE, []);
+  const invoices = await readData(FILE, []);
   const next = {
-    id: generateId("inq"),
+    id: generateId("inv"),
+    invoiceNumber: `INV-${new Date().getFullYear()}-${Math.floor(Math.random() * 9000 + 1000)}`,
     ...data,
     createdAt: new Date().toISOString(),
-    status: "New",
+    status: data.status ?? "Unpaid",
   };
-  const updated = [next, ...inquiries];
+  const updated = [next, ...invoices];
   await writeData(FILE, updated);
   return NextResponse.json(next);
 }

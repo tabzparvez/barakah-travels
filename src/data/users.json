@@ -1,0 +1,11 @@
+[
+  {
+    "id": "user-super-admin",
+    "name": "Super Admin",
+    "email": "info@barakahtravels.online",
+    "username": "admin",
+    "password": "barakah123",
+    "role": "Super Admin",
+    "permissions": ["packages", "inquiries", "quotations", "invoices", "users"]
+  }
+]

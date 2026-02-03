@@ -1,54 +1,96 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { FaBoxOpen, FaEnvelopeOpenText, FaStar, FaImages, FaBlog, FaQuestionCircle, FaSignOutAlt } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+
+type DashboardStats = {
+  packages: number;
+  inquiries: number;
+  quotations: number;
+  invoices: number;
+};
 
 export default function AdminDashboard() {
-  const router = useRouter();
+  const [stats, setStats] = useState<DashboardStats>({
+    packages: 0,
+    inquiries: 0,
+    quotations: 0,
+    invoices: 0,
+  });
+
   useEffect(() => {
-    // Simple check for admin session (cookie or localStorage)
-    const isAdmin = localStorage.getItem("isAdmin");
-    if (!isAdmin) {
-      router.push("/admin/login");
+    async function load() {
+      const [packagesRes, inquiriesRes, quotationsRes, invoicesRes] =
+        await Promise.all([
+          fetch("/api/packages"),
+          fetch("/api/inquiries"),
+          fetch("/api/quotations"),
+          fetch("/api/invoices"),
+        ]);
+      const [packages, inquiries, quotations, invoices] = await Promise.all([
+        packagesRes.json(),
+        inquiriesRes.json(),
+        quotationsRes.json(),
+        invoicesRes.json(),
+      ]);
+      setStats({
+        packages: packages.length,
+        inquiries: inquiries.length,
+        quotations: quotations.length,
+        invoices: invoices.length,
+      });
     }
-  }, [router]);
+    load();
+  }, []);
+
+  const cards = [
+    {
+      label: "Total Packages",
+      value: stats.packages,
+      href: "/admin/packages",
+    },
+    {
+      label: "Total Inquiries",
+      value: stats.inquiries,
+      href: "/admin/inquiries",
+    },
+    {
+      label: "Total Quotations",
+      value: stats.quotations,
+      href: "/admin/quotations",
+    },
+    {
+      label: "Total Invoices",
+      value: stats.invoices,
+      href: "/admin/invoices",
+    },
+  ];
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-primary-light to-primary-dark px-2">
-      <div className="bg-white rounded-3xl shadow-2xl p-10 w-full max-w-xl flex flex-col items-center border border-primary/10">
-        <h1 className="text-4xl font-extrabold mb-8 text-primary font-heading text-center drop-shadow">Admin Dashboard</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full mb-10">
-          <a href="/admin/packages" className="flex flex-col items-center justify-center p-6 rounded-xl shadow-card bg-primary-light hover:bg-primary transition-all duration-200 group cursor-pointer">
-            <FaBoxOpen className="text-3xl mb-2 text-primary group-hover:text-white transition" />
-            <span className="font-semibold text-primary group-hover:text-white transition">Manage Packages</span>
-          </a>
-          <a href="/admin/inquiries" className="flex flex-col items-center justify-center p-6 rounded-xl shadow-card bg-primary-light hover:bg-primary transition-all duration-200 group cursor-pointer">
-            <FaEnvelopeOpenText className="text-3xl mb-2 text-primary group-hover:text-white transition" />
-            <span className="font-semibold text-primary group-hover:text-white transition">View Inquiries</span>
-          </a>
-          <a href="/admin/testimonials" className="flex flex-col items-center justify-center p-6 rounded-xl shadow-card bg-primary-light hover:bg-primary transition-all duration-200 group cursor-pointer">
-            <FaStar className="text-3xl mb-2 text-primary group-hover:text-white transition" />
-            <span className="font-semibold text-primary group-hover:text-white transition">Manage Testimonials</span>
-          </a>
-          <a href="/admin/gallery" className="flex flex-col items-center justify-center p-6 rounded-xl shadow-card bg-primary-light hover:bg-primary transition-all duration-200 group cursor-pointer">
-            <FaImages className="text-3xl mb-2 text-primary group-hover:text-white transition" />
-            <span className="font-semibold text-primary group-hover:text-white transition">Manage Gallery</span>
-          </a>
-          <a href="/admin/blog" className="flex flex-col items-center justify-center p-6 rounded-xl shadow-card bg-primary-light hover:bg-primary transition-all duration-200 group cursor-pointer">
-            <FaBlog className="text-3xl mb-2 text-primary group-hover:text-white transition" />
-            <span className="font-semibold text-primary group-hover:text-white transition">Manage Blog</span>
-          </a>
-          <a href="/admin/faq" className="flex flex-col items-center justify-center p-6 rounded-xl shadow-card bg-primary-light hover:bg-primary transition-all duration-200 group cursor-pointer">
-            <FaQuestionCircle className="text-3xl mb-2 text-primary group-hover:text-white transition" />
-            <span className="font-semibold text-primary group-hover:text-white transition">Manage FAQ</span>
-          </a>
-        </div>
-        <a href="/admin/logout" className="flex items-center gap-2 justify-center mt-2 px-6 py-3 rounded-xl bg-red-500 hover:bg-red-600 text-white font-semibold shadow-card transition-all duration-200 w-full max-w-xs">
-          <FaSignOutAlt className="text-lg" /> Logout
-        </a>
+    <div className="space-y-10">
+      <div className="admin-card bg-gradient-to-r from-slate-900 to-slate-800 text-white border-none">
+        <p className="uppercase tracking-[0.3em] text-yellow-400 text-xs">
+          Overview
+        </p>
+        <h2 className="text-3xl font-semibold mt-2">
+          Barakah Travels Admin Dashboard
+        </h2>
+        <p className="text-white/70 mt-3">
+          Monitor all core business metrics and manage your premium travel
+          services from one place.
+        </p>
       </div>
-  {/* Button style is now global in globals.css for consistency */}
-    </main>
+
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        {cards.map((card) => (
+          <Link key={card.label} href={card.href} className="admin-card">
+            <p className="text-sm text-slate-500">{card.label}</p>
+            <p className="text-3xl font-semibold text-slate-900 mt-2">
+              {card.value}
+            </p>
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 }

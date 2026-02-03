@@ -3,20 +3,19 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 
 /* ================= TYPES ================= */
-type Package = {
-  _id: string;
-  name: string;
-  days: number;
+type TravelPackage = {
+  id: string;
+  title: string;
   type: string;
-  description?: string;
-  price?: number;
-  features?: string[];
-  image?: string;
+  price?: string;
+  duration?: string;
+  images?: string[];
+  inclusions?: string[];
 };
 
 /* ================= DATA FETCH ================= */
 function usePackages() {
-  const [packages, setPackages] = useState<Package[] | null>(null);
+  const [packages, setPackages] = useState<TravelPackage[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,33 +43,24 @@ export default function PackagesPage() {
   const { packages, loading, error } = usePackages();
 
   /* Fallback / demo data */
-  const demoPackages: Package[] = [
+  const demoPackages: TravelPackage[] = [
     {
-      _id: "demo1",
-      name: "Economy Umrah Package",
-      days: 7,
-      type: "Economy",
-      description:
-        "Affordable Umrah package with 3-star hotel, visa, transport & ziyārāt.",
-      price: 95000,
-      features: ["Visa Included", "3-Star Hotel", "Transport", "Ziyārāt"],
-      image: "/umrah2.png",
+      id: "demo1",
+      title: "Economy Umrah Package",
+      type: "Umrah",
+      duration: "7 Days",
+      price: "PKR 95,000",
+      images: ["/umrah2.png"],
+      inclusions: ["Visa Included", "3-Star Hotel", "Transport", "Ziyārāt"],
     },
     {
-      _id: "demo2",
-      name: "Premium Umrah Package",
-      days: 10,
-      type: "Premium",
-      description:
-        "Premium Umrah package with 5-star hotel, private transport & support.",
-      price: 185000,
-      features: [
-        "Visa Included",
-        "5-Star Hotel",
-        "Private Transport",
-        "Ziyārāt",
-      ],
-      image: "/umrah2.png",
+      id: "demo2",
+      title: "Premium Umrah Package",
+      type: "Umrah",
+      duration: "10 Days",
+      price: "PKR 185,000",
+      images: ["/umrah2.png"],
+      inclusions: ["Visa Included", "5-Star Hotel", "Private Transport", "Ziyārāt"],
     },
   ];
 
@@ -122,15 +112,15 @@ export default function PackagesPage() {
         <section className="grid gap-8 md:grid-cols-3">
           {showPackages.map((pkg) => (
             <div
-              key={pkg._id}
+              key={pkg.id}
               className="card flex flex-col hover:shadow-xl transition"
             >
               {/* Image */}
-              {pkg.image && (
+              {pkg.images?.[0] && (
                 <div className="relative h-40 mb-4">
                   <Image
-                    src={pkg.image}
-                    alt={`${pkg.name} Umrah Package`}
+                    src={pkg.images[0]}
+                    alt={`${pkg.title} Umrah Package`}
                     fill
                     className="object-cover rounded"
                   />
@@ -142,34 +132,27 @@ export default function PackagesPage() {
 
               {/* Title */}
               <h2 className="text-xl font-bold mb-1 text-primary">
-                {pkg.name}
+                {pkg.title}
               </h2>
               <p className="text-sm text-secondary mb-3">
-                {pkg.days} Days · {pkg.type}
+                {pkg.duration || "Flexible"} · {pkg.type}
               </p>
 
               {/* Features */}
               <ul className="list-disc pl-5 text-sm mb-4 flex-1">
-                {pkg.features?.map((f, i) => (
+                {pkg.inclusions?.map((f, i) => (
                   <li key={i}>{f}</li>
                 ))}
               </ul>
 
-              {/* Description */}
-              {pkg.description && (
-                <p className="text-sm mb-3">{pkg.description}</p>
-              )}
-
               {/* Price */}
               {pkg.price && (
-                <div className="font-bold text-lg mb-4">
-                  PKR {pkg.price.toLocaleString()}
-                </div>
+                <div className="font-bold text-lg mb-4">{pkg.price}</div>
               )}
 
               {/* CTA */}
               <a
-                href={`https://wa.me/923183548299?text=Assalamualaikum, I want details about ${pkg.days} days ${pkg.type} Umrah package`}
+                href={`https://wa.me/923183548299?text=Assalamualaikum, I want details about ${pkg.title}`}
                 className="btn text-center"
               >
                 Book on WhatsApp

@@ -7,10 +7,9 @@ export default function AdminLogout() {
   useEffect(() => {
     // Clear admin session (if using cookies/localStorage)
     if (typeof window !== "undefined") {
-      localStorage.removeItem("adminToken");
+      localStorage.removeItem("barakahAdminUser");
     }
-    // Redirect to homepage
-    router.replace("/");
+    router.replace("/admin/login");
   }, [router]);
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh]">

@@ -1,74 +1,82 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function NewInvoicePage() {
   const router = useRouter();
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    price: "",
+    status: "Unpaid",
+  });
 
-  const [customer, setCustomer] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [description, setDescription] = useState("Umrah Package");
-  const [qty, setQty] = useState(1);
-  const [unitPrice, setUnitPrice] = useState(0);
-  const [paid, setPaid] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState("Cash");
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
-  const total = qty * unitPrice;
-  const balance = total - paid;
-
-  function handleSubmit() {
-    const id = Date.now().toString();
-
-    const data = {
-      customer,
-      phone,
-      email,
-      description,
-      qty,
-      unitPrice,
-      total,
-      paid,
-      balance,
-      paymentMethod,
-      date: new Date().toISOString(),
-    };
-
-    localStorage.setItem(`invoice-${id}`, JSON.stringify(data));
-    router.push(`/admin/invoices/${id}`);
-  }
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const res = await fetch("/api/invoices", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        client: { name: form.name, phone: form.phone },
+        packageDetails: { price: form.price },
+        status: form.status,
+      }),
+    });
+    const data = await res.json();
+    router.push(`/admin/invoices/${data.id}`);
+  };
 
   return (
-    <div className="card max-w-2xl">
-      <h1 className="text-2xl font-bold mb-6">Create New Invoice</h1>
-
-      <input className="input" placeholder="Customer Name" onChange={e => setCustomer(e.target.value)} />
-      <input className="input" placeholder="Phone" onChange={e => setPhone(e.target.value)} />
-      <input className="input" placeholder="Email" onChange={e => setEmail(e.target.value)} />
-
-      <input className="input" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} />
-      <input className="input" type="number" placeholder="Quantity" value={qty} onChange={e => setQty(+e.target.value)} />
-      <input className="input" type="number" placeholder="Unit Price" onChange={e => setUnitPrice(+e.target.value)} />
-
-      <select className="input" onChange={e => setPaymentMethod(e.target.value)}>
-        <option>Cash</option>
-        <option>Bank Transfer</option>
-        <option>EasyPaisa</option>
-        <option>JazzCash</option>
-      </select>
-
-      <input className="input" type="number" placeholder="Paid Amount" onChange={e => setPaid(+e.target.value)} />
-
-      <div className="mt-4 text-sm">
-        <p>Total: <strong>PKR {total}</strong></p>
-        <p>Paid: <strong>PKR {paid}</strong></p>
-        <p>Balance: <strong>PKR {balance}</strong></p>
+    <form onSubmit={handleSubmit} className="space-y-8">
+      <div className="admin-card">
+        <h2 className="text-2xl font-semibold mb-2">Create Invoice</h2>
+        <p className="text-slate-500">Generate an invoice manually if needed.</p>
       </div>
 
-      <button onClick={handleSubmit} className="btn mt-6">
-        Save & View Invoice
+      <div className="admin-card space-y-4">
+        <input
+          name="name"
+          value={form.name}
+          onChange={handleChange}
+          placeholder="Client Name"
+          className="admin-input"
+          required
+        />
+        <input
+          name="phone"
+          value={form.phone}
+          onChange={handleChange}
+          placeholder="Client Phone"
+          className="admin-input"
+          required
+        />
+        <input
+          name="price"
+          value={form.price}
+          onChange={handleChange}
+          placeholder="Invoice Amount"
+          className="admin-input"
+          required
+        />
+        <select
+          name="status"
+          value={form.status}
+          onChange={handleChange}
+          className="admin-input"
+        >
+          <option value="Unpaid">Unpaid</option>
+          <option value="Paid">Paid</option>
+        </select>
+      </div>
+
+      <button type="submit" className="btn w-full md:w-auto">
+        Save Invoice
       </button>
-    </div>
+    </form>
   );
 }

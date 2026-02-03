@@ -1,0 +1,26 @@
+[
+  {
+    "id": "pkg-umrah-01",
+    "type": "Umrah",
+    "title": "Premium Umrah 10 Nights",
+    "price": "PKR 235,000",
+    "duration": "10 Nights",
+    "status": "Active",
+    "images": ["/umrah2.png"],
+    "inclusions": ["Visa", "Hotels near Haram", "Ground transport"],
+    "exclusions": ["Personal expenses", "Travel insurance"],
+    "itinerary": ["Makkah (5 nights)", "Madinah (5 nights)"]
+  },
+  {
+    "id": "pkg-tour-01",
+    "type": "International",
+    "title": "Turkey Highlights",
+    "price": "PKR 285,000",
+    "duration": "7 Nights",
+    "status": "Active",
+    "images": ["/turkey.jpg"],
+    "inclusions": ["Hotels", "City tours", "Airport transfers"],
+    "exclusions": ["Visa fee", "Personal expenses"],
+    "itinerary": ["Istanbul (4 nights)", "Cappadocia (3 nights)"]
+  }
+]
