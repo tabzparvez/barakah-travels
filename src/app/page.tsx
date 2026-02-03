@@ -78,37 +78,44 @@ export default function Home() {
   }, []);
 
   return (
-    <main>
+    <main className="pb-16">
 
       {/* HERO */}
-      <section className="relative min-h-[70vh] rounded-2xl overflow-hidden shadow-card mb-20 mt-4 md:mt-6 reveal">
+      <section className="relative min-h-[70vh] rounded-[32px] overflow-hidden shadow-card mb-20 mt-4 md:mt-6 reveal">
         <Image
           src="/umrah2.png"
           alt="Kaaba"
           fill
           className="object-cover opacity-25"
         />
-        <div className="relative z-10 text-center py-28 px-6">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-primary mb-6">
+        <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/80 to-white/95" />
+        <div className="relative z-10 text-center py-24 md:py-28 px-6">
+          <span className="badge mb-4">Trusted Umrah Support</span>
+          <h1 className="text-4xl md:text-6xl font-extrabold text-primary mb-6">
             Answer the Call for Umrah with Peace of Mind
           </h1>
 
-          <p className="text-xl text-secondary-dark mb-8 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-secondary-dark mb-8 max-w-3xl mx-auto">
             Complete Umrah visa, hotels near Haram, flights and transport —
             handled by Barakah Travels with 24/7 WhatsApp support.
           </p>
 
-          <a
-            href="https://wa.me/923183548299"
-            className="btn text-lg px-8 py-3"
-          >
-            Get Latest Umrah Price on WhatsApp
-          </a>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="https://wa.me/923183548299"
+              className="btn text-base md:text-lg px-8 py-3"
+            >
+              Get Latest Umrah Price on WhatsApp
+            </a>
+            <a href="/packages" className="btn-outline text-base md:text-lg px-8 py-3">
+              View Umrah Packages
+            </a>
+          </div>
 
-          <div className="mt-10 flex flex-wrap justify-center gap-10 text-primary font-bold">
-            <span>500+ Pilgrims Served</span>
-            <span>Visa in 48 Hours</span>
-            <span>Hotels Within 300m of Haram</span>
+          <div className="mt-10 flex flex-wrap justify-center gap-6 text-primary font-semibold">
+            <span className="flex items-center gap-2">• 500+ Pilgrims Served</span>
+            <span className="flex items-center gap-2">• Visa in 48 Hours</span>
+            <span className="flex items-center gap-2">• Hotels Within 300m of Haram</span>
           </div>
         </div>
       </section>
@@ -136,7 +143,7 @@ export default function Home() {
             { title: "Baku", img: "/baku.jpg" },
           ].map((d, i) => (
             <div key={i} className="card text-center p-4 reveal">
-              <Image src={d.img} alt={d.title} width={300} height={160} className="rounded mb-4"/>
+              <Image src={d.img} alt={d.title} width={300} height={160} className="rounded-xl mb-4"/>
               <h3 className="text-xl font-bold text-primary mb-2">{d.title}</h3>
               <Link href="/contact" className="btn">Explore</Link>
             </div>
@@ -189,7 +196,7 @@ export default function Home() {
           Umrah Packages & Travel Services in Pakistan
         </h2>
         <p className="mb-3">
-          Barakah Travels provides affordable and premium Umrah packages from Karachi,
+          Barakah Travels provides affordable and comfortable Umrah packages from Karachi,
           Lahore and Islamabad including visa, hotels near Haram and transport.
         </p>
         <p>

@@ -1,19 +1,16 @@
 import { ReactNode } from "react";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+import { redirect, unauthorized } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import {
   FaTachometerAlt,
   FaBoxOpen,
   FaEnvelope,
-  FaStar,
-  FaImages,
-  FaBlog,
-  FaQuestionCircle,
   FaSignOutAlt,
   FaFileInvoice,
-  FaReceipt,
+  FaFileSignature,
+  FaCogs,
 } from "react-icons/fa";
 
 const ADMIN_EMAIL = "info@barakahtravels.online";
@@ -32,59 +29,47 @@ export default async function AdminLayout({
 
   // 🔐 Not admin
   if (session.user.email !== ADMIN_EMAIL) {
-    redirect("/");
+    unauthorized();
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 md:flex">
+    <div className="min-h-screen bg-gray-50 md:flex">
       {/* ================= SIDEBAR ================= */}
-      <aside className="hidden md:flex md:w-64 bg-[#9C7421] text-white p-6 flex-col shadow-xl">
+      <aside className="hidden md:flex md:w-72 bg-white text-secondary p-6 flex-col shadow-lg border-r border-primary/10">
         {/* Brand */}
         <div className="mb-10">
-          <h2 className="text-2xl font-extrabold tracking-wide">
-            Barakah CRM
+          <h2 className="text-2xl font-extrabold tracking-wide text-primary">
+            Barakah Umrah CRM
           </h2>
-          <p className="text-xs text-yellow-200 mt-1">
-            Admin Panel
+          <p className="text-xs text-secondary mt-1">
+            Operations & Sales
           </p>
         </div>
 
         {/* Navigation */}
         <nav className="flex flex-col gap-2 text-sm">
-          <Link href="/admin" className="flex items-center gap-3 px-3 py-2 rounded hover:bg-yellow-700/40 transition">
-            <FaTachometerAlt /> Dashboard
+          <Link href="/admin" className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition">
+            <FaTachometerAlt className="text-primary" /> Dashboard
           </Link>
 
-          <Link href="/admin/invoices" className="flex items-center gap-3 px-3 py-2 rounded hover:bg-yellow-700/40 transition">
-            <FaFileInvoice /> Invoices
+          <Link href="/admin/inquiries" className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition">
+            <FaEnvelope className="text-primary" /> Inquiries
           </Link>
 
-          <Link href="/admin/vouchers" className="flex items-center gap-3 px-3 py-2 rounded hover:bg-yellow-700/40 transition">
-            <FaReceipt /> Vouchers
+          <Link href="/admin/quotations" className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition">
+            <FaFileSignature className="text-primary" /> Quotations
           </Link>
 
-          <Link href="/admin/packages" className="flex items-center gap-3 px-3 py-2 rounded hover:bg-yellow-700/40 transition">
-            <FaBoxOpen /> Packages
+          <Link href="/admin/invoices" className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition">
+            <FaFileInvoice className="text-primary" /> Invoices
           </Link>
 
-          <Link href="/admin/inquiries" className="flex items-center gap-3 px-3 py-2 rounded hover:bg-yellow-700/40 transition">
-            <FaEnvelope /> Inquiries
+          <Link href="/admin/packages" className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition">
+            <FaBoxOpen className="text-primary" /> Umrah Packages
           </Link>
 
-          <Link href="/admin/reviews" className="flex items-center gap-3 px-3 py-2 rounded hover:bg-yellow-700/40 transition">
-            <FaStar /> Reviews
-          </Link>
-
-          <Link href="/admin/gallery" className="flex items-center gap-3 px-3 py-2 rounded hover:bg-yellow-700/40 transition">
-            <FaImages /> Gallery
-          </Link>
-
-          <Link href="/admin/blog" className="flex items-center gap-3 px-3 py-2 rounded hover:bg-yellow-700/40 transition">
-            <FaBlog /> Blog
-          </Link>
-
-          <Link href="/admin/faq" className="flex items-center gap-3 px-3 py-2 rounded hover:bg-yellow-700/40 transition">
-            <FaQuestionCircle /> FAQ
+          <Link href="/admin/settings" className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition">
+            <FaCogs className="text-primary" /> Settings
           </Link>
         </nav>
 
@@ -92,9 +77,9 @@ export default async function AdminLayout({
         <form
           action="/api/auth/signout"
           method="post"
-          className="mt-auto pt-6 border-t border-yellow-200/30"
+          className="mt-auto pt-6 border-t border-primary/10"
         >
-          <button className="flex items-center gap-2 text-red-200 hover:text-white transition">
+          <button className="flex items-center gap-2 text-red-500 hover:text-red-600 transition">
             <FaSignOutAlt /> Logout
           </button>
         </form>

@@ -23,7 +23,12 @@ export default function InvoicesPage() {
     const data: Invoice[] = keys
       .map((key) => {
         const item = localStorage.getItem(key);
-        return item ? JSON.parse(item) : null;
+        if (!item) return null;
+        const data = JSON.parse(item);
+        return {
+          ...data,
+          invoiceId: data.invoiceId || key.replace("invoice-", ""),
+        };
       })
       .filter(Boolean);
 
@@ -32,8 +37,13 @@ export default function InvoicesPage() {
 
   return (
     <div className="card">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Invoices</h1>
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-primary">Invoices</h1>
+          <p className="text-sm text-gray-500">
+            Auto-generated invoices from quotations.
+          </p>
+        </div>
         <Link href="/admin/invoices/new" className="btn">
           + Create Invoice
         </Link>
@@ -44,8 +54,8 @@ export default function InvoicesPage() {
           No invoices created yet
         </p>
       ) : (
-        <table className="w-full text-sm border">
-          <thead className="bg-gray-100">
+        <table className="w-full text-sm border border-gray-200 rounded-xl overflow-hidden">
+          <thead className="bg-gray-50">
             <tr>
               <th className="p-2 text-left">Invoice #</th>
               <th className="p-2 text-left">Customer</th>
@@ -56,7 +66,7 @@ export default function InvoicesPage() {
           </thead>
           <tbody>
             {invoices.map((inv) => (
-              <tr key={inv.invoiceId} className="border-t">
+              <tr key={inv.invoiceId} className="border-t border-gray-200">
                 <td className="p-2">#{inv.invoiceId}</td>
                 <td className="p-2">{inv.customerName}</td>
                 <td className="p-2">PKR {inv.total}</td>

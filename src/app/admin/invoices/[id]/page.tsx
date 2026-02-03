@@ -13,6 +13,7 @@ export default function InvoiceViewPage({
   if (!raw) return <p className="text-center mt-10">Invoice not found.</p>;
 
   const data = JSON.parse(raw);
+  const invoiceNumber = data.invoiceId || params.id;
 
   return (
     <div
@@ -41,7 +42,7 @@ export default function InvoiceViewPage({
         <div className="text-right">
           <p className="text-lg font-bold">INVOICE</p>
           <p>
-            <strong>No:</strong> {params.id}
+            <strong>No:</strong> {invoiceNumber}
           </p>
           <p>
             <strong>Date:</strong>{" "}
@@ -65,7 +66,7 @@ export default function InvoiceViewPage({
       <div className="mb-4">
         <p>
           <strong>Customer Name:</strong>{" "}
-          {data.customer}
+          {data.customerName}
         </p>
         <p>
           <strong>Phone:</strong> {data.phone}
@@ -73,6 +74,11 @@ export default function InvoiceViewPage({
         <p>
           <strong>Email:</strong> {data.email}
         </p>
+        {data.quotationId && (
+          <p>
+            <strong>Quotation:</strong> {data.quotationId}
+          </p>
+        )}
       </div>
 
       {/* ================= TABLE ================= */}
@@ -185,12 +191,20 @@ export default function InvoiceViewPage({
 
       {/* ================= PRINT ================= */}
       <div className="mt-6 no-print">
-        <button
-          onClick={() => window.print()}
-          className="btn"
-        >
-          Print / Save PDF
-        </button>
+        <div className="flex flex-wrap gap-3">
+          <button
+            onClick={() => window.print()}
+            className="btn"
+          >
+            Print Invoice
+          </button>
+          <button
+            onClick={() => window.print()}
+            className="btn-outline"
+          >
+            Download PDF
+          </button>
+        </div>
       </div>
     </div>
   );
