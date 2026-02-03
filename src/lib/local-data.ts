@@ -153,6 +153,6 @@ export function createId(prefix: string) {
 }
 
 export function sanitizeUser(user: AdminUser) {
-  const { password, ...rest } = user;
+  const { password: _password, ...rest } = user;
   return rest;
 }

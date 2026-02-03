@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
     client.close();
     return NextResponse.json({ success: true });
   } catch (error) {
+    console.error("Newsletter signup failed", error);
     return NextResponse.json({ error: 'Failed to save email.' }, { status: 500 });
   }
 }

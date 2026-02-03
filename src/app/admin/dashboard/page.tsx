@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import {
   FaBoxOpen,
   FaEnvelopeOpenText,
@@ -109,24 +110,24 @@ export default function AdminDashboard() {
         <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
           <h2 className="text-lg font-semibold">Quick Actions</h2>
           <div className="mt-4 flex flex-col gap-3 text-sm">
-            <a
+            <Link
               href="/admin/quotations"
               className="rounded-xl border border-yellow-400/40 px-4 py-2 text-yellow-300 hover:bg-yellow-400/10"
             >
               Create new quotation
-            </a>
-            <a
+            </Link>
+            <Link
               href="/admin/inquiries"
               className="rounded-xl border border-white/10 px-4 py-2 hover:bg-white/5"
             >
               Review new inquiries
-            </a>
-            <a
+            </Link>
+            <Link
               href="/admin/invoices"
               className="rounded-xl border border-white/10 px-4 py-2 hover:bg-white/5"
             >
               Send invoice reminders
-            </a>
+            </Link>
           </div>
         </div>
       </div>
