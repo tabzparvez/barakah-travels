@@ -58,8 +58,8 @@ export default function Header() {
           : "bg-white"
       }`}
     >
-      <div className="bg-[#b1822a] text-white text-xs md:text-sm">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-6 py-2">
+      <div className="bg-[#b1822a] text-white text-sm md:text-base">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between px-6 py-3 md:py-4">
           <span>Umrah Support • 24/7 WhatsApp Assistance</span>
           <span>+92 318 3548299</span>
         </div>
