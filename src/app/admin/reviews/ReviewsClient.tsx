@@ -4,7 +4,7 @@ import { useState } from "react";
 
 type Review = {
   _id: string;
-  name: string;
+  name?: string;
   email?: string;
   review: string;
   approved: boolean;
