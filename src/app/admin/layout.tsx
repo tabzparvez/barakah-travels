@@ -11,6 +11,7 @@ import {
   FaFileInvoice,
   FaFileSignature,
   FaCogs,
+  FaStar,
 } from "react-icons/fa";
 
 const ADMIN_EMAIL = "info@barakahtravels.online";
@@ -41,34 +42,57 @@ export default async function AdminLayout({
           <h2 className="text-2xl font-extrabold tracking-wide text-primary">
             Barakah Umrah CRM
           </h2>
-          <p className="text-xs text-secondary mt-1">
-            Operations & Sales
-          </p>
+          <p className="text-xs text-secondary mt-1">Operations & Sales</p>
         </div>
 
         {/* Navigation */}
         <nav className="flex flex-col gap-2 text-sm">
-          <Link href="/admin" className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition">
+          <Link
+            href="/admin"
+            className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition"
+          >
             <FaTachometerAlt className="text-primary" /> Dashboard
           </Link>
 
-          <Link href="/admin/inquiries" className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition">
+          <Link
+            href="/admin/inquiries"
+            className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition"
+          >
             <FaEnvelope className="text-primary" /> Inquiries
           </Link>
 
-          <Link href="/admin/quotations" className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition">
+          <Link
+            href="/admin/quotations"
+            className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition"
+          >
             <FaFileSignature className="text-primary" /> Quotations
           </Link>
 
-          <Link href="/admin/invoices" className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition">
+          <Link
+            href="/admin/invoices"
+            className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition"
+          >
             <FaFileInvoice className="text-primary" /> Invoices
           </Link>
 
-          <Link href="/admin/packages" className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition">
-            <FaBoxOpen className="text-primary" /> Umrah Packages
+          <Link
+            href="/admin/packages"
+            className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition"
+          >
+            <FaBoxOpen className="text-primary" /> Packages
           </Link>
 
-          <Link href="/admin/settings" className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition">
+          <Link
+            href="/admin/reviews"
+            className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition"
+          >
+            <FaStar className="text-primary" /> Reviews
+          </Link>
+
+          <Link
+            href="/admin/settings"
+            className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition"
+          >
             <FaCogs className="text-primary" /> Settings
           </Link>
         </nav>
@@ -86,9 +110,7 @@ export default async function AdminLayout({
       </aside>
 
       {/* ================= MAIN ================= */}
-      <main className="w-full p-4 md:p-10">
-        {children}
-      </main>
+      <main className="w-full p-4 md:p-10">{children}</main>
     </div>
   );
 }
