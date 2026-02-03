@@ -81,7 +81,7 @@ export default function Home() {
     <main>
 
       {/* HERO */}
-      <section className="relative min-h-[75vh] rounded-2xl overflow-hidden shadow-card mb-20 mt-8 reveal">
+      <section className="relative min-h-[70vh] rounded-2xl overflow-hidden shadow-card mb-20 mt-4 md:mt-6 reveal">
         <Image
           src="/umrah2.png"
           alt="Kaaba"
