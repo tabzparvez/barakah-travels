@@ -1,10 +1,12 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import UserAvatar from "@/components/UserAvatar";
 
 type Inquiry = {
   _id?: string;
+  userId?: string;
   name?: string;
   email?: string;
   phone?: string;
@@ -17,6 +19,7 @@ type Inquiry = {
 
 type Quotation = {
   id: string;
+  userId?: string;
   clientName?: string;
   email?: string;
   phone?: string;
@@ -26,29 +29,30 @@ type Quotation = {
   status?: string;
 };
 
+type Invoice = {
+  invoiceId: string;
+  userId?: string;
+  customerName?: string;
+  total?: number;
+  balance?: number;
+  paid?: number;
+  date?: string;
+};
+
 export default function UserDashboard() {
   const { data: session, status } = useSession();
-  const [phoneMatch, setPhoneMatch] = useState("");
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [quotations, setQuotations] = useState<Quotation[]>([]);
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [loadingInquiries, setLoadingInquiries] = useState(false);
 
-  const identifiers = useMemo(() => {
-    return [session?.user?.email, phoneMatch].filter(
-      (value): value is string => Boolean(value)
-    );
-  }, [session?.user?.email, phoneMatch]);
-
-  const matchesIdentifier = useCallback(
-    (value?: string) =>
-      identifiers.some((identifier) =>
-        value?.toLowerCase().includes(identifier.toLowerCase())
-      ),
-    [identifiers]
+  const userId = useMemo(
+    () => (session?.user as { id?: string })?.id,
+    [session]
   );
 
   useEffect(() => {
-    if (!session?.user?.email) return;
+    if (!userId) return;
     setLoadingInquiries(true);
     fetch("/api/inquiries")
       .then((res) => res.json())
@@ -56,7 +60,7 @@ export default function UserDashboard() {
         setInquiries(data);
       })
       .finally(() => setLoadingInquiries(false));
-  }, [session?.user?.email]);
+  }, [userId]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -77,18 +81,36 @@ export default function UserDashboard() {
     setQuotations(data);
   }, []);
 
-  const filteredInquiries = useMemo(() => {
-    return inquiries.filter(
-      (inquiry) =>
-        matchesIdentifier(inquiry.email) || matchesIdentifier(inquiry.phone)
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const keys = Object.keys(localStorage).filter((k) =>
+      k.startsWith("invoice-")
     );
-  }, [inquiries, matchesIdentifier]);
+    const data = keys
+      .map((key) => {
+        const raw = localStorage.getItem(key);
+        if (!raw) return null;
+        const item = JSON.parse(raw) as Invoice;
+        return {
+          ...item,
+          invoiceId: item.invoiceId || key.replace("invoice-", ""),
+        };
+      })
+      .filter(Boolean) as Invoice[];
+    setInvoices(data);
+  }, []);
+
+  const filteredInquiries = useMemo(() => {
+    return inquiries.filter((inquiry) => inquiry.userId === userId);
+  }, [inquiries, userId]);
 
   const filteredQuotations = useMemo(() => {
-    return quotations.filter(
-      (quote) => matchesIdentifier(quote.email) || matchesIdentifier(quote.phone)
-    );
-  }, [quotations, matchesIdentifier]);
+    return quotations.filter((quote) => quote.userId === userId);
+  }, [quotations, userId]);
+
+  const filteredInvoices = useMemo(() => {
+    return invoices.filter((invoice) => invoice.userId === userId);
+  }, [invoices, userId]);
 
   if (status === "loading") {
     return <div className="max-w-5xl mx-auto py-12 px-4">Loading...</div>;
@@ -104,37 +126,28 @@ export default function UserDashboard() {
 
   return (
     <main className="max-w-5xl mx-auto py-12 px-4 space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold text-primary mb-2">
-          User Dashboard
-        </h1>
-        <p className="text-gray-600">
-          Welcome back, <strong>{session.user.name}</strong>
-        </p>
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-primary mb-2">
+            User Dashboard
+          </h1>
+          <p className="text-gray-600">
+            Welcome back, <strong>{session.user.name}</strong>
+          </p>
+        </div>
+        <UserAvatar
+          src={session.user.image}
+          name={session.user.name}
+          size={40}
+        />
       </div>
 
-      <div className="card">
-        <h2 className="text-lg font-semibold text-primary mb-3">
-          Match Your Records
-        </h2>
-        <p className="text-sm text-gray-600 mb-4">
-          We match your inquiries and quotations using your Google email or a
-          phone number.
-        </p>
-        <div className="grid gap-4 md:grid-cols-2">
-          <input
-            className="input"
-            value={session.user.email || ""}
-            readOnly
-          />
-          <input
-            className="input"
-            placeholder="Add phone number (optional)"
-            value={phoneMatch}
-            onChange={(event) => setPhoneMatch(event.target.value)}
-          />
+      {!userId && (
+        <div className="card text-sm text-gray-600">
+          Your account is missing a user ID. Please sign out and back in to
+          sync your records.
         </div>
-      </div>
+      )}
 
       <div className="grid gap-6 md:grid-cols-2">
         <div className="card space-y-4">
@@ -143,7 +156,7 @@ export default function UserDashboard() {
             <p className="text-sm text-gray-500">Loading inquiries...</p>
           ) : filteredInquiries.length === 0 ? (
             <p className="text-sm text-gray-500">
-              No inquiries matched your email or phone yet.
+              No inquiries found for your account yet.
             </p>
           ) : (
             <ul className="space-y-3 text-sm">
@@ -198,9 +211,30 @@ export default function UserDashboard() {
 
       <div className="card">
         <h2 className="font-semibold text-lg text-primary">My Invoices</h2>
-        <p className="text-sm text-gray-500">
-          Invoices will be available here soon for online viewing and payment.
-        </p>
+        {filteredInvoices.length === 0 ? (
+          <p className="text-sm text-gray-500">
+            Invoices will appear here after a quotation is approved.
+          </p>
+        ) : (
+          <ul className="space-y-3 text-sm">
+            {filteredInvoices.map((invoice) => (
+              <li key={invoice.invoiceId} className="border-b pb-3">
+                <div className="font-semibold">
+                  Invoice #{invoice.invoiceId}
+                </div>
+                <div className="text-gray-600">
+                  PKR {Number(invoice.total || 0).toLocaleString()} • Paid{" "}
+                  {Number(invoice.paid || 0).toLocaleString()}
+                </div>
+                <div className="text-xs text-gray-400">
+                  {invoice.date
+                    ? new Date(invoice.date).toLocaleString()
+                    : "Issued recently"}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <div className="text-sm text-gray-500">

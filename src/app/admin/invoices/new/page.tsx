@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { addUserNotification } from "@/lib/notifications";
 
 export default function NewInvoicePage() {
   const router = useRouter();
@@ -9,6 +10,7 @@ export default function NewInvoicePage() {
   const [customerName, setCustomerName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [userId, setUserId] = useState("");
   const [description, setDescription] = useState("Umrah Package");
   const [qty, setQty] = useState(1);
   const [unitPrice, setUnitPrice] = useState(0);
@@ -23,6 +25,7 @@ export default function NewInvoicePage() {
 
     const data = {
       invoiceId: id,
+      userId: userId || undefined,
       customerName,
       phone,
       email,
@@ -37,6 +40,15 @@ export default function NewInvoicePage() {
     };
 
     localStorage.setItem(`invoice-${id}`, JSON.stringify(data));
+    if (userId) {
+      addUserNotification(userId, {
+        id: `user-invoice-${id}`,
+        type: "invoice",
+        message: `Invoice ${id} has been created.`,
+        createdAt: new Date().toISOString(),
+        read: false,
+      });
+    }
     router.push(`/admin/invoices/${id}`);
   }
 
@@ -47,6 +59,7 @@ export default function NewInvoicePage() {
       <input className="input" placeholder="Customer Name" onChange={e => setCustomerName(e.target.value)} />
       <input className="input" placeholder="Phone" onChange={e => setPhone(e.target.value)} />
       <input className="input" placeholder="Email" onChange={e => setEmail(e.target.value)} />
+      <input className="input" placeholder="User ID (optional)" onChange={e => setUserId(e.target.value)} />
 
       <input className="input" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} />
       <input className="input" type="number" placeholder="Quantity" value={qty} onChange={e => setQty(+e.target.value)} />

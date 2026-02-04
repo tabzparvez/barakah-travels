@@ -1,6 +1,7 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import { addAdminNotification } from "@/lib/notifications";
 
 export default function SubmitReview() {
   const { data: session, status } = useSession();
@@ -22,6 +23,13 @@ export default function SubmitReview() {
     });
     if (res.ok) {
       setSubmitted(true);
+      addAdminNotification({
+        id: `admin-review-${Date.now()}`,
+        type: "review",
+        message: "New review submitted for approval.",
+        createdAt: new Date().toISOString(),
+        read: false,
+      });
     } else {
       setError("Failed to submit review.");
     }

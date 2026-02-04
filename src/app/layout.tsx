@@ -3,7 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import SessionWrapper from "@/components/SessionWrapper";
-import { FaPhoneAlt, FaWhatsapp, FaEnvelope } from "react-icons/fa";
+import PageTransition from "@/components/PageTransition";
+import PageLoader from "@/components/PageLoader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -62,10 +63,13 @@ export default function RootLayout({
       >
         <SessionWrapper>
           <Header />
+          <PageLoader />
 
           {/* MAIN CONTENT */}
           <main className="w-full flex-1 pt-28 md:pt-32">
-            <div className="max-w-7xl mx-auto px-4">{children}</div>
+            <div className="max-w-7xl mx-auto px-4">
+              <PageTransition>{children}</PageTransition>
+            </div>
           </main>
         </SessionWrapper>
         <a
@@ -81,53 +85,58 @@ export default function RootLayout({
 
         {/* FOOTER */}
         <footer className="bg-secondary text-secondary-light mt-16">
-          <div className="max-w-7xl mx-auto px-4 py-8 grid gap-6 md:grid-cols-2">
-            {/* Business Info */}
-            <div className="space-y-2 text-center md:text-left">
+          <div className="max-w-7xl mx-auto px-4 py-12 grid gap-8 md:grid-cols-[1.2fr_1fr_1fr_1fr]">
+            <div className="space-y-3">
               <h3 className="text-primary font-bold text-lg">
                 Barakah Travels
               </h3>
-              <p className="text-sm">
-                Trusted Umrah & Travel Services. Visa assistance, hotel
-                arrangements & guided journeys.
+              <p className="text-sm text-secondary-light/80">
+                Trusted Umrah & travel specialists delivering visa support,
+                hotels near Haram, and guided spiritual journeys across
+                Pakistan.
               </p>
-
-              <div className="flex flex-col gap-2 mt-4 md:items-start items-center">
-                <span className="flex items-center gap-2">
-                  <FaPhoneAlt />{" "}
-                  <a href="tel:+923400799777" className="font-semibold">
-                    +92 340 0799777
-                  </a>
-                </span>
-                <span className="flex items-center gap-2">
-                  <FaWhatsapp />{" "}
-                  <a
-                    href="https://wa.me/923183548299"
-                    className="font-semibold"
-                  >
-                    +92 318 3548299
-                  </a>
-                </span>
-                <span className="flex items-center gap-2">
-                  <FaEnvelope />{" "}
-                  <a
-                    href="mailto:info@barakahtravels.online"
-                    className="font-semibold"
-                  >
-                    info@barakahtravels.online
-                  </a>
-                </span>
-              </div>
+              <a
+                href="https://wa.me/923183548299"
+                className="inline-flex items-center gap-2 rounded-full bg-primary text-white px-4 py-2 text-sm font-semibold shadow-md"
+              >
+                <span>WhatsApp Us 24/7</span>
+              </a>
             </div>
 
-            {/* Legal */}
-            <div className="flex flex-col justify-center items-center md:items-end gap-2 text-sm">
-              <a href="/privacy-policy" className="hover:underline">
-                Privacy Policy
-              </a>
-              <a href="/terms" className="hover:underline">
-                Terms & Conditions
-              </a>
+            <div className="space-y-3 text-sm">
+              <h4 className="font-semibold text-white">Quick Links</h4>
+              <ul className="space-y-2 text-secondary-light/80">
+                <li><a href="/about" className="hover:text-white">About</a></li>
+                <li><a href="/packages" className="hover:text-white">Umrah Packages</a></li>
+                <li><a href="/contact" className="hover:text-white">Contact</a></li>
+                <li><a href="/submit-review" className="hover:text-white">Submit Review</a></li>
+              </ul>
+            </div>
+
+            <div className="space-y-3 text-sm">
+              <h4 className="font-semibold text-white">Services</h4>
+              <ul className="space-y-2 text-secondary-light/80">
+                <li>Umrah Visa Processing</li>
+                <li>Hotel Bookings Near Haram</li>
+                <li>Private Transport</li>
+                <li>Ziyarat Tours</li>
+              </ul>
+            </div>
+
+            <div className="space-y-3 text-sm">
+              <h4 className="font-semibold text-white">Cities Served</h4>
+              <ul className="space-y-2 text-secondary-light/80">
+                <li>Karachi</li>
+                <li>Lahore</li>
+                <li>Islamabad</li>
+                <li>Multan</li>
+              </ul>
+              <div className="text-secondary-light/70 text-xs">
+                Phone: +92 340 0799777
+              </div>
+              <div className="text-secondary-light/70 text-xs">
+                Email: info@barakahtravels.online
+              </div>
             </div>
           </div>
 

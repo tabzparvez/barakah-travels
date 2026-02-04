@@ -1,9 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { addUserNotification } from "@/lib/notifications";
 
 type QuotationData = {
   id: string;
+  userId?: string;
   clientName: string;
   phone: string;
   email: string;
@@ -77,6 +79,7 @@ export default function QuotationViewPage({ params }: { params: { id: string } }
     const invoiceId = `INV-${Date.now()}`;
     const invoiceData = {
       invoiceId,
+      userId: data.userId,
       customerName: data.clientName,
       phone: data.phone,
       email: data.email,
@@ -92,6 +95,15 @@ export default function QuotationViewPage({ params }: { params: { id: string } }
     };
 
     localStorage.setItem(`invoice-${invoiceId}`, JSON.stringify(invoiceData));
+    if (data.userId) {
+      addUserNotification(data.userId, {
+        id: `user-invoice-${invoiceId}`,
+        type: "invoice",
+        message: `Invoice ${invoiceId} has been created.`,
+        createdAt: new Date().toISOString(),
+        read: false,
+      });
+    }
     router.push(`/admin/invoices/${invoiceId}`);
   };
 

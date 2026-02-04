@@ -1,6 +1,7 @@
 import mongoose, { Schema } from 'mongoose';
 
 const InquirySchema = new Schema({
+  userId: String,
   name: String,
   phone: String,
   email: String,

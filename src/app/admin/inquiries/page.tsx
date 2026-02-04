@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 type Inquiry = {
   _id: string;
+  userId?: string;
   name: string;
   phone: string;
   email: string;
@@ -58,7 +59,7 @@ export default function AdminInquiries() {
                   inq.from
                 )}&to=${encodeURIComponent(inq.to)}&notes=${encodeURIComponent(
                   inq.notes
-                )}`}
+                )}&userId=${encodeURIComponent(inq.userId || "")}`}
                 className="btn"
               >
                 Create Quotation
