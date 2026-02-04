@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { addUserNotification } from "@/lib/notifications";
 
 type FlightDetails = {
   date: string;
@@ -33,6 +34,7 @@ export default function NewQuotationPage() {
   const [clientName, setClientName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [userId, setUserId] = useState("");
   const [persons, setPersons] = useState("2");
   const [service, setService] = useState("Umrah");
   const [travelFrom, setTravelFrom] = useState("");
@@ -90,6 +92,7 @@ export default function NewQuotationPage() {
     const fromParam = searchParams.get("from");
     const toParam = searchParams.get("to");
     const notesParam = searchParams.get("notes");
+    const userIdParam = searchParams.get("userId");
 
     if (name) setClientName(name);
     if (phoneParam) setPhone(phoneParam);
@@ -98,12 +101,14 @@ export default function NewQuotationPage() {
     if (fromParam) setTravelFrom(fromParam);
     if (toParam) setTravelTo(toParam);
     if (notesParam) setInquiryNotes(notesParam);
+    if (userIdParam) setUserId(userIdParam);
   }, [searchParams]);
 
   const handleSave = () => {
     const id = `QT-${Date.now()}`;
     const data = {
       id,
+      userId: userId || undefined,
       clientName,
       phone,
       email,
@@ -126,6 +131,15 @@ export default function NewQuotationPage() {
     };
 
     localStorage.setItem(`quotation-${id}`, JSON.stringify(data));
+    if (userId) {
+      addUserNotification(userId, {
+        id: `user-quote-${id}`,
+        type: "quotation",
+        message: `Your quotation ${id} is ready for review.`,
+        createdAt: new Date().toISOString(),
+        read: false,
+      });
+    }
     router.push(`/admin/quotations/${id}`);
   };
 
@@ -160,7 +174,7 @@ export default function NewQuotationPage() {
               </select>
             </div>
           </div>
-          <div className="grid gap-4 md:grid-cols-3 mt-4">
+          <div className="grid gap-4 md:grid-cols-4 mt-4">
             <input
               className="input"
               placeholder="Name"
@@ -172,6 +186,12 @@ export default function NewQuotationPage() {
               placeholder="Phone"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+            />
+            <input
+              className="input"
+              placeholder="User ID (auto-filled)"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
             />
             <input
               className="input"

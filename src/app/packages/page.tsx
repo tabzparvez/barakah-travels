@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { FaPassport, FaHotel, FaBus, FaKaaba } from "react-icons/fa";
 
 /* ================= TYPES ================= */
 type Package = {
@@ -77,6 +78,15 @@ export default function PackagesPage() {
   const showPackages =
     packages && packages.length > 0 ? packages : demoPackages;
 
+  const getFeatureIcon = (feature: string) => {
+    const normalized = feature.toLowerCase();
+    if (normalized.includes("visa")) return <FaPassport />;
+    if (normalized.includes("hotel")) return <FaHotel />;
+    if (normalized.includes("transport")) return <FaBus />;
+    if (normalized.includes("ziyar")) return <FaKaaba />;
+    return <FaPassport />;
+  };
+
   return (
     <main className="max-w-7xl mx-auto px-4 py-12">
 
@@ -120,25 +130,35 @@ export default function PackagesPage() {
       {/* ================= PACKAGES GRID ================= */}
       {!loading && !error && (
         <section className="grid gap-8 md:grid-cols-3">
-          {showPackages.map((pkg) => (
+          {showPackages.map((pkg, index) => {
+            const isPopular =
+              pkg.name?.toLowerCase().includes("comfort") || index === 1;
+            return (
             <div
               key={pkg._id}
               className="card flex flex-col hover:shadow-xl transition"
             >
               {/* Image */}
               {pkg.image && (
-                <div className="relative h-40 mb-4">
+                <div className="relative h-44 mb-4">
                   <Image
                     src={pkg.image}
                     alt={`${pkg.name} Umrah Package`}
                     fill
-                  className="object-cover rounded-xl"
+                    className="object-cover rounded-xl"
                   />
                 </div>
               )}
 
               {/* Badge */}
-              <span className="badge w-fit mb-2">Visa Included</span>
+              <div className="flex items-center justify-between mb-2">
+                <span className="badge w-fit">Visa Included</span>
+                {isPopular && (
+                  <span className="text-xs font-semibold text-white bg-primary px-3 py-1 rounded-full">
+                    Most Popular
+                  </span>
+                )}
+              </div>
 
               {/* Title */}
               <h2 className="text-xl font-bold mb-1 text-primary">
@@ -149,9 +169,14 @@ export default function PackagesPage() {
               </p>
 
               {/* Features */}
-              <ul className="list-disc pl-5 text-sm mb-4 flex-1">
+              <ul className="text-sm mb-4 flex-1 space-y-2">
                 {pkg.features?.map((f, i) => (
-                  <li key={i}>{f}</li>
+                  <li key={i} className="flex items-center gap-2">
+                    <span className="text-primary text-base">
+                      {getFeatureIcon(f)}
+                    </span>
+                    <span>{f}</span>
+                  </li>
                 ))}
               </ul>
 
@@ -175,7 +200,7 @@ export default function PackagesPage() {
                 Book on WhatsApp
               </a>
             </div>
-          ))}
+          )})}
         </section>
       )}
 

@@ -2,9 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { addAdminNotification } from "@/lib/notifications";
 
 type InvoiceData = {
   invoiceId: string;
+  userId?: string;
   customerName: string;
   phone: string;
   email: string;
@@ -27,12 +29,15 @@ export default function EditInvoicePage({ params }: { params: { id: string } }) 
   const [customerName, setCustomerName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [userId, setUserId] = useState("");
   const [description, setDescription] = useState("Umrah Package");
   const [qty, setQty] = useState(1);
   const [unitPrice, setUnitPrice] = useState(0);
   const [paid, setPaid] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState("Cash");
   const [quotationId, setQuotationId] = useState("");
+  const [initialPaid, setInitialPaid] = useState(0);
+  const [initialTotal, setInitialTotal] = useState(0);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -46,12 +51,15 @@ export default function EditInvoicePage({ params }: { params: { id: string } }) 
     setCustomerName(data.customerName || "");
     setPhone(data.phone || "");
     setEmail(data.email || "");
+    setUserId(data.userId || "");
     setDescription(data.description || "Umrah Package");
     setQty(Number(data.qty || 1));
     setUnitPrice(Number(data.unitPrice || 0));
     setPaid(Number(data.paid || 0));
     setPaymentMethod(data.paymentMethod || "Cash");
     setQuotationId(data.quotationId || "");
+    setInitialPaid(Number(data.paid || 0));
+    setInitialTotal(Number(data.total || 0));
     setLoaded(true);
   }, [params.id]);
 
@@ -61,6 +69,7 @@ export default function EditInvoicePage({ params }: { params: { id: string } }) 
   function handleSubmit() {
     const data: InvoiceData = {
       invoiceId: params.id,
+      userId: userId || undefined,
       customerName,
       phone,
       email,
@@ -76,6 +85,15 @@ export default function EditInvoicePage({ params }: { params: { id: string } }) 
     };
 
     localStorage.setItem(`invoice-${params.id}`, JSON.stringify(data));
+    if (initialPaid < initialTotal && paid >= total && total > 0) {
+      addAdminNotification({
+        id: `admin-invoice-paid-${params.id}`,
+        type: "invoice-paid",
+        message: `Invoice ${params.id} marked as paid.`,
+        createdAt: new Date().toISOString(),
+        read: false,
+      });
+    }
     router.push(`/admin/invoices/${params.id}`);
   }
 
@@ -111,6 +129,12 @@ export default function EditInvoicePage({ params }: { params: { id: string } }) 
         placeholder="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        className="input"
+        placeholder="User ID"
+        value={userId}
+        onChange={(e) => setUserId(e.target.value)}
       />
       <input
         className="input"

@@ -2,8 +2,12 @@
 
 import { useState } from "react";
 import type { ChangeEvent, FormEvent } from "react";
+import { useSession } from "next-auth/react";
+import { FaWhatsapp, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
+import { addAdminNotification } from "@/lib/notifications";
 
 export default function Contact() {
+  const { data: session } = useSession();
   const [formState, setFormState] = useState({
     name: "",
     phone: "",
@@ -15,6 +19,7 @@ export default function Contact() {
     success: false,
     error: "",
   });
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -27,10 +32,14 @@ export default function Contact() {
     event.preventDefault();
     setFormStatus({ loading: true, success: false, error: "" });
 
+    const userId = (session?.user as { id?: string })?.id;
     const response = await fetch("/api/inquiry", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formState),
+      body: JSON.stringify({
+        ...formState,
+        userId: userId || undefined,
+      }),
     });
 
     if (!response.ok) {
@@ -43,6 +52,14 @@ export default function Contact() {
     }
 
     setFormStatus({ loading: false, success: true, error: "" });
+    setShowSuccessModal(true);
+    addAdminNotification({
+      id: `admin-inquiry-${Date.now()}`,
+      type: "inquiry",
+      message: "New inquiry submitted from the contact page.",
+      createdAt: new Date().toISOString(),
+      read: false,
+    });
     setFormState({ name: "", phone: "", service: "Umrah", notes: "" });
   };
 
@@ -58,6 +75,9 @@ export default function Contact() {
             perfect package for you. We respond fast on WhatsApp, phone, and
             email.
           </p>
+          <p className="text-primary font-semibold">
+            Let us handle every detail so your family can focus on worship.
+          </p>
           <a
             href="https://wa.me/923183548299"
             className="btn inline-flex"
@@ -68,6 +88,9 @@ export default function Contact() {
 
         <div className="grid gap-6 md:grid-cols-3">
           <div className="card text-center space-y-2">
+            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-2xl mx-auto">
+              <FaWhatsapp />
+            </div>
             <p className="text-xs uppercase tracking-wide text-gray-500">
               WhatsApp
             </p>
@@ -79,6 +102,9 @@ export default function Contact() {
             </p>
           </div>
           <div className="card text-center space-y-2">
+            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-2xl mx-auto">
+              <FaPhoneAlt />
+            </div>
             <p className="text-xs uppercase tracking-wide text-gray-500">
               Call Us
             </p>
@@ -90,6 +116,9 @@ export default function Contact() {
             </p>
           </div>
           <div className="card text-center space-y-2">
+            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-2xl mx-auto">
+              <FaEnvelope />
+            </div>
             <p className="text-xs uppercase tracking-wide text-gray-500">
               Email
             </p>
@@ -151,11 +180,6 @@ export default function Contact() {
                 <button className="btn" type="submit" disabled={formStatus.loading}>
                   {formStatus.loading ? "Sending..." : "Send Inquiry"}
                 </button>
-                {formStatus.success && (
-                  <span className="text-sm text-green-600">
-                    Thank you! We will be in touch shortly.
-                  </span>
-                )}
                 {formStatus.error && (
                   <span className="text-sm text-red-600">{formStatus.error}</span>
                 )}
@@ -179,6 +203,28 @@ export default function Contact() {
           </div>
         </div>
       </div>
+
+      {showSuccessModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+          <div className="bg-white rounded-2xl shadow-xl p-6 max-w-md text-center space-y-3">
+            <div className="text-3xl text-primary" aria-hidden="true">
+              ✓
+            </div>
+            <h3 className="text-xl font-semibold text-primary">
+              Request Submitted
+            </h3>
+            <p className="text-sm text-gray-600">
+              Your request has been submitted. Our team will contact you shortly.
+            </p>
+            <button
+              className="btn w-full"
+              onClick={() => setShowSuccessModal(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

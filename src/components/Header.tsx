@@ -4,9 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { useState, useEffect } from "react";
-import { useSession, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
+import UserAvatar from "@/components/UserAvatar";
+import NotificationBell from "@/components/NotificationBell";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -60,13 +62,17 @@ export default function Header() {
       }`}
     >
       <div className="bg-primary text-white text-xs sm:text-sm">
-        <div className="max-w-7xl mx-auto px-6 py-2.5 flex flex-wrap items-center justify-center gap-3">
+        <div className="max-w-7xl mx-auto px-6 py-3 flex flex-wrap items-center justify-center gap-3">
           <span className="font-semibold">Trusted Umrah & Travel Support</span>
           <span className="hidden sm:inline">•</span>
           <span>WhatsApp: +92 318 3548299</span>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-20 md:h-24">
+      <div
+        className={`max-w-7xl mx-auto flex items-center justify-between px-6 transition-all duration-300 ${
+          scrolled ? "h-16 md:h-20" : "h-20 md:h-24"
+        }`}
+      >
 
         {/* Logo */}
         <Link href="/" onClick={handleLinkClick} className="flex items-center gap-2">
@@ -77,8 +83,8 @@ export default function Header() {
   height={120}
   priority
   className="
-    h-20 w-auto
-    md:h-18
+    h-16 w-auto
+    md:h-16
     object-contain drop-shadow-x1
   "
 />
@@ -148,20 +154,20 @@ export default function Header() {
               Sign In
             </Link>
           ) : (
-            <div className="relative">
+            <div className="relative flex items-center gap-3">
+              <NotificationBell
+                mode="user"
+                userId={(session.user as { id?: string })?.id}
+              />
               <button
                 onClick={() => setProfileOpen((v) => !v)}
                 className="flex items-center gap-2 bg-primary/10 px-3 py-2 rounded-full hover:bg-primary/20"
               >
-                {session.user?.image && (
-                  <Image
-                    src={session.user.image}
-                    alt={session.user.name || "User"}
-                    width={28}
-                    height={28}
-                    className="rounded-full"
-                  />
-                )}
+                <UserAvatar
+                  src={session.user?.image}
+                  name={session.user?.name}
+                  size={32}
+                />
                 <span className="text-primary font-bold">
                   {session.user?.name?.split(" ")[0]}
                 </span>

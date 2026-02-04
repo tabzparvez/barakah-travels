@@ -28,6 +28,7 @@ type TransportDetails = {
 
 type QuotationData = {
   id: string;
+  userId?: string;
   clientName: string;
   phone: string;
   email: string;
@@ -57,6 +58,7 @@ export default function EditQuotationPage({ params }: { params: { id: string } }
   const [clientName, setClientName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [userId, setUserId] = useState("");
   const [persons, setPersons] = useState("2");
   const [service, setService] = useState("Umrah");
   const [travelFrom, setTravelFrom] = useState("");
@@ -120,6 +122,7 @@ export default function EditQuotationPage({ params }: { params: { id: string } }
     setClientName(data.clientName || "");
     setPhone(data.phone || "");
     setEmail(data.email || "");
+    setUserId(data.userId || "");
     setPersons(String(data.persons || 0));
     setService(data.service || "Umrah");
     setTravelFrom(data.travelFrom || "");
@@ -142,6 +145,7 @@ export default function EditQuotationPage({ params }: { params: { id: string } }
   const handleSave = () => {
     const data: QuotationData = {
       id: params.id,
+      userId: userId || undefined,
       clientName,
       phone,
       email,
@@ -206,7 +210,7 @@ export default function EditQuotationPage({ params }: { params: { id: string } }
               </select>
             </div>
           </div>
-          <div className="grid gap-4 md:grid-cols-3 mt-4">
+          <div className="grid gap-4 md:grid-cols-4 mt-4">
             <input
               className="input"
               placeholder="Name"
@@ -218,6 +222,12 @@ export default function EditQuotationPage({ params }: { params: { id: string } }
               placeholder="Phone"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+            />
+            <input
+              className="input"
+              placeholder="User ID"
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
             />
             <input
               className="input"

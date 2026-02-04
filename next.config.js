@@ -4,7 +4,7 @@ const nextConfig = {
     authInterrupts: true,
   },
   images: {
-    domains: ["images.unsplash.com"],
+    domains: ["images.unsplash.com", "lh3.googleusercontent.com"],
   },
 };
 

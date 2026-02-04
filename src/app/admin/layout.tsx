@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { redirect, unauthorized } from "next/navigation";
 import { authOptions } from "@/lib/auth";
+import AdminTopBar from "@/components/AdminTopBar";
 import {
   FaTachometerAlt,
   FaBoxOpen,
@@ -110,7 +111,10 @@ export default async function AdminLayout({
       </aside>
 
       {/* ================= MAIN ================= */}
-      <main className="w-full p-4 md:p-10">{children}</main>
+      <main className="w-full p-4 md:p-10">
+        <AdminTopBar name={session.user?.name} image={session.user?.image} />
+        {children}
+      </main>
     </div>
   );
 }
