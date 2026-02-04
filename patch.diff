@@ -1,0 +1,3397 @@
+diff --git a/next.config.js b/next.config.js
+index abca1f199127bc0e5e39cd7b5b3983dcf3db67ac..6ec35943120a683c87aab8400c935f37085f986e 100644
+--- a/next.config.js
++++ b/next.config.js
+@@ -1,11 +1,11 @@
+ /** @type {import('next').NextConfig} */
+ const nextConfig = {
+   experimental: {
+     authInterrupts: true,
+   },
+   images: {
+-    domains: ["images.unsplash.com"],
++    domains: ["images.unsplash.com", "lh3.googleusercontent.com"],
+   },
+ };
+ 
+ module.exports = nextConfig;
+diff --git a/public/notification.wav b/public/notification.wav
+new file mode 100644
+index 0000000000000000000000000000000000000000..a3866a43556cc4c34020fb274ca4f246e39f446d
+GIT binary patch
+literal 17684
+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
+VsC9^1hp2UkT8F50{=aIS{{!jXVVnQ}
+
+literal 0
+HcmV?d00001
+
+diff --git a/src/app/about/page.tsx b/src/app/about/page.tsx
+index ae5d0c098bd0ee8a173e8ad023745e5096320f5a..1df5d9d57d82fa6ec67b56a21dc4ad0f32e11372 100644
+--- a/src/app/about/page.tsx
++++ b/src/app/about/page.tsx
+@@ -1,21 +1,69 @@
+ 
+ export default function About() {
+   return (
+-    <main className="section max-w-3xl mx-auto">
+-      <h1 className="text-4xl font-bold mb-8 text-primary">About Barakah Travels</h1>
+-      <div className="bg-white rounded-2xl shadow-card p-8 mb-8">
+-        <p className="mb-6 text-lg text-gray-700">At Barakah Travels, we are your trusted partner for Umrah, Hajj, and international travel. Our mission is to provide seamless, stress-free journeys with:</p>
+-        <ul className="list-disc pl-6 mb-6 text-gray-700">
+-          <li>Expert visa assistance</li>
+-          <li>Customized travel packages</li>
+-          <li>24/7 dedicated support</li>
+-        </ul>
+-        <p className="mb-6 text-gray-700">We are guided by integrity, professionalism, and a passion for customer satisfaction. Our experienced team works tirelessly to make every journey affordable, comfortable, and memorable.</p>
+-        <p className="mb-6 text-gray-700">Whether you are planning a spiritual pilgrimage or an international trip, we tailor our services to meet your unique needs.</p>
+-        <div className="text-xl font-semibold text-primary-dark flex items-center gap-2">
+-          <span role="img" aria-label="point">👉</span> Choose Barakah Travels — where your journey begins with peace of mind and excellence.
+-        </div>
++    <main className="section max-w-5xl mx-auto space-y-10">
++      <div className="text-center space-y-4">
++        <h1 className="text-4xl font-bold text-primary">
++          About Barakah Travels
++        </h1>
++        <p className="text-gray-600 max-w-3xl mx-auto">
++          We deliver faith-led journeys with reliable visa support, hotel
++          coordination, and caring guidance for pilgrims across Pakistan.
++        </p>
+       </div>
++
++      <section className="grid gap-6 md:grid-cols-2">
++        <div className="card space-y-3">
++          <h2 className="text-2xl font-semibold text-primary">Who We Are</h2>
++          <p className="text-sm text-gray-600">
++            Barakah Travels is a dedicated Umrah and travel agency focused on
++            providing safe, transparent, and spiritually fulfilling journeys.
++            Our team has helped hundreds of pilgrims travel with confidence and
++            comfort.
++          </p>
++        </div>
++        <div className="card space-y-3">
++          <h2 className="text-2xl font-semibold text-primary">
++            What Makes Us Different
++          </h2>
++          <ul className="text-sm text-gray-600 space-y-2">
++            <li>• Visa processing updates shared in real time.</li>
++            <li>• Hotels within walking distance of Haram.</li>
++            <li>• 24/7 WhatsApp support before and during travel.</li>
++            <li>• Clear pricing with no hidden fees.</li>
++          </ul>
++        </div>
++      </section>
++
++      <section className="card space-y-4">
++        <h2 className="text-2xl font-semibold text-primary">Our Process</h2>
++        <div className="grid gap-4 md:grid-cols-4 text-sm text-gray-600">
++          <div>
++            <p className="font-semibold text-secondary">1. Consult</p>
++            <p>Understand your preferred dates and budget.</p>
++          </div>
++          <div>
++            <p className="font-semibold text-secondary">2. Plan</p>
++            <p>Share visa, hotel, and transport options fast.</p>
++          </div>
++          <div>
++            <p className="font-semibold text-secondary">3. Confirm</p>
++            <p>Lock in flights, rooms, and documentation.</p>
++          </div>
++          <div>
++            <p className="font-semibold text-secondary">4. Support</p>
++            <p>Stay connected with your travel advisor 24/7.</p>
++          </div>
++        </div>
++      </section>
++
++      <section className="card space-y-4">
++        <h2 className="text-2xl font-semibold text-primary">Cities Served</h2>
++        <p className="text-sm text-gray-600">
++          We provide Umrah services for pilgrims traveling from Karachi, Lahore,
++          Islamabad, Multan, and other major cities across Pakistan.
++        </p>
++      </section>
+     </main>
+   );
+ }
+diff --git a/src/app/admin/inquiries/page.tsx b/src/app/admin/inquiries/page.tsx
+index a7e2eabaa7935fe22d07adb87720f509b01802be..cc8a3e6612405cd4fa081d14b1a298ecec941230 100644
+--- a/src/app/admin/inquiries/page.tsx
++++ b/src/app/admin/inquiries/page.tsx
+@@ -1,31 +1,32 @@
+ 'use client';
+ 
+ import { useEffect, useState } from 'react';
+ 
+ type Inquiry = {
+   _id: string;
++  userId?: string;
+   name: string;
+   phone: string;
+   email: string;
+   service: string;
+   from: string;
+   to: string;
+   notes: string;
+   createdAt: string;
+ };
+ 
+ export default function AdminInquiries() {
+   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
+ 
+   useEffect(() => {
+     fetch('/api/inquiries').then(res => res.json()).then(setInquiries);
+   }, []);
+ 
+   return (
+     <main className="section max-w-6xl mx-auto">
+       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between mb-6">
+         <div>
+           <h1 className="text-2xl font-bold text-primary">Inquiries</h1>
+           <p className="text-sm text-gray-500">
+             Review Umrah inquiry submissions and create quotations with one click.
+           </p>
+@@ -36,37 +37,37 @@ export default function AdminInquiries() {
+           <li key={inq._id} className="card">
+             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+               <div className="space-y-1">
+                 <div className="font-semibold text-lg text-secondary">
+                   {inq.name} ({inq.phone})
+                 </div>
+                 <div className="text-sm text-gray-600">Email: {inq.email}</div>
+                 <div className="text-sm text-gray-600">Service: {inq.service}</div>
+                 <div className="text-sm text-gray-600">
+                   From: {inq.from} • To: {inq.to}
+                 </div>
+                 <div className="text-sm text-gray-600">Notes: {inq.notes}</div>
+                 <div className="text-xs text-gray-400 mt-2">
+                   {new Date(inq.createdAt).toLocaleString()}
+                 </div>
+               </div>
+               <a
+                 href={`/admin/quotations/new?name=${encodeURIComponent(
+                   inq.name
+                 )}&phone=${encodeURIComponent(inq.phone)}&email=${encodeURIComponent(
+                   inq.email
+                 )}&service=${encodeURIComponent(inq.service)}&from=${encodeURIComponent(
+                   inq.from
+                 )}&to=${encodeURIComponent(inq.to)}&notes=${encodeURIComponent(
+                   inq.notes
+-                )}`}
++                )}&userId=${encodeURIComponent(inq.userId || "")}`}
+                 className="btn"
+               >
+                 Create Quotation
+               </a>
+             </div>
+           </li>
+         ))}
+       </ul>
+     </main>
+   );
+ }
+diff --git a/src/app/admin/invoices/[id]/edit/page.tsx b/src/app/admin/invoices/[id]/edit/page.tsx
+index 6915a2ae94ec6fc2bad9bbe5ab3b4ddcd11c7173..ccf60d4db99784b6fbbb85f7dea7ccce3807e156 100644
+--- a/src/app/admin/invoices/[id]/edit/page.tsx
++++ b/src/app/admin/invoices/[id]/edit/page.tsx
+@@ -1,139 +1,163 @@
+ "use client";
+ 
+ import { useRouter } from "next/navigation";
+ import { useEffect, useState } from "react";
++import { addAdminNotification } from "@/lib/notifications";
+ 
+ type InvoiceData = {
+   invoiceId: string;
++  userId?: string;
+   customerName: string;
+   phone: string;
+   email: string;
+   description: string;
+   qty: number;
+   unitPrice: number;
+   total: number;
+   paid: number;
+   balance: number;
+   paymentMethod: string;
+   date: string;
+   quotationId?: string;
+ };
+ 
+ export default function EditInvoicePage({ params }: { params: { id: string } }) {
+   const router = useRouter();
+   const [loaded, setLoaded] = useState(false);
+   const [notFound, setNotFound] = useState(false);
+ 
+   const [customerName, setCustomerName] = useState("");
+   const [phone, setPhone] = useState("");
+   const [email, setEmail] = useState("");
++  const [userId, setUserId] = useState("");
+   const [description, setDescription] = useState("Umrah Package");
+   const [qty, setQty] = useState(1);
+   const [unitPrice, setUnitPrice] = useState(0);
+   const [paid, setPaid] = useState(0);
+   const [paymentMethod, setPaymentMethod] = useState("Cash");
+   const [quotationId, setQuotationId] = useState("");
++  const [initialPaid, setInitialPaid] = useState(0);
++  const [initialTotal, setInitialTotal] = useState(0);
+ 
+   useEffect(() => {
+     if (typeof window === "undefined") return;
+     const raw = localStorage.getItem(`invoice-${params.id}`);
+     if (!raw) {
+       setNotFound(true);
+       setLoaded(true);
+       return;
+     }
+     const data = JSON.parse(raw) as InvoiceData;
+     setCustomerName(data.customerName || "");
+     setPhone(data.phone || "");
+     setEmail(data.email || "");
++    setUserId(data.userId || "");
+     setDescription(data.description || "Umrah Package");
+     setQty(Number(data.qty || 1));
+     setUnitPrice(Number(data.unitPrice || 0));
+     setPaid(Number(data.paid || 0));
+     setPaymentMethod(data.paymentMethod || "Cash");
+     setQuotationId(data.quotationId || "");
++    setInitialPaid(Number(data.paid || 0));
++    setInitialTotal(Number(data.total || 0));
+     setLoaded(true);
+   }, [params.id]);
+ 
+   const total = qty * unitPrice;
+   const balance = total - paid;
+ 
+   function handleSubmit() {
+     const data: InvoiceData = {
+       invoiceId: params.id,
++      userId: userId || undefined,
+       customerName,
+       phone,
+       email,
+       description,
+       qty,
+       unitPrice,
+       total,
+       paid,
+       balance,
+       paymentMethod,
+       date: new Date().toISOString(),
+       quotationId: quotationId || undefined,
+     };
+ 
+     localStorage.setItem(`invoice-${params.id}`, JSON.stringify(data));
++    if (initialPaid < initialTotal && paid >= total && total > 0) {
++      addAdminNotification({
++        id: `admin-invoice-paid-${params.id}`,
++        type: "invoice-paid",
++        message: `Invoice ${params.id} marked as paid.`,
++        createdAt: new Date().toISOString(),
++        read: false,
++      });
++    }
+     router.push(`/admin/invoices/${params.id}`);
+   }
+ 
+   if (!loaded) {
+     return <p className="text-center mt-10">Loading invoice...</p>;
+   }
+ 
+   if (notFound) {
+     return <p className="text-center mt-10">Invoice not found.</p>;
+   }
+ 
+   return (
+     <div className="card max-w-2xl">
+       <h1 className="text-2xl font-bold mb-2">Edit Invoice</h1>
+       <p className="text-sm text-gray-500 mb-6">
+         Update payment status or invoice line items.
+       </p>
+ 
+       <input
+         className="input"
+         placeholder="Customer Name"
+         value={customerName}
+         onChange={(e) => setCustomerName(e.target.value)}
+       />
+       <input
+         className="input"
+         placeholder="Phone"
+         value={phone}
+         onChange={(e) => setPhone(e.target.value)}
+       />
+       <input
+         className="input"
+         placeholder="Email"
+         value={email}
+         onChange={(e) => setEmail(e.target.value)}
+       />
++      <input
++        className="input"
++        placeholder="User ID"
++        value={userId}
++        onChange={(e) => setUserId(e.target.value)}
++      />
+       <input
+         className="input"
+         placeholder="Quotation ID"
+         value={quotationId}
+         onChange={(e) => setQuotationId(e.target.value)}
+       />
+ 
+       <input
+         className="input"
+         placeholder="Description"
+         value={description}
+         onChange={(e) => setDescription(e.target.value)}
+       />
+       <input
+         className="input"
+         type="number"
+         placeholder="Quantity"
+         value={qty}
+         onChange={(e) => setQty(Number(e.target.value))}
+       />
+       <input
+         className="input"
+         type="number"
+         placeholder="Unit Price"
+         value={unitPrice}
+diff --git a/src/app/admin/invoices/new/page.tsx b/src/app/admin/invoices/new/page.tsx
+index 7ac189f3363d40c600711ab485937b523080d9d1..c69cfb071bdd236a229442187efa164e34e47c7d 100644
+--- a/src/app/admin/invoices/new/page.tsx
++++ b/src/app/admin/invoices/new/page.tsx
+@@ -1,74 +1,87 @@
+ "use client";
+ 
+ import { useRouter } from "next/navigation";
+ import { useState } from "react";
++import { addUserNotification } from "@/lib/notifications";
+ 
+ export default function NewInvoicePage() {
+   const router = useRouter();
+ 
+   const [customerName, setCustomerName] = useState("");
+   const [phone, setPhone] = useState("");
+   const [email, setEmail] = useState("");
++  const [userId, setUserId] = useState("");
+   const [description, setDescription] = useState("Umrah Package");
+   const [qty, setQty] = useState(1);
+   const [unitPrice, setUnitPrice] = useState(0);
+   const [paid, setPaid] = useState(0);
+   const [paymentMethod, setPaymentMethod] = useState("Cash");
+ 
+   const total = qty * unitPrice;
+   const balance = total - paid;
+ 
+   function handleSubmit() {
+     const id = `INV-${Date.now()}`;
+ 
+     const data = {
+       invoiceId: id,
++      userId: userId || undefined,
+       customerName,
+       phone,
+       email,
+       description,
+       qty,
+       unitPrice,
+       total,
+       paid,
+       balance,
+       paymentMethod,
+       date: new Date().toISOString(),
+     };
+ 
+     localStorage.setItem(`invoice-${id}`, JSON.stringify(data));
++    if (userId) {
++      addUserNotification(userId, {
++        id: `user-invoice-${id}`,
++        type: "invoice",
++        message: `Invoice ${id} has been created.`,
++        createdAt: new Date().toISOString(),
++        read: false,
++      });
++    }
+     router.push(`/admin/invoices/${id}`);
+   }
+ 
+   return (
+     <div className="card max-w-2xl">
+       <h1 className="text-2xl font-bold mb-6">Create New Invoice</h1>
+ 
+       <input className="input" placeholder="Customer Name" onChange={e => setCustomerName(e.target.value)} />
+       <input className="input" placeholder="Phone" onChange={e => setPhone(e.target.value)} />
+       <input className="input" placeholder="Email" onChange={e => setEmail(e.target.value)} />
++      <input className="input" placeholder="User ID (optional)" onChange={e => setUserId(e.target.value)} />
+ 
+       <input className="input" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} />
+       <input className="input" type="number" placeholder="Quantity" value={qty} onChange={e => setQty(+e.target.value)} />
+       <input className="input" type="number" placeholder="Unit Price" onChange={e => setUnitPrice(+e.target.value)} />
+ 
+       <select className="input" onChange={e => setPaymentMethod(e.target.value)}>
+         <option>Cash</option>
+         <option>Bank Transfer</option>
+         <option>EasyPaisa</option>
+         <option>JazzCash</option>
+       </select>
+ 
+       <input className="input" type="number" placeholder="Paid Amount" onChange={e => setPaid(+e.target.value)} />
+ 
+       <div className="mt-4 text-sm">
+         <p>Total: <strong>PKR {total}</strong></p>
+         <p>Paid: <strong>PKR {paid}</strong></p>
+         <p>Balance: <strong>PKR {balance}</strong></p>
+       </div>
+ 
+       <button onClick={handleSubmit} className="btn mt-6">
+         Save & View Invoice
+       </button>
+     </div>
+   );
+diff --git a/src/app/admin/layout.tsx b/src/app/admin/layout.tsx
+index 029b35dda98a112f7a500b1d0e825ea10d156ac3..bb0a74bc28cb1111cb20f073f016b5a6effb931f 100644
+--- a/src/app/admin/layout.tsx
++++ b/src/app/admin/layout.tsx
+@@ -1,30 +1,31 @@
+ import { ReactNode } from "react";
+ import Link from "next/link";
+ import { getServerSession } from "next-auth";
+ import { redirect, unauthorized } from "next/navigation";
+ import { authOptions } from "@/lib/auth";
++import AdminTopBar from "@/components/AdminTopBar";
+ import {
+   FaTachometerAlt,
+   FaBoxOpen,
+   FaEnvelope,
+   FaSignOutAlt,
+   FaFileInvoice,
+   FaFileSignature,
+   FaCogs,
+   FaStar,
+ } from "react-icons/fa";
+ 
+ const ADMIN_EMAIL = "info@barakahtravels.online";
+ 
+ export default async function AdminLayout({
+   children,
+ }: {
+   children: ReactNode;
+ }) {
+   const session = await getServerSession(authOptions);
+ 
+   // 🔐 Not logged in
+   if (!session || !session.user?.email) {
+     redirect("/login");
+   }
+ 
+@@ -88,29 +89,32 @@ export default async function AdminLayout({
+           >
+             <FaStar className="text-primary" /> Reviews
+           </Link>
+ 
+           <Link
+             href="/admin/settings"
+             className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-primary/10 transition"
+           >
+             <FaCogs className="text-primary" /> Settings
+           </Link>
+         </nav>
+ 
+         {/* Logout */}
+         <form
+           action="/api/auth/signout"
+           method="post"
+           className="mt-auto pt-6 border-t border-primary/10"
+         >
+           <button className="flex items-center gap-2 text-red-500 hover:text-red-600 transition">
+             <FaSignOutAlt /> Logout
+           </button>
+         </form>
+       </aside>
+ 
+       {/* ================= MAIN ================= */}
+-      <main className="w-full p-4 md:p-10">{children}</main>
++      <main className="w-full p-4 md:p-10">
++        <AdminTopBar name={session.user?.name} image={session.user?.image} />
++        {children}
++      </main>
+     </div>
+   );
+ }
+diff --git a/src/app/admin/quotations/[id]/edit/page.tsx b/src/app/admin/quotations/[id]/edit/page.tsx
+index db8099cd2ae6bc7097a062c36d26c778e0638757..d132fd09db1dbe6de2065272d2664b9ab9b64749 100644
+--- a/src/app/admin/quotations/[id]/edit/page.tsx
++++ b/src/app/admin/quotations/[id]/edit/page.tsx
+@@ -6,79 +6,81 @@ import { useRouter } from "next/navigation";
+ type FlightDetails = {
+   date: string;
+   departure: string;
+   arrival: string;
+   airline: string;
+   flightNumber: string;
+   routeType: string;
+ };
+ 
+ type HotelDetails = {
+   name: string;
+   distance: string;
+   roomType: string;
+   nights: string;
+ };
+ 
+ type TransportDetails = {
+   type: string;
+   airportToMakkah: string;
+   makkahToMadinah: string;
+   madinahToAirport: string;
+ };
+ 
+ type QuotationData = {
+   id: string;
++  userId?: string;
+   clientName: string;
+   phone: string;
+   email: string;
+   persons: number;
+   service?: string;
+   travelFrom?: string;
+   travelTo?: string;
+   inquiryNotes?: string;
+   status?: string;
+   goingFlight: FlightDetails;
+   returnFlight: FlightDetails;
+   makkahHotel: HotelDetails;
+   madinahHotel: HotelDetails;
+   transport: TransportDetails;
+   price: number;
+   inclusions: string;
+   exclusions: string;
+   notes: string;
+   createdAt: string;
+ };
+ 
+ export default function EditQuotationPage({ params }: { params: { id: string } }) {
+   const router = useRouter();
+   const [loaded, setLoaded] = useState(false);
+   const [notFound, setNotFound] = useState(false);
+ 
+   const [clientName, setClientName] = useState("");
+   const [phone, setPhone] = useState("");
+   const [email, setEmail] = useState("");
++  const [userId, setUserId] = useState("");
+   const [persons, setPersons] = useState("2");
+   const [service, setService] = useState("Umrah");
+   const [travelFrom, setTravelFrom] = useState("");
+   const [travelTo, setTravelTo] = useState("");
+   const [inquiryNotes, setInquiryNotes] = useState("");
+   const [status, setStatus] = useState("Draft");
+ 
+   const [goingFlight, setGoingFlight] = useState<FlightDetails>({
+     date: "",
+     departure: "",
+     arrival: "",
+     airline: "",
+     flightNumber: "",
+     routeType: "Direct",
+   });
+   const [returnFlight, setReturnFlight] = useState<FlightDetails>({
+     date: "",
+     departure: "",
+     arrival: "",
+     airline: "",
+     flightNumber: "",
+     routeType: "Direct",
+   });
+ 
+   const [makkahHotel, setMakkahHotel] = useState<HotelDetails>({
+@@ -98,72 +100,74 @@ export default function EditQuotationPage({ params }: { params: { id: string } }
+     type: "Private",
+     airportToMakkah: "",
+     makkahToMadinah: "",
+     madinahToAirport: "",
+   });
+ 
+   const [price, setPrice] = useState("0");
+   const [inclusions, setInclusions] = useState("");
+   const [exclusions, setExclusions] = useState("");
+   const [notes, setNotes] = useState("");
+   const [createdAt, setCreatedAt] = useState("");
+ 
+   useEffect(() => {
+     if (typeof window === "undefined") return;
+     const raw = localStorage.getItem(`quotation-${params.id}`);
+     if (!raw) {
+       setNotFound(true);
+       setLoaded(true);
+       return;
+     }
+ 
+     const data = JSON.parse(raw) as QuotationData;
+     setClientName(data.clientName || "");
+     setPhone(data.phone || "");
+     setEmail(data.email || "");
++    setUserId(data.userId || "");
+     setPersons(String(data.persons || 0));
+     setService(data.service || "Umrah");
+     setTravelFrom(data.travelFrom || "");
+     setTravelTo(data.travelTo || "");
+     setInquiryNotes(data.inquiryNotes || "");
+     setStatus(data.status || "Draft");
+     setGoingFlight(data.goingFlight || goingFlight);
+     setReturnFlight(data.returnFlight || returnFlight);
+     setMakkahHotel(data.makkahHotel || makkahHotel);
+     setMadinahHotel(data.madinahHotel || madinahHotel);
+     setTransport(data.transport || transport);
+     setPrice(String(data.price || 0));
+     setInclusions(data.inclusions || "");
+     setExclusions(data.exclusions || "");
+     setNotes(data.notes || "");
+     setCreatedAt(data.createdAt || "");
+     setLoaded(true);
+   }, [params.id]);
+ 
+   const handleSave = () => {
+     const data: QuotationData = {
+       id: params.id,
++      userId: userId || undefined,
+       clientName,
+       phone,
+       email,
+       persons: Number(persons || 0),
+       service,
+       travelFrom,
+       travelTo,
+       inquiryNotes,
+       status,
+       goingFlight,
+       returnFlight,
+       makkahHotel,
+       madinahHotel,
+       transport,
+       price: Number(price || 0),
+       inclusions,
+       exclusions,
+       notes,
+       createdAt: createdAt || new Date().toISOString(),
+     };
+ 
+     localStorage.setItem(`quotation-${params.id}`, JSON.stringify(data));
+     router.push(`/admin/quotations/${params.id}`);
+   };
+ 
+@@ -184,63 +188,69 @@ export default function EditQuotationPage({ params }: { params: { id: string } }
+         </p>
+       </div>
+ 
+       <div className="grid gap-6">
+         <div className="card">
+           <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+             <div>
+               <h2 className="text-lg font-semibold text-primary">Client</h2>
+               <p className="text-sm text-gray-500">
+                 Primary contact details for the quotation.
+               </p>
+             </div>
+             <div className="w-full md:w-56">
+               <label className="text-xs text-gray-500">Status</label>
+               <select
+                 className="input"
+                 value={status}
+                 onChange={(e) => setStatus(e.target.value)}
+               >
+                 <option>Draft</option>
+                 <option>Sent</option>
+                 <option>Accepted</option>
+               </select>
+             </div>
+           </div>
+-          <div className="grid gap-4 md:grid-cols-3 mt-4">
++          <div className="grid gap-4 md:grid-cols-4 mt-4">
+             <input
+               className="input"
+               placeholder="Name"
+               value={clientName}
+               onChange={(e) => setClientName(e.target.value)}
+             />
+             <input
+               className="input"
+               placeholder="Phone"
+               value={phone}
+               onChange={(e) => setPhone(e.target.value)}
+             />
++            <input
++              className="input"
++              placeholder="User ID"
++              value={userId}
++              onChange={(e) => setUserId(e.target.value)}
++            />
+             <input
+               className="input"
+               placeholder="Persons"
+               type="number"
+               value={persons}
+               onChange={(e) => setPersons(e.target.value)}
+             />
+           </div>
+           <input
+             className="input"
+             placeholder="Email"
+             value={email}
+             onChange={(e) => setEmail(e.target.value)}
+           />
+         </div>
+ 
+         <div className="card">
+           <h2 className="text-lg font-semibold text-primary mb-4">
+             Trip Overview
+           </h2>
+           <div className="grid gap-4 md:grid-cols-2">
+             <input
+               className="input"
+               placeholder="Service (Umrah / Turkey / Baku)"
+               value={service}
+diff --git a/src/app/admin/quotations/[id]/page.tsx b/src/app/admin/quotations/[id]/page.tsx
+index 9abf01534d57dfdb54fb95a641587b0c7e6c6955..d45807b7ebf40f1443dda3d4e6695d531af7088a 100644
+--- a/src/app/admin/quotations/[id]/page.tsx
++++ b/src/app/admin/quotations/[id]/page.tsx
+@@ -1,31 +1,33 @@
+ "use client";
+ 
+ import { useRouter } from "next/navigation";
++import { addUserNotification } from "@/lib/notifications";
+ 
+ type QuotationData = {
+   id: string;
++  userId?: string;
+   clientName: string;
+   phone: string;
+   email: string;
+   persons: number;
+   service?: string;
+   travelFrom?: string;
+   travelTo?: string;
+   inquiryNotes?: string;
+   status?: string;
+   goingFlight: {
+     date: string;
+     departure: string;
+     arrival: string;
+     airline: string;
+     flightNumber: string;
+     routeType: string;
+   };
+   returnFlight: {
+     date: string;
+     departure: string;
+     arrival: string;
+     airline: string;
+     flightNumber: string;
+     routeType: string;
+   };
+@@ -55,65 +57,75 @@ type QuotationData = {
+ };
+ 
+ const statusStyles: Record<string, string> = {
+   Draft: "bg-gray-100 text-gray-600",
+   Sent: "bg-blue-100 text-blue-700",
+   Accepted: "bg-green-100 text-green-700",
+ };
+ 
+ export default function QuotationViewPage({ params }: { params: { id: string } }) {
+   const router = useRouter();
+ 
+   if (typeof window === "undefined") return null;
+ 
+   const raw = localStorage.getItem(`quotation-${params.id}`);
+   if (!raw) {
+     return <p className="text-center mt-10">Quotation not found.</p>;
+   }
+ 
+   const data = JSON.parse(raw) as QuotationData;
+   const status = data.status || "Draft";
+ 
+   const handleConvertToInvoice = () => {
+     const invoiceId = `INV-${Date.now()}`;
+     const invoiceData = {
+       invoiceId,
++      userId: data.userId,
+       customerName: data.clientName,
+       phone: data.phone,
+       email: data.email,
+       description: `Umrah package quotation ${data.id}`,
+       qty: data.persons || 1,
+       unitPrice: data.price,
+       total: data.price,
+       paid: 0,
+       balance: data.price,
+       paymentMethod: "Pending",
+       date: new Date().toISOString(),
+       quotationId: data.id,
+     };
+ 
+     localStorage.setItem(`invoice-${invoiceId}`, JSON.stringify(invoiceData));
++    if (data.userId) {
++      addUserNotification(data.userId, {
++        id: `user-invoice-${invoiceId}`,
++        type: "invoice",
++        message: `Invoice ${invoiceId} has been created.`,
++        createdAt: new Date().toISOString(),
++        read: false,
++      });
++    }
+     router.push(`/admin/invoices/${invoiceId}`);
+   };
+ 
+   return (
+     <main className="section max-w-5xl mx-auto">
+       <div id="quotation-print" className="card">
+         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between border-b border-primary/10 pb-4 mb-6">
+           <div className="flex items-center gap-4">
+             <img
+               src="/newlogo.png"
+               alt="Barakah Travels"
+               className="h-14 w-auto object-contain"
+             />
+             <div>
+               <p className="text-xs uppercase tracking-wide text-gray-500">
+                 Barakah Travels
+               </p>
+               <p className="text-sm text-gray-600">Umrah • Visa • Travel</p>
+               <p className="text-xs text-gray-500">
+                 +92 318 3548299 • info@barakahtravels.online
+               </p>
+             </div>
+           </div>
+           <div className="text-right">
+             <p className="text-sm font-semibold text-primary">Quotation</p>
+diff --git a/src/app/admin/quotations/new/page.tsx b/src/app/admin/quotations/new/page.tsx
+index b4ccae929f6a03b53a2fe207eb27a7f500492994..e3b77daf1775538ef2cdf6ca67b050919ec516f2 100644
+--- a/src/app/admin/quotations/new/page.tsx
++++ b/src/app/admin/quotations/new/page.tsx
+@@ -1,60 +1,62 @@
+ "use client";
+ 
+ import { useEffect, useState } from "react";
+ import { useRouter, useSearchParams } from "next/navigation";
++import { addUserNotification } from "@/lib/notifications";
+ 
+ type FlightDetails = {
+   date: string;
+   departure: string;
+   arrival: string;
+   airline: string;
+   flightNumber: string;
+   routeType: string;
+ };
+ 
+ type HotelDetails = {
+   name: string;
+   distance: string;
+   roomType: string;
+   nights: string;
+ };
+ 
+ type TransportDetails = {
+   type: string;
+   airportToMakkah: string;
+   makkahToMadinah: string;
+   madinahToAirport: string;
+ };
+ 
+ export default function NewQuotationPage() {
+   const router = useRouter();
+   const searchParams = useSearchParams();
+ 
+   const [clientName, setClientName] = useState("");
+   const [phone, setPhone] = useState("");
+   const [email, setEmail] = useState("");
++  const [userId, setUserId] = useState("");
+   const [persons, setPersons] = useState("2");
+   const [service, setService] = useState("Umrah");
+   const [travelFrom, setTravelFrom] = useState("");
+   const [travelTo, setTravelTo] = useState("");
+   const [inquiryNotes, setInquiryNotes] = useState("");
+   const [status, setStatus] = useState("Draft");
+ 
+   const [goingFlight, setGoingFlight] = useState<FlightDetails>({
+     date: "",
+     departure: "",
+     arrival: "",
+     airline: "",
+     flightNumber: "",
+     routeType: "Direct",
+   });
+   const [returnFlight, setReturnFlight] = useState<FlightDetails>({
+     date: "",
+     departure: "",
+     arrival: "",
+     airline: "",
+     flightNumber: "",
+     routeType: "Direct",
+   });
+ 
+   const [makkahHotel, setMakkahHotel] = useState<HotelDetails>({
+@@ -68,133 +70,151 @@ export default function NewQuotationPage() {
+     distance: "",
+     roomType: "",
+     nights: "",
+   });
+ 
+   const [transport, setTransport] = useState<TransportDetails>({
+     type: "Private",
+     airportToMakkah: "",
+     makkahToMadinah: "",
+     madinahToAirport: "",
+   });
+ 
+   const [price, setPrice] = useState("0");
+   const [inclusions, setInclusions] = useState("");
+   const [exclusions, setExclusions] = useState("");
+   const [notes, setNotes] = useState("");
+ 
+   useEffect(() => {
+     const name = searchParams.get("name");
+     const phoneParam = searchParams.get("phone");
+     const emailParam = searchParams.get("email");
+     const serviceParam = searchParams.get("service");
+     const fromParam = searchParams.get("from");
+     const toParam = searchParams.get("to");
+     const notesParam = searchParams.get("notes");
++    const userIdParam = searchParams.get("userId");
+ 
+     if (name) setClientName(name);
+     if (phoneParam) setPhone(phoneParam);
+     if (emailParam) setEmail(emailParam);
+     if (serviceParam) setService(serviceParam);
+     if (fromParam) setTravelFrom(fromParam);
+     if (toParam) setTravelTo(toParam);
+     if (notesParam) setInquiryNotes(notesParam);
++    if (userIdParam) setUserId(userIdParam);
+   }, [searchParams]);
+ 
+   const handleSave = () => {
+     const id = `QT-${Date.now()}`;
+     const data = {
+       id,
++      userId: userId || undefined,
+       clientName,
+       phone,
+       email,
+       persons: Number(persons || 0),
+       service,
+       travelFrom,
+       travelTo,
+       inquiryNotes,
+       status,
+       goingFlight,
+       returnFlight,
+       makkahHotel,
+       madinahHotel,
+       transport,
+       price: Number(price || 0),
+       inclusions,
+       exclusions,
+       notes,
+       createdAt: new Date().toISOString(),
+     };
+ 
+     localStorage.setItem(`quotation-${id}`, JSON.stringify(data));
++    if (userId) {
++      addUserNotification(userId, {
++        id: `user-quote-${id}`,
++        type: "quotation",
++        message: `Your quotation ${id} is ready for review.`,
++        createdAt: new Date().toISOString(),
++        read: false,
++      });
++    }
+     router.push(`/admin/quotations/${id}`);
+   };
+ 
+   return (
+     <main className="section max-w-5xl mx-auto">
+       <div className="mb-8">
+         <h1 className="text-2xl font-bold text-primary">New Quotation</h1>
+         <p className="text-sm text-gray-500">
+           Capture detailed Umrah requirements for your client.
+         </p>
+       </div>
+ 
+       <div className="grid gap-6">
+         <div className="card">
+           <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+             <div>
+               <h2 className="text-lg font-semibold text-primary">Client</h2>
+               <p className="text-sm text-gray-500">
+                 Primary contact details for the quotation.
+               </p>
+             </div>
+             <div className="w-full md:w-56">
+               <label className="text-xs text-gray-500">Status</label>
+               <select
+                 className="input"
+                 value={status}
+                 onChange={(e) => setStatus(e.target.value)}
+               >
+                 <option>Draft</option>
+                 <option>Sent</option>
+                 <option>Accepted</option>
+               </select>
+             </div>
+           </div>
+-          <div className="grid gap-4 md:grid-cols-3 mt-4">
++          <div className="grid gap-4 md:grid-cols-4 mt-4">
+             <input
+               className="input"
+               placeholder="Name"
+               value={clientName}
+               onChange={(e) => setClientName(e.target.value)}
+             />
+             <input
+               className="input"
+               placeholder="Phone"
+               value={phone}
+               onChange={(e) => setPhone(e.target.value)}
+             />
++            <input
++              className="input"
++              placeholder="User ID (auto-filled)"
++              value={userId}
++              onChange={(e) => setUserId(e.target.value)}
++            />
+             <input
+               className="input"
+               placeholder="Persons"
+               type="number"
+               value={persons}
+               onChange={(e) => setPersons(e.target.value)}
+             />
+           </div>
+           <input
+             className="input"
+             placeholder="Email"
+             value={email}
+             onChange={(e) => setEmail(e.target.value)}
+           />
+         </div>
+ 
+         <div className="card">
+           <h2 className="text-lg font-semibold text-primary mb-4">
+             Trip Overview
+           </h2>
+           <div className="grid gap-4 md:grid-cols-2">
+             <input
+               className="input"
+               placeholder="Service (Umrah / Turkey / Baku)"
+               value={service}
+diff --git a/src/app/contact/page.tsx b/src/app/contact/page.tsx
+index b1b035462928846de7a54ac04fa9de3d8861ab0d..12e919b85412eab88871311e698307baad020d5c 100644
+--- a/src/app/contact/page.tsx
++++ b/src/app/contact/page.tsx
+@@ -1,117 +1,146 @@
+ "use client";
+ 
+ import { useState } from "react";
+ import type { ChangeEvent, FormEvent } from "react";
++import { useSession } from "next-auth/react";
++import { FaWhatsapp, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
++import { addAdminNotification } from "@/lib/notifications";
+ 
+ export default function Contact() {
++  const { data: session } = useSession();
+   const [formState, setFormState] = useState({
+     name: "",
+     phone: "",
+     service: "Umrah",
+     notes: "",
+   });
+   const [formStatus, setFormStatus] = useState({
+     loading: false,
+     success: false,
+     error: "",
+   });
++  const [showSuccessModal, setShowSuccessModal] = useState(false);
+ 
+   const handleChange = (
+     event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+   ) => {
+     const { name, value } = event.target;
+     setFormState((prev) => ({ ...prev, [name]: value }));
+   };
+ 
+   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+     event.preventDefault();
+     setFormStatus({ loading: true, success: false, error: "" });
+ 
++    const userId = (session?.user as { id?: string })?.id;
+     const response = await fetch("/api/inquiry", {
+       method: "POST",
+       headers: { "Content-Type": "application/json" },
+-      body: JSON.stringify(formState),
++      body: JSON.stringify({
++        ...formState,
++        userId: userId || undefined,
++      }),
+     });
+ 
+     if (!response.ok) {
+       setFormStatus({
+         loading: false,
+         success: false,
+         error: "Unable to send your request. Please try again.",
+       });
+       return;
+     }
+ 
+     setFormStatus({ loading: false, success: true, error: "" });
++    setShowSuccessModal(true);
++    addAdminNotification({
++      id: `admin-inquiry-${Date.now()}`,
++      type: "inquiry",
++      message: "New inquiry submitted from the contact page.",
++      createdAt: new Date().toISOString(),
++      read: false,
++    });
+     setFormState({ name: "", phone: "", service: "Umrah", notes: "" });
+   };
+ 
+   return (
+     <main className="section">
+       <div className="max-w-6xl mx-auto space-y-10">
+         <div className="text-center space-y-4">
+           <h1 className="text-3xl md:text-4xl font-bold text-primary">
+             Contact Barakah Travels
+           </h1>
+           <p className="text-gray-600 max-w-2xl mx-auto">
+             Share your travel goals and our Umrah specialists will tailor the
+             perfect package for you. We respond fast on WhatsApp, phone, and
+             email.
+           </p>
++          <p className="text-primary font-semibold">
++            Let us handle every detail so your family can focus on worship.
++          </p>
+           <a
+             href="https://wa.me/923183548299"
+             className="btn inline-flex"
+           >
+             Chat on WhatsApp Now
+           </a>
+         </div>
+ 
+         <div className="grid gap-6 md:grid-cols-3">
+           <div className="card text-center space-y-2">
++            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-2xl mx-auto">
++              <FaWhatsapp />
++            </div>
+             <p className="text-xs uppercase tracking-wide text-gray-500">
+               WhatsApp
+             </p>
+             <p className="text-lg font-semibold text-primary">
+               +92 318 3548299
+             </p>
+             <p className="text-sm text-gray-500">
+               Fastest response for quotes & availability.
+             </p>
+           </div>
+           <div className="card text-center space-y-2">
++            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-2xl mx-auto">
++              <FaPhoneAlt />
++            </div>
+             <p className="text-xs uppercase tracking-wide text-gray-500">
+               Call Us
+             </p>
+             <p className="text-lg font-semibold text-primary">
+               +92 340 0799777
+             </p>
+             <p className="text-sm text-gray-500">
+               Speak directly with our Umrah advisors.
+             </p>
+           </div>
+           <div className="card text-center space-y-2">
++            <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-2xl mx-auto">
++              <FaEnvelope />
++            </div>
+             <p className="text-xs uppercase tracking-wide text-gray-500">
+               Email
+             </p>
+             <p className="text-lg font-semibold text-primary">
+               info@barakahtravels.online
+             </p>
+             <p className="text-sm text-gray-500">
+               Get detailed itineraries and documentation.
+             </p>
+           </div>
+         </div>
+ 
+         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-start">
+           <div className="card">
+             <h2 className="text-2xl font-bold text-primary mb-2">
+               Quick Inquiry
+             </h2>
+             <p className="text-sm text-gray-600 mb-6">
+               Submit your request and we will contact you with the best options.
+             </p>
+             <form className="form" onSubmit={handleSubmit}>
+               <div className="grid gap-4 md:grid-cols-2">
+                 <input
+                   className="input"
+                   name="name"
+@@ -129,56 +158,73 @@ export default function Contact() {
+                   required
+                 />
+               </div>
+               <select
+                 className="input"
+                 name="service"
+                 value={formState.service}
+                 onChange={handleChange}
+               >
+                 <option>Umrah</option>
+                 <option>Dubai</option>
+                 <option>Turkey</option>
+                 <option>Baku</option>
+               </select>
+               <textarea
+                 className="input min-h-[120px]"
+                 name="notes"
+                 placeholder="Tell us about your travel plans"
+                 value={formState.notes}
+                 onChange={handleChange}
+               />
+               <div className="flex flex-wrap items-center gap-3">
+                 <button className="btn" type="submit" disabled={formStatus.loading}>
+                   {formStatus.loading ? "Sending..." : "Send Inquiry"}
+                 </button>
+-                {formStatus.success && (
+-                  <span className="text-sm text-green-600">
+-                    Thank you! We will be in touch shortly.
+-                  </span>
+-                )}
+                 {formStatus.error && (
+                   <span className="text-sm text-red-600">{formStatus.error}</span>
+                 )}
+               </div>
+             </form>
+           </div>
+ 
+           <div className="card space-y-4">
+             <h3 className="text-xl font-semibold text-primary">
+               What happens next?
+             </h3>
+             <ul className="text-sm text-gray-600 space-y-3">
+               <li>• We confirm your travel dates and departure city.</li>
+               <li>• Our team shares hotel and flight options within hours.</li>
+               <li>• You receive a transparent Umrah quotation on WhatsApp.</li>
+             </ul>
+             <p className="text-sm text-gray-500">
+               Prefer a detailed package? Use the full inquiry form on the Home
+               page for customized itineraries.
+             </p>
+           </div>
+         </div>
+       </div>
++
++      {showSuccessModal && (
++        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
++          <div className="bg-white rounded-2xl shadow-xl p-6 max-w-md text-center space-y-3">
++            <div className="text-3xl text-primary" aria-hidden="true">
++              ✓
++            </div>
++            <h3 className="text-xl font-semibold text-primary">
++              Request Submitted
++            </h3>
++            <p className="text-sm text-gray-600">
++              Your request has been submitted. Our team will contact you shortly.
++            </p>
++            <button
++              className="btn w-full"
++              onClick={() => setShowSuccessModal(false)}
++            >
++              Close
++            </button>
++          </div>
++        </div>
++      )}
+     </main>
+   );
+ }
+diff --git a/src/app/dashboard/page.tsx b/src/app/dashboard/page.tsx
+index 8e7d824a67bc5b5e9dec6537ee746ef2069c070f..8a3702d9a9dff614f1b20b6a203ea2d364350fe9 100644
+--- a/src/app/dashboard/page.tsx
++++ b/src/app/dashboard/page.tsx
+@@ -1,171 +1,184 @@
+ "use client";
+ 
+ import { useSession } from "next-auth/react";
+-import { useCallback, useEffect, useMemo, useState } from "react";
++import { useEffect, useMemo, useState } from "react";
++import UserAvatar from "@/components/UserAvatar";
+ 
+ type Inquiry = {
+   _id?: string;
++  userId?: string;
+   name?: string;
+   email?: string;
+   phone?: string;
+   service?: string;
+   from?: string;
+   to?: string;
+   notes?: string;
+   createdAt?: string;
+ };
+ 
+ type Quotation = {
+   id: string;
++  userId?: string;
+   clientName?: string;
+   email?: string;
+   phone?: string;
+   persons?: number;
+   price?: number;
+   createdAt?: string;
+   status?: string;
+ };
+ 
++type Invoice = {
++  invoiceId: string;
++  userId?: string;
++  customerName?: string;
++  total?: number;
++  balance?: number;
++  paid?: number;
++  date?: string;
++};
++
+ export default function UserDashboard() {
+   const { data: session, status } = useSession();
+-  const [phoneMatch, setPhoneMatch] = useState("");
+   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
+   const [quotations, setQuotations] = useState<Quotation[]>([]);
++  const [invoices, setInvoices] = useState<Invoice[]>([]);
+   const [loadingInquiries, setLoadingInquiries] = useState(false);
+ 
+-  const identifiers = useMemo(() => {
+-    return [session?.user?.email, phoneMatch].filter(
+-      (value): value is string => Boolean(value)
+-    );
+-  }, [session?.user?.email, phoneMatch]);
+-
+-  const matchesIdentifier = useCallback(
+-    (value?: string) =>
+-      identifiers.some((identifier) =>
+-        value?.toLowerCase().includes(identifier.toLowerCase())
+-      ),
+-    [identifiers]
++  const userId = useMemo(
++    () => (session?.user as { id?: string })?.id,
++    [session]
+   );
+ 
+   useEffect(() => {
+-    if (!session?.user?.email) return;
++    if (!userId) return;
+     setLoadingInquiries(true);
+     fetch("/api/inquiries")
+       .then((res) => res.json())
+       .then((data: Inquiry[]) => {
+         setInquiries(data);
+       })
+       .finally(() => setLoadingInquiries(false));
+-  }, [session?.user?.email]);
++  }, [userId]);
+ 
+   useEffect(() => {
+     if (typeof window === "undefined") return;
+     const keys = Object.keys(localStorage).filter((k) =>
+       k.startsWith("quotation-")
+     );
+     const data = keys
+       .map((key) => {
+         const raw = localStorage.getItem(key);
+         if (!raw) return null;
+         const item = JSON.parse(raw) as Quotation;
+         return {
+           ...item,
+           id: item.id || key.replace("quotation-", ""),
+         };
+       })
+       .filter(Boolean) as Quotation[];
+     setQuotations(data);
+   }, []);
+ 
+-  const filteredInquiries = useMemo(() => {
+-    return inquiries.filter(
+-      (inquiry) =>
+-        matchesIdentifier(inquiry.email) || matchesIdentifier(inquiry.phone)
++  useEffect(() => {
++    if (typeof window === "undefined") return;
++    const keys = Object.keys(localStorage).filter((k) =>
++      k.startsWith("invoice-")
+     );
+-  }, [inquiries, matchesIdentifier]);
++    const data = keys
++      .map((key) => {
++        const raw = localStorage.getItem(key);
++        if (!raw) return null;
++        const item = JSON.parse(raw) as Invoice;
++        return {
++          ...item,
++          invoiceId: item.invoiceId || key.replace("invoice-", ""),
++        };
++      })
++      .filter(Boolean) as Invoice[];
++    setInvoices(data);
++  }, []);
++
++  const filteredInquiries = useMemo(() => {
++    return inquiries.filter((inquiry) => inquiry.userId === userId);
++  }, [inquiries, userId]);
+ 
+   const filteredQuotations = useMemo(() => {
+-    return quotations.filter(
+-      (quote) => matchesIdentifier(quote.email) || matchesIdentifier(quote.phone)
+-    );
+-  }, [quotations, matchesIdentifier]);
++    return quotations.filter((quote) => quote.userId === userId);
++  }, [quotations, userId]);
++
++  const filteredInvoices = useMemo(() => {
++    return invoices.filter((invoice) => invoice.userId === userId);
++  }, [invoices, userId]);
+ 
+   if (status === "loading") {
+     return <div className="max-w-5xl mx-auto py-12 px-4">Loading...</div>;
+   }
+ 
+   if (!session?.user) {
+     return (
+       <div className="max-w-5xl mx-auto py-12 px-4">
+         Please sign in to view your dashboard.
+       </div>
+     );
+   }
+ 
+   return (
+     <main className="max-w-5xl mx-auto py-12 px-4 space-y-8">
+-      <div>
+-        <h1 className="text-3xl font-bold text-primary mb-2">
+-          User Dashboard
+-        </h1>
+-        <p className="text-gray-600">
+-          Welcome back, <strong>{session.user.name}</strong>
+-        </p>
++      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
++        <div>
++          <h1 className="text-3xl font-bold text-primary mb-2">
++            User Dashboard
++          </h1>
++          <p className="text-gray-600">
++            Welcome back, <strong>{session.user.name}</strong>
++          </p>
++        </div>
++        <UserAvatar
++          src={session.user.image}
++          name={session.user.name}
++          size={40}
++        />
+       </div>
+ 
+-      <div className="card">
+-        <h2 className="text-lg font-semibold text-primary mb-3">
+-          Match Your Records
+-        </h2>
+-        <p className="text-sm text-gray-600 mb-4">
+-          We match your inquiries and quotations using your Google email or a
+-          phone number.
+-        </p>
+-        <div className="grid gap-4 md:grid-cols-2">
+-          <input
+-            className="input"
+-            value={session.user.email || ""}
+-            readOnly
+-          />
+-          <input
+-            className="input"
+-            placeholder="Add phone number (optional)"
+-            value={phoneMatch}
+-            onChange={(event) => setPhoneMatch(event.target.value)}
+-          />
++      {!userId && (
++        <div className="card text-sm text-gray-600">
++          Your account is missing a user ID. Please sign out and back in to
++          sync your records.
+         </div>
+-      </div>
++      )}
+ 
+       <div className="grid gap-6 md:grid-cols-2">
+         <div className="card space-y-4">
+           <h2 className="font-semibold text-lg text-primary">My Inquiries</h2>
+           {loadingInquiries ? (
+             <p className="text-sm text-gray-500">Loading inquiries...</p>
+           ) : filteredInquiries.length === 0 ? (
+             <p className="text-sm text-gray-500">
+-              No inquiries matched your email or phone yet.
++              No inquiries found for your account yet.
+             </p>
+           ) : (
+             <ul className="space-y-3 text-sm">
+               {filteredInquiries.map((inquiry) => (
+                 <li key={inquiry._id || inquiry.email} className="border-b pb-3">
+                   <div className="font-semibold">
+                     {inquiry.service || "Umrah"} Inquiry
+                   </div>
+                   <div className="text-gray-600">
+                     {inquiry.from || "Pakistan"} → {inquiry.to || "Saudi Arabia"}
+                   </div>
+                   <div className="text-xs text-gray-400">
+                     {inquiry.createdAt
+                       ? new Date(inquiry.createdAt).toLocaleString()
+                       : "Submitted recently"}
+                   </div>
+                 </li>
+               ))}
+             </ul>
+           )}
+         </div>
+ 
+         <div className="card space-y-4">
+           <h2 className="font-semibold text-lg text-primary">My Quotations</h2>
+           {filteredQuotations.length === 0 ? (
+@@ -176,36 +189,57 @@ export default function UserDashboard() {
+             <ul className="space-y-3 text-sm">
+               {filteredQuotations.map((quote) => (
+                 <li key={quote.id} className="border-b pb-3">
+                   <div className="font-semibold">
+                     {quote.clientName || "Quotation"} •{" "}
+                     {quote.status || "Draft"}
+                   </div>
+                   <div className="text-gray-600">
+                     PKR {Number(quote.price || 0).toLocaleString()} •{" "}
+                     {quote.persons || 0} persons
+                   </div>
+                   <div className="text-xs text-gray-400">
+                     {quote.createdAt
+                       ? new Date(quote.createdAt).toLocaleString()
+                       : "Shared recently"}
+                   </div>
+                 </li>
+               ))}
+             </ul>
+           )}
+         </div>
+       </div>
+ 
+       <div className="card">
+         <h2 className="font-semibold text-lg text-primary">My Invoices</h2>
+-        <p className="text-sm text-gray-500">
+-          Invoices will be available here soon for online viewing and payment.
+-        </p>
++        {filteredInvoices.length === 0 ? (
++          <p className="text-sm text-gray-500">
++            Invoices will appear here after a quotation is approved.
++          </p>
++        ) : (
++          <ul className="space-y-3 text-sm">
++            {filteredInvoices.map((invoice) => (
++              <li key={invoice.invoiceId} className="border-b pb-3">
++                <div className="font-semibold">
++                  Invoice #{invoice.invoiceId}
++                </div>
++                <div className="text-gray-600">
++                  PKR {Number(invoice.total || 0).toLocaleString()} • Paid{" "}
++                  {Number(invoice.paid || 0).toLocaleString()}
++                </div>
++                <div className="text-xs text-gray-400">
++                  {invoice.date
++                    ? new Date(invoice.date).toLocaleString()
++                    : "Issued recently"}
++                </div>
++              </li>
++            ))}
++          </ul>
++        )}
+       </div>
+ 
+       <div className="text-sm text-gray-500">
+         Logged in as <strong>{session.user.email}</strong>
+       </div>
+     </main>
+   );
+ }
+diff --git a/src/app/globals.css b/src/app/globals.css
+index d0eb13c14674e2f57e1af8ef94eab8b5e8057223..5fcc5f4234e77af5640e7c9086a4f5bd0f1c186c 100644
+--- a/src/app/globals.css
++++ b/src/app/globals.css
+@@ -1,71 +1,75 @@
+ @tailwind base;
+ @tailwind components;
+ @tailwind utilities;
+ 
+ 
++html {
++  scroll-behavior: smooth;
++}
++
+ body {
+   background-color: #fbf7ef;
+   @apply text-secondary font-sans min-h-screen antialiased;
+ }
+ 
+ h1, h2, h3, h4, h5, h6 {
+   @apply font-heading tracking-tight;
+ }
+ 
+ .section {
+   @apply max-w-6xl mx-auto px-5 md:px-8 py-10 md:py-14;
+ }
+ 
+ .btn {
+   @apply inline-flex items-center justify-center gap-2 rounded-full bg-primary text-white font-semibold py-2.5 px-6 shadow-md transition hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary-dark focus:ring-offset-2;
+ }
+ 
+ .btn-outline {
+   @apply inline-flex items-center justify-center gap-2 rounded-full border border-primary/40 text-primary font-semibold py-2.5 px-6 transition hover:bg-primary/10;
+ }
+ 
+ .card {
+   @apply bg-white rounded-2xl shadow-card p-6 border border-primary/10 transition-shadow duration-200;
+ }
+ 
+ @media (min-width: 768px) {
+   .card {
+     @apply hover:shadow-lg;
+   }
+ }
+ 
+ .badge {
+   @apply inline-flex items-center rounded-full bg-primary/10 text-primary px-3 py-1 text-xs font-semibold;
+ }
+ 
+ .form .input,
+ .form input,
+ .form select,
+ .form textarea,
+ .input {
+-  @apply w-full border border-gray-200 rounded-2xl px-4 py-2.5 mb-3 bg-white focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/60;
++  @apply w-full border border-gray-200 rounded-2xl px-4 py-2.5 mb-3 bg-white focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/80 transition;
+ }
+ 
+ .form button[type="submit"] {
+   @apply mt-2;
+ }
+ 
+ nav {
+   @apply flex items-center justify-between py-4 px-8 bg-white shadow-card mb-8;
+ }
+ 
+ footer {
+   @apply bg-gray-50 text-center py-8 mt-16 text-sm text-secondary;
+ }
+ /* ===========================
+    PRINT STYLES (INVOICE ONLY)
+    =========================== */
+ 
+ @media print {
+   html, body {
+     margin: 0;
+     padding: 0;
+     background: white;
+   }
+ 
+   body {
+@@ -153,25 +157,94 @@ footer {
+     transform: translateX(80px);
+   }
+   to {
+     opacity: 1;
+     transform: translateX(0);
+   }
+ }
+ 
+ .slide-left {
+   animation: slideLeft 1s ease forwards;
+ }
+ 
+ .slide-right {
+   animation: slideRight 1s ease forwards;
+ }
+ 
+ .reveal {
+   opacity: 1;
+   transform: translateY(16px);
+   transition: all 0.8s ease;
+ }
+ 
+ .reveal.active {
+   transform: translateY(0);
+ }
++
++/* ================= PAGE TRANSITION ================= */
++
++@keyframes fadeInUp {
++  from {
++    opacity: 0;
++    transform: translateY(12px);
++  }
++  to {
++    opacity: 1;
++    transform: translateY(0);
++  }
++}
++
++.page-fade {
++  animation: fadeInUp 0.6s ease;
++}
++
++/* ================= AIRPLANE LOADER ================= */
++
++.plane-loader-overlay {
++  position: fixed;
++  inset: 0;
++  background: rgba(12, 10, 6, 0.45);
++  backdrop-filter: blur(6px);
++  display: flex;
++  align-items: center;
++  justify-content: center;
++  z-index: 200;
++}
++
++.plane-loader {
++  background: white;
++  border-radius: 999px;
++  padding: 16px 26px;
++  display: inline-flex;
++  align-items: center;
++  gap: 12px;
++  color: #b1822a;
++  font-weight: 600;
++  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
++  animation: floaty 1.2s ease-in-out infinite;
++}
++
++.plane-loader svg {
++  animation: fly 1.2s ease-in-out infinite;
++}
++
++@keyframes fly {
++  0% {
++    transform: translateX(-4px) rotate(-4deg);
++  }
++  50% {
++    transform: translateX(6px) rotate(4deg);
++  }
++  100% {
++    transform: translateX(-4px) rotate(-4deg);
++  }
++}
++
++@keyframes floaty {
++  0%,
++  100% {
++    transform: translateY(0);
++  }
++  50% {
++    transform: translateY(-6px);
++  }
++}
+diff --git a/src/app/layout.tsx b/src/app/layout.tsx
+index 6ec8e9dbf275e4f01a2143c6351fd1d47945c70b..984e7ec064af56234079653a3da2b6179f78417f 100644
+--- a/src/app/layout.tsx
++++ b/src/app/layout.tsx
+@@ -1,31 +1,32 @@
+ import type { Metadata } from "next";
+ import { Geist, Geist_Mono } from "next/font/google";
+ import "./globals.css";
+ import Header from "@/components/Header";
+ import SessionWrapper from "@/components/SessionWrapper";
+-import { FaPhoneAlt, FaWhatsapp, FaEnvelope } from "react-icons/fa";
++import PageTransition from "@/components/PageTransition";
++import PageLoader from "@/components/PageLoader";
+ 
+ const geistSans = Geist({
+   variable: "--font-geist-sans",
+   subsets: ["latin"],
+ });
+ 
+ const geistMono = Geist_Mono({
+   variable: "--font-geist-mono",
+   subsets: ["latin"],
+ });
+ 
+ export const metadata: Metadata = {
+   metadataBase: new URL("https://www.barakahtravels.online"),
+   title: {
+     default: "Barakah Travels | Umrah, Visa & Travel Services",
+     template: "%s | Barakah Travels",
+   },
+   description:
+     "Barakah Travels – Trusted Umrah, Hajj, Visa & Travel services in Pakistan. WhatsApp booking available.",
+ 
+   openGraph: {
+     title: "Barakah Travels",
+     description:
+       "Your trusted partner for Umrah packages, visas, and travel services.",
+     url: "https://www.barakahtravels.online",
+@@ -40,102 +41,110 @@ export const metadata: Metadata = {
+     ],
+     locale: "en_PK",
+     type: "website",
+   },
+ 
+   icons: {
+     icon: "/favicon.png",
+     apple: "/favicon.png",
+     shortcut: "/favicon.png",
+   },
+ };
+ 
+ 
+ export default function RootLayout({
+   children,
+ }: {
+   children: React.ReactNode;
+ }) {
+   return (
+     <html lang="en">
+       <body
+         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#fbf7ef] text-secondary min-h-screen flex flex-col`}
+       >
+         <SessionWrapper>
+           <Header />
++          <PageLoader />
+ 
+           {/* MAIN CONTENT */}
+           <main className="w-full flex-1 pt-28 md:pt-32">
+-            <div className="max-w-7xl mx-auto px-4">{children}</div>
++            <div className="max-w-7xl mx-auto px-4">
++              <PageTransition>{children}</PageTransition>
++            </div>
+           </main>
+         </SessionWrapper>
+         <a
+   href="https://wa.me/923183548299"
+   target="_blank"
+   className="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition"
+ >
+   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="24" height="24" fill="white">
+     <path d="M16 .396C7.164.396 0 7.56 0 16.396c0 2.816.74 5.566 2.148 7.984L0 32l7.848-2.108a15.93 15.93 0 0 0 8.152 2.252c8.836 0 16-7.164 16-16S24.836.396 16 .396zm0 29.168c-2.42 0-4.788-.648-6.852-1.876l-.492-.292-4.656 1.252 1.244-4.532-.32-.516A13.55 13.55 0 0 1 2.452 16.4c0-7.49 6.058-13.548 13.548-13.548S29.548 8.91 29.548 16.4 23.49 29.564 16 29.564zm7.52-10.084c-.412-.204-2.44-1.204-2.82-1.34-.38-.136-.656-.204-.932.204-.276.412-1.064 1.34-1.304 1.616-.24.276-.48.308-.892.104-.412-.204-1.74-.64-3.316-2.044-1.228-1.096-2.056-2.452-2.296-2.864-.24-.412-.024-.636.18-.84.184-.184.412-.48.616-.72.204-.24.272-.412.408-.684.136-.276.068-.516-.034-.72-.104-.204-.932-2.244-1.276-3.072-.336-.804-.676-.696-.932-.708l-.792-.012c-.276 0-.72.104-1.096.516-.376.412-1.44 1.408-1.44 3.436 0 2.028 1.476 3.988 1.68 4.264.204.276 2.9 4.428 7.024 6.204.984.424 1.752.676 2.352.864.988.312 1.888.268 2.6.164.792-.12 2.44-1 2.784-1.964.344-.964.344-1.792.24-1.964-.104-.172-.38-.276-.792-.48z"/>
+   </svg>
+ </a>
+ 
+ 
+         {/* FOOTER */}
+         <footer className="bg-secondary text-secondary-light mt-16">
+-          <div className="max-w-7xl mx-auto px-4 py-8 grid gap-6 md:grid-cols-2">
+-            {/* Business Info */}
+-            <div className="space-y-2 text-center md:text-left">
++          <div className="max-w-7xl mx-auto px-4 py-12 grid gap-8 md:grid-cols-[1.2fr_1fr_1fr_1fr]">
++            <div className="space-y-3">
+               <h3 className="text-primary font-bold text-lg">
+                 Barakah Travels
+               </h3>
+-              <p className="text-sm">
+-                Trusted Umrah & Travel Services. Visa assistance, hotel
+-                arrangements & guided journeys.
++              <p className="text-sm text-secondary-light/80">
++                Trusted Umrah & travel specialists delivering visa support,
++                hotels near Haram, and guided spiritual journeys across
++                Pakistan.
+               </p>
++              <a
++                href="https://wa.me/923183548299"
++                className="inline-flex items-center gap-2 rounded-full bg-primary text-white px-4 py-2 text-sm font-semibold shadow-md"
++              >
++                <span>WhatsApp Us 24/7</span>
++              </a>
++            </div>
+ 
+-              <div className="flex flex-col gap-2 mt-4 md:items-start items-center">
+-                <span className="flex items-center gap-2">
+-                  <FaPhoneAlt />{" "}
+-                  <a href="tel:+923400799777" className="font-semibold">
+-                    +92 340 0799777
+-                  </a>
+-                </span>
+-                <span className="flex items-center gap-2">
+-                  <FaWhatsapp />{" "}
+-                  <a
+-                    href="https://wa.me/923183548299"
+-                    className="font-semibold"
+-                  >
+-                    +92 318 3548299
+-                  </a>
+-                </span>
+-                <span className="flex items-center gap-2">
+-                  <FaEnvelope />{" "}
+-                  <a
+-                    href="mailto:info@barakahtravels.online"
+-                    className="font-semibold"
+-                  >
+-                    info@barakahtravels.online
+-                  </a>
+-                </span>
+-              </div>
++            <div className="space-y-3 text-sm">
++              <h4 className="font-semibold text-white">Quick Links</h4>
++              <ul className="space-y-2 text-secondary-light/80">
++                <li><a href="/about" className="hover:text-white">About</a></li>
++                <li><a href="/packages" className="hover:text-white">Umrah Packages</a></li>
++                <li><a href="/contact" className="hover:text-white">Contact</a></li>
++                <li><a href="/submit-review" className="hover:text-white">Submit Review</a></li>
++              </ul>
+             </div>
+ 
+-            {/* Legal */}
+-            <div className="flex flex-col justify-center items-center md:items-end gap-2 text-sm">
+-              <a href="/privacy-policy" className="hover:underline">
+-                Privacy Policy
+-              </a>
+-              <a href="/terms" className="hover:underline">
+-                Terms & Conditions
+-              </a>
++            <div className="space-y-3 text-sm">
++              <h4 className="font-semibold text-white">Services</h4>
++              <ul className="space-y-2 text-secondary-light/80">
++                <li>Umrah Visa Processing</li>
++                <li>Hotel Bookings Near Haram</li>
++                <li>Private Transport</li>
++                <li>Ziyarat Tours</li>
++              </ul>
++            </div>
++
++            <div className="space-y-3 text-sm">
++              <h4 className="font-semibold text-white">Cities Served</h4>
++              <ul className="space-y-2 text-secondary-light/80">
++                <li>Karachi</li>
++                <li>Lahore</li>
++                <li>Islamabad</li>
++                <li>Multan</li>
++              </ul>
++              <div className="text-secondary-light/70 text-xs">
++                Phone: +92 340 0799777
++              </div>
++              <div className="text-secondary-light/70 text-xs">
++                Email: info@barakahtravels.online
++              </div>
+             </div>
+           </div>
+ 
+           <div className="text-center text-xs py-4 border-t border-white/10">
+             © 2025 Barakah Travels. All rights reserved.
+           </div>
+         </footer>
+       </body>
+     </html>
+   );
+ }
+diff --git a/src/app/packages/page.tsx b/src/app/packages/page.tsx
+index 6d614bc04515816f8a0a469b00db86bf681865fe..fed643030941980f7fcb8883fb0c75b292691793 100644
+--- a/src/app/packages/page.tsx
++++ b/src/app/packages/page.tsx
+@@ -1,28 +1,29 @@
+ "use client";
+ import Image from "next/image";
+ import { useState, useEffect } from "react";
++import { FaPassport, FaHotel, FaBus, FaKaaba } from "react-icons/fa";
+ 
+ /* ================= TYPES ================= */
+ type Package = {
+   _id: string;
+   name: string;
+   days: number;
+   type: string;
+   description?: string;
+   price?: number;
+   features?: string[];
+   image?: string;
+ };
+ 
+ /* ================= DATA FETCH ================= */
+ function usePackages() {
+   const [packages, setPackages] = useState<Package[] | null>(null);
+   const [loading, setLoading] = useState(true);
+   const [error, setError] = useState<string | null>(null);
+ 
+   useEffect(() => {
+     fetch("/api/packages")
+       .then((res) => {
+         if (!res.ok) throw new Error("Failed to fetch packages");
+         return res.json();
+       })
+@@ -55,146 +56,170 @@ export default function PackagesPage() {
+       price: 95000,
+       features: ["Visa Included", "3-Star Hotel", "Transport", "Ziyārāt"],
+       image: "/umrah2.png",
+     },
+     {
+       _id: "demo2",
+       name: "Comfort Umrah Package",
+       days: 10,
+       type: "Comfort",
+       description:
+         "Comfort Umrah package with 5-star hotel, private transport & support.",
+       price: 185000,
+       features: [
+         "Visa Included",
+         "5-Star Hotel",
+         "Private Transport",
+         "Ziyārāt",
+       ],
+       image: "/umrah2.png",
+     },
+   ];
+ 
+   const showPackages =
+     packages && packages.length > 0 ? packages : demoPackages;
+ 
++  const getFeatureIcon = (feature: string) => {
++    const normalized = feature.toLowerCase();
++    if (normalized.includes("visa")) return <FaPassport />;
++    if (normalized.includes("hotel")) return <FaHotel />;
++    if (normalized.includes("transport")) return <FaBus />;
++    if (normalized.includes("ziyar")) return <FaKaaba />;
++    return <FaPassport />;
++  };
++
+   return (
+     <main className="max-w-7xl mx-auto px-4 py-12">
+ 
+       {/* ================= PAGE HEADER (SEO) ================= */}
+       <section className="mb-14 text-center">
+         <h1
+           id="umrah"
+           className="text-4xl md:text-5xl font-extrabold text-primary mb-4"
+         >
+           Umrah Packages from Pakistan
+         </h1>
+         <p className="text-lg text-secondary max-w-3xl mx-auto">
+           Affordable and comfortable Umrah packages with visa, hotels near Haram,
+           transport and complete guidance. Book with confidence through
+           Barakah Travels.
+         </p>
+ 
+         {/* Trust strip */}
+         <div className="mt-6 flex flex-wrap justify-center gap-6 text-sm font-semibold text-primary">
+           <span>✔ Visa Included</span>
+           <span>✔ Hotels Near Haram</span>
+           <span>✔ 24/7 WhatsApp Support</span>
+         </div>
+       </section>
+ 
+       <div className="mt-6 text-center">
+         <a
+           href="/umrah-packages-from-karachi"
+           className="text-primary font-semibold underline"
+         >
+           View Detailed Umrah Packages from Karachi →
+         </a>
+       </div>
+ 
+       {/* ================= STATES ================= */}
+       {loading && <div className="text-center">Loading packages…</div>}
+       {error && (
+         <div className="text-center text-red-500">{error}</div>
+       )}
+ 
+       {/* ================= PACKAGES GRID ================= */}
+       {!loading && !error && (
+         <section className="grid gap-8 md:grid-cols-3">
+-          {showPackages.map((pkg) => (
++          {showPackages.map((pkg, index) => {
++            const isPopular =
++              pkg.name?.toLowerCase().includes("comfort") || index === 1;
++            return (
+             <div
+               key={pkg._id}
+               className="card flex flex-col hover:shadow-xl transition"
+             >
+               {/* Image */}
+               {pkg.image && (
+-                <div className="relative h-40 mb-4">
++                <div className="relative h-44 mb-4">
+                   <Image
+                     src={pkg.image}
+                     alt={`${pkg.name} Umrah Package`}
+                     fill
+-                  className="object-cover rounded-xl"
++                    className="object-cover rounded-xl"
+                   />
+                 </div>
+               )}
+ 
+               {/* Badge */}
+-              <span className="badge w-fit mb-2">Visa Included</span>
++              <div className="flex items-center justify-between mb-2">
++                <span className="badge w-fit">Visa Included</span>
++                {isPopular && (
++                  <span className="text-xs font-semibold text-white bg-primary px-3 py-1 rounded-full">
++                    Most Popular
++                  </span>
++                )}
++              </div>
+ 
+               {/* Title */}
+               <h2 className="text-xl font-bold mb-1 text-primary">
+                 {pkg.name}
+               </h2>
+               <p className="text-sm text-secondary mb-3">
+                 {pkg.days} Days · {pkg.type}
+               </p>
+ 
+               {/* Features */}
+-              <ul className="list-disc pl-5 text-sm mb-4 flex-1">
++              <ul className="text-sm mb-4 flex-1 space-y-2">
+                 {pkg.features?.map((f, i) => (
+-                  <li key={i}>{f}</li>
++                  <li key={i} className="flex items-center gap-2">
++                    <span className="text-primary text-base">
++                      {getFeatureIcon(f)}
++                    </span>
++                    <span>{f}</span>
++                  </li>
+                 ))}
+               </ul>
+ 
+               {/* Description */}
+               {pkg.description && (
+                 <p className="text-sm mb-3">{pkg.description}</p>
+               )}
+ 
+               {/* Price */}
+               {pkg.price && (
+                 <div className="font-bold text-lg mb-4">
+                   PKR {pkg.price.toLocaleString()}
+                 </div>
+               )}
+ 
+               {/* CTA */}
+               <a
+                 href={`https://wa.me/923183548299?text=Assalamualaikum, I want details about ${pkg.days} days ${pkg.type} Umrah package`}
+                 className="btn text-center"
+               >
+                 Book on WhatsApp
+               </a>
+             </div>
+-          ))}
++          )})}
+         </section>
+       )}
+ 
+       {/* ================= SEO CONTENT BLOCK ================= */}
+       <section className="mt-20 max-w-4xl mx-auto text-sm text-secondary leading-relaxed">
+         <h2 className="text-2xl font-bold text-primary mb-4">
+           Why Choose Barakah Travels for Umrah?
+         </h2>
+         <p className="mb-3">
+           Barakah Travels provides reliable and transparent Umrah services for
+           pilgrims across Pakistan. Our packages include visa processing,
+           hotel accommodation near Haram, transport and ziyārāt arrangements.
+         </p>
+         <p>
+           Whether you are travelling from Karachi, Lahore, Islamabad or any
+           other city, our team ensures a smooth and spiritually fulfilling
+           journey.
+         </p>
+       </section>
+     </main>
+   );
+ }
+diff --git a/src/app/page.tsx b/src/app/page.tsx
+index bc27861d947a43b975a2373688206d700f8783e0..41a3044594f81b0aa9c87058e91a5839115e34f1 100644
+--- a/src/app/page.tsx
++++ b/src/app/page.tsx
+@@ -1,203 +1,240 @@
+ "use client";
+ import Link from "next/link";
+ import React, { useState, useEffect } from "react";
+ import Image from "next/image";
+ import { useSession } from "next-auth/react";
++import { FaHotel, FaWhatsapp, FaMapMarkedAlt, FaPassport, FaPlaneDeparture, FaKaaba } from "react-icons/fa";
++import { addAdminNotification } from "@/lib/notifications";
+ 
+ /* ================= REVIEWS AUTO SLIDER ================= */
+ function ReviewsSlider() {
+   const reviews = [
+     {
+       name: "Ayesha Siddiqui",
+       city: "Lahore",
+       rating: 5,
+       review:
+         "Barakah Travels made our Umrah journey smooth and stress-free. Highly recommended!",
+     },
+     {
+       name: "Imran Qureshi",
+       city: "Karachi",
+       rating: 5,
+       review:
+         "Excellent visa guidance and fast WhatsApp support. Will book again.",
+     },
+     {
+       name: "Fatima Noor",
+       city: "Islamabad",
+       rating: 5,
+       review:
+         "Professional team and excellent hotel arrangements near Haram.",
+     },
+   ];
+ 
+   const [index, setIndex] = useState(0);
+ 
+   useEffect(() => {
+     const t = setInterval(() => {
+       setIndex((i) => (i + 1) % reviews.length);
+     }, 3500);
+     return () => clearInterval(t);
+   }, []);
+ 
+   const r = reviews[index];
+ 
+   return (
+     <div className="max-w-xl mx-auto text-center card reveal">
+-      <div className="flex justify-center mb-2">
++      <div className="flex justify-center mb-3 gap-1 text-yellow-500 text-lg">
+         {Array.from({ length: r.rating }).map((_, i) => (
+-          <span key={i} className="text-yellow-400 text-lg">★</span>
++          <span key={i}>★</span>
+         ))}
+       </div>
+-      <p className="italic text-secondary-dark mb-2">“{r.review}”</p>
++      <p className="italic text-secondary-dark mb-3">“{r.review}”</p>
+       <p className="font-bold text-primary">
+         — {r.name}, {r.city}
+       </p>
+     </div>
+   );
+ }
+ 
+ /* ================= HOME ================= */
+ export default function Home() {
+   const { data: session } = useSession();
+   const [formState, setFormState] = useState({
+     name: "",
+     phone: "",
+     email: "",
+     service: "Umrah",
+     from: "",
+     to: "",
+     notes: "",
+   });
+   const [formStatus, setFormStatus] = useState({
+     loading: false,
+     success: false,
+     error: "",
+   });
++  const [showSuccessModal, setShowSuccessModal] = useState(false);
+ 
+   const handleInputChange = (
+     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+   ) => {
+     const { name, value } = event.target;
+     setFormState((prev) => ({ ...prev, [name]: value }));
+   };
+ 
+   const handleInquirySubmit = async (
+     event: React.FormEvent<HTMLFormElement>
+   ) => {
+     event.preventDefault();
+     setFormStatus({ loading: true, success: false, error: "" });
+ 
++    const userId = (session?.user as { id?: string })?.id;
+     const response = await fetch("/api/inquiry", {
+       method: "POST",
+       headers: { "Content-Type": "application/json" },
+-      body: JSON.stringify(formState),
++      body: JSON.stringify({
++        ...formState,
++        userId: userId || undefined,
++      }),
+     });
+ 
+     if (!response.ok) {
+       setFormStatus({
+         loading: false,
+         success: false,
+         error: "Something went wrong. Please try again.",
+       });
+       return;
+     }
+ 
+     setFormStatus({ loading: false, success: true, error: "" });
++    setShowSuccessModal(true);
++    addAdminNotification({
++      id: `admin-inquiry-${Date.now()}`,
++      type: "inquiry",
++      message: "New inquiry submitted from the home page.",
++      createdAt: new Date().toISOString(),
++      read: false,
++    });
+     setFormState({
+       name: "",
+       phone: "",
+       email: "",
+       service: "Umrah",
+       from: "",
+       to: "",
+       notes: "",
+     });
+   };
+ 
+   useEffect(() => {
+     setTimeout(() => {
+       const reveals = document.querySelectorAll(".reveal");
+ 
+       const observer = new IntersectionObserver(
+         (entries) => {
+           entries.forEach((entry) => {
+             if (entry.isIntersecting) {
+               entry.target.classList.add("active");
+             }
+           });
+         },
+         { threshold: 0.15 }
+       );
+ 
+       reveals.forEach((el) => observer.observe(el));
+     }, 300);
+   }, []);
+ 
+   return (
+     <main className="pb-16">
+ 
+       {/* HERO */}
+-      <section className="relative min-h-[70vh] rounded-[32px] overflow-hidden shadow-card mb-20 mt-4 md:mt-6 reveal">
++      <section className="relative min-h-[72vh] rounded-[32px] overflow-hidden shadow-card mb-12 mt-4 md:mt-6 reveal">
+         <Image
+           src="/umrah2.png"
+           alt="Kaaba"
+           fill
+-          className="object-cover opacity-45"
++          className="object-cover opacity-85"
+         />
+-        <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/65 to-white/80" />
+-        <div className="relative z-10 text-center py-24 md:py-28 px-6">
++        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-primary/40" />
++        <div className="relative z-10 text-center py-24 md:py-28 px-6 text-white">
+           <span className="badge mb-4">Trusted Umrah Support</span>
+-          <h1 className="text-4xl md:text-6xl font-extrabold text-primary mb-6">
++          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 text-white">
+             Answer the Call for Umrah with Peace of Mind
+           </h1>
+ 
+-          <p className="text-lg md:text-xl text-secondary-dark mb-8 max-w-3xl mx-auto">
++          <p className="text-lg md:text-xl text-white/90 mb-8 max-w-3xl mx-auto">
+             Complete Umrah visa, hotels near Haram, flights and transport —
+             handled by Barakah Travels with 24/7 WhatsApp support.
+           </p>
+ 
+           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+             <a
+               href="https://wa.me/923183548299"
+               className="btn text-base md:text-lg px-8 py-3"
+             >
+               Get Latest Umrah Price on WhatsApp
+             </a>
+             <a href="/packages" className="btn-outline text-base md:text-lg px-8 py-3">
+               View Umrah Packages
+             </a>
+           </div>
+ 
+-          <div className="mt-10 flex flex-wrap justify-center gap-6 text-primary font-semibold">
++          <div className="mt-10 flex flex-wrap justify-center gap-6 text-white font-semibold">
+             <span className="flex items-center gap-2">• 500+ Pilgrims Served</span>
+             <span className="flex items-center gap-2">• Visa in 48 Hours</span>
+             <span className="flex items-center gap-2">• Hotels Within 300m of Haram</span>
+           </div>
+         </div>
+       </section>
+ 
++      {/* TRUST STRIP */}
++      <section className="mb-20">
++        <div className="grid gap-4 md:grid-cols-4">
++          {[
++            { icon: <FaPassport />, title: "Visa in 48 Hours", desc: "Fast-track processing" },
++            { icon: <FaHotel />, title: "Hotels Near Haram", desc: "Walkable stays" },
++            { icon: <FaWhatsapp />, title: "24/7 WhatsApp", desc: "Always-on support" },
++            { icon: <FaMapMarkedAlt />, title: "Cities Served", desc: "Karachi • Lahore • Islamabad" },
++          ].map((item) => (
++            <div key={item.title} className="card flex items-center gap-3">
++              <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-2xl">
++                {item.icon}
++              </div>
++              <div>
++                <p className="font-semibold text-primary">{item.title}</p>
++                <p className="text-xs text-gray-500">{item.desc}</p>
++              </div>
++            </div>
++          ))}
++        </div>
++      </section>
++
+       {/* INQUIRY FORM */}
+       <section className="mb-24 reveal">
+         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-start">
+           <div className="card">
+             <h2 className="text-2xl font-bold text-primary mb-2">
+               Umrah Inquiry Form
+             </h2>
+             <p className="text-sm text-secondary-dark mb-6">
+               Tell us your travel preferences and our team will send the best
+               Umrah package options within 24 hours.
+             </p>
+             <form className="form" onSubmit={handleInquirySubmit}>
+               <div className="grid gap-4 md:grid-cols-2">
+                 <input
+                   className="input"
+                   name="name"
+                   placeholder="Full Name"
+                   value={formState.name}
+                   onChange={handleInputChange}
+                   required
+                 />
+                 <input
+                   className="input"
+                   name="phone"
+                   placeholder="Phone / WhatsApp"
+@@ -232,166 +269,208 @@ export default function Home() {
+                   className="input"
+                   name="from"
+                   placeholder="Traveling From"
+                   value={formState.from}
+                   onChange={handleInputChange}
+                 />
+                 <input
+                   className="input"
+                   name="to"
+                   placeholder="Preferred Dates / Month"
+                   value={formState.to}
+                   onChange={handleInputChange}
+                 />
+               </div>
+               <textarea
+                 className="input min-h-[120px]"
+                 name="notes"
+                 placeholder="Special requests, hotel preferences, or notes"
+                 value={formState.notes}
+                 onChange={handleInputChange}
+               />
+               <div className="flex flex-wrap items-center gap-3">
+                 <button className="btn" type="submit" disabled={formStatus.loading}>
+                   {formStatus.loading ? "Submitting..." : "Submit Inquiry"}
+                 </button>
+-                {formStatus.success && (
+-                  <span className="text-sm text-green-600">
+-                    Inquiry sent! We will contact you shortly.
+-                  </span>
+-                )}
+                 {formStatus.error && (
+                   <span className="text-sm text-red-600">{formStatus.error}</span>
+                 )}
+               </div>
+             </form>
+           </div>
+           <div className="card space-y-4">
+             <h3 className="text-xl font-semibold text-primary">
+               Why pilgrims choose Barakah Travels
+             </h3>
+             <ul className="space-y-3 text-sm text-secondary-dark">
+               <li>• Saudi visa processing with real-time updates.</li>
+               <li>• Hand-picked hotels within walking distance of Haram.</li>
+               <li>• Dedicated WhatsApp support before and during travel.</li>
+               <li>• Flexible packages for families, groups, and seniors.</li>
+             </ul>
+             <a
+               href="https://wa.me/923183548299"
+               className="btn-outline w-full justify-center"
+             >
+               Get Instant WhatsApp Quote
+             </a>
+           </div>
+         </div>
+       </section>
+ 
+       {/* REVIEWS */}
+-      <section className="mb-24 reveal">
++      <section className="mb-20 reveal">
+         <h2 className="text-3xl font-bold text-center text-primary mb-8">
+           What Our Clients Say
+         </h2>
+         <ReviewsSlider />
+         <div className="mt-8 text-center space-y-3">
+           <Link href="/submit-review" className="btn-outline">
+             Add Review
+           </Link>
+           {!session && (
+             <p className="text-sm text-gray-500">
+               Please sign in with Google to leave a review
+             </p>
+           )}
+         </div>
+       </section>
+ 
++      <section className="text-center mb-20">
++        <a href="https://wa.me/923183548299" className="btn">
++          Ask for Latest Umrah Prices
++        </a>
++      </section>
++
+       {/* POPULAR DESTINATIONS */}
+-      <section className="mb-24 reveal">
++      <section className="mb-20 reveal">
+         <h2 className="text-3xl font-bold text-center text-primary mb-10">
+           Popular Destinations
+         </h2>
+ 
+         <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-5">
+           {[
+             { title: "Umrah", img: "/umrah2.png" },
+             { title: "Dubai", img: "/dubai.jpg" },
+             { title: "Turkey", img: "/turkey.jpg" },
+             { title: "Thailand", img: "/thailand.jpg" },
+             { title: "Baku", img: "/baku.jpg" },
+           ].map((d, i) => (
+             <div
+               key={i}
+               className="card text-center p-4 reveal flex flex-col h-full"
+             >
+               <div className="relative w-full aspect-[4/3] mb-4">
+                 <Image
+                   src={d.img}
+                   alt={d.title}
+                   fill
+                   className="rounded-xl object-cover"
+                 />
+               </div>
+               <h3 className="text-xl font-bold text-primary mb-2">{d.title}</h3>
+               <Link href="/contact" className="btn mt-auto">
+                 Explore
+               </Link>
+             </div>
+           ))}
+         </div>
+       </section>
+ 
++      <section className="text-center mb-20">
++        <a href="/packages" className="btn-outline">
++          View All Packages
++        </a>
++      </section>
++
+       {/* UMRAH JOURNEY */}
+       <section className="mb-24 max-w-6xl mx-auto reveal">
+         <h2 className="text-3xl font-bold text-center text-primary mb-12">
+           Your Umrah Journey With Barakah Travels
+         </h2>
+ 
+         <div className="grid md:grid-cols-4 gap-8 text-center">
+-          <div className="card reveal">
+-            <h3 className="font-bold text-lg mb-2">1. Contact on WhatsApp</h3>
+-            <p>Get complete package details instantly.</p>
+-          </div>
+-          <div className="card reveal">
+-            <h3 className="font-bold text-lg mb-2">2. Visa Processing</h3>
+-            <p>Fast and hassle-free Umrah visa service.</p>
+-          </div>
+-          <div className="card reveal">
+-            <h3 className="font-bold text-lg mb-2">3. Flights & Hotels</h3>
+-            <p>Stay near Haram with comfortable transport.</p>
+-          </div>
+-          <div className="card reveal">
+-            <h3 className="font-bold text-lg mb-2">4. Perform Umrah Peacefully</h3>
+-            <p>Guidance and support throughout your journey.</p>
+-          </div>
++          {[
++            {
++              title: "1. Contact on WhatsApp",
++              desc: "Get complete package details instantly.",
++              icon: <FaWhatsapp />,
++            },
++            {
++              title: "2. Visa Processing",
++              desc: "Fast and hassle-free Umrah visa service.",
++              icon: <FaPassport />,
++            },
++            {
++              title: "3. Flights & Hotels",
++              desc: "Stay near Haram with comfortable transport.",
++              icon: <FaPlaneDeparture />,
++            },
++            {
++              title: "4. Perform Umrah Peacefully",
++              desc: "Guidance and support throughout your journey.",
++              icon: <FaKaaba />,
++            },
++          ].map((step) => (
++            <div key={step.title} className="card reveal">
++              <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center text-2xl mx-auto mb-3">
++                {step.icon}
++              </div>
++              <h3 className="font-bold text-lg mb-2">{step.title}</h3>
++              <p>{step.desc}</p>
++            </div>
++          ))}
+         </div>
+       </section>
+ 
+       {/* CTA */}
+       <section className="text-center mb-24 reveal">
+         <h2 className="text-3xl font-bold text-primary mb-6">
+           Ready for Your Umrah Journey?
+         </h2>
+         <a
+           href="https://wa.me/923183548299"
+           className="btn text-lg px-8 py-3"
+         >
+           Contact on WhatsApp Now
+         </a>
+       </section>
+ 
+       {/* SEO CONTENT */}
+       <section className="max-w-4xl mx-auto text-sm text-secondary leading-relaxed mt-24 reveal">
+         <h2 className="text-2xl font-bold text-primary mb-4">
+           Umrah Packages & Travel Services in Pakistan
+         </h2>
+         <p className="mb-3">
+           Barakah Travels provides affordable and comfortable Umrah packages from Karachi,
+           Lahore and Islamabad including visa, hotels near Haram and transport.
+         </p>
+         <p>
+           Our experienced team ensures a smooth and spiritually fulfilling Umrah
+           journey with transparent pricing and 24/7 WhatsApp support.
+         </p>
+       </section>
+ 
++      {showSuccessModal && (
++        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
++          <div className="bg-white rounded-2xl shadow-xl p-6 max-w-md text-center space-y-3">
++            <div className="text-3xl text-primary flex justify-center" aria-hidden="true">
++              ✓
++            </div>
++            <h3 className="text-xl font-semibold text-primary">
++              Request Submitted
++            </h3>
++            <p className="text-sm text-gray-600">
++              Your request has been submitted. Our team will contact you shortly.
++            </p>
++            <button
++              className="btn w-full"
++              onClick={() => setShowSuccessModal(false)}
++            >
++              Close
++            </button>
++          </div>
++        </div>
++      )}
+     </main>
+   );
+ }
+diff --git a/src/app/submit-review/page.tsx b/src/app/submit-review/page.tsx
+index b066a7ebbf72d72bcf9111d0bf3ce6bfa010844e..1bc9df06d9415141d36088b870e6e3dd6662b34f 100644
+--- a/src/app/submit-review/page.tsx
++++ b/src/app/submit-review/page.tsx
+@@ -1,49 +1,57 @@
+ "use client";
+ import { useSession } from "next-auth/react";
+ import { useState } from "react";
++import { addAdminNotification } from "@/lib/notifications";
+ 
+ export default function SubmitReview() {
+   const { data: session, status } = useSession();
+   const [review, setReview] = useState("");
+   const [submitted, setSubmitted] = useState(false);
+   const [error, setError] = useState("");
+ 
+   async function handleSubmit(e: React.FormEvent) {
+     e.preventDefault();
+     setError("");
+     if (!review.trim()) {
+       setError("Review cannot be empty.");
+       return;
+     }
+     const res = await fetch("/api/reviews", {
+       method: "POST",
+       headers: { "Content-Type": "application/json" },
+       body: JSON.stringify({ review, name: session?.user?.name, email: session?.user?.email }),
+     });
+     if (res.ok) {
+       setSubmitted(true);
++      addAdminNotification({
++        id: `admin-review-${Date.now()}`,
++        type: "review",
++        message: "New review submitted for approval.",
++        createdAt: new Date().toISOString(),
++        read: false,
++      });
+     } else {
+       setError("Failed to submit review.");
+     }
+   }
+ 
+   if (status === "loading") return <div>Loading...</div>;
+   if (!session)
+     return (
+       <div className="max-w-xl mx-auto mt-10 text-center">
+         Please sign in with Google to submit a review.
+       </div>
+     );
+ 
+   return (
+     <main className="max-w-md mx-auto mt-10">
+       <h1 className="text-2xl font-bold mb-4">Submit Your Review</h1>
+       {submitted ? (
+         <div className="text-green-600">Thank you for your review!</div>
+       ) : (
+         <form onSubmit={handleSubmit} className="form">
+           <textarea
+             value={review}
+             onChange={e => setReview(e.target.value)}
+             placeholder="Write your review here..."
+             className="input mb-2 h-24"
+diff --git a/src/components/AdminTopBar.tsx b/src/components/AdminTopBar.tsx
+new file mode 100644
+index 0000000000000000000000000000000000000000..01aa177ed0fa8754c82b1c755e5146d988bb0cfb
+--- /dev/null
++++ b/src/components/AdminTopBar.tsx
+@@ -0,0 +1,28 @@
++"use client";
++
++import NotificationBell from "@/components/NotificationBell";
++import UserAvatar from "@/components/UserAvatar";
++
++type AdminTopBarProps = {
++  name?: string | null;
++  image?: string | null;
++};
++
++export default function AdminTopBar({ name, image }: AdminTopBarProps) {
++  return (
++    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between mb-6">
++      <div>
++        <p className="text-xs uppercase tracking-wide text-gray-400">
++          Admin Console
++        </p>
++        <h1 className="text-xl font-semibold text-primary">
++          Welcome back, {name || "Admin"}
++        </h1>
++      </div>
++      <div className="flex items-center gap-3">
++        <NotificationBell mode="admin" align="right" />
++        <UserAvatar src={image} name={name} size={36} />
++      </div>
++    </div>
++  );
++}
+diff --git a/src/components/Header.tsx b/src/components/Header.tsx
+index 31814d6bcb2159ee9796e40fdfc5f3473e932d68..2ddc32cb6b3d87792e29cac84c846f8131c21454 100644
+--- a/src/components/Header.tsx
++++ b/src/components/Header.tsx
+@@ -1,34 +1,36 @@
+ "use client";
+ 
+ import Link from "next/link";
+ import Image from "next/image";
+ import { FaBars, FaTimes } from "react-icons/fa";
+ import { useState, useEffect } from "react";
+-import { useSession, signOut } from "next-auth/react";
++import { useSession } from "next-auth/react";
+ import { motion, AnimatePresence } from "framer-motion";
+ import { usePathname } from "next/navigation";
++import UserAvatar from "@/components/UserAvatar";
++import NotificationBell from "@/components/NotificationBell";
+ 
+ export default function Header() {
+   const [menuOpen, setMenuOpen] = useState(false);
+   const [profileOpen, setProfileOpen] = useState(false);
+   const [scrolled, setScrolled] = useState(false);
+ 
+   const { data: session } = useSession();
+   const pathname = usePathname();
+ 
+   /* Close menus on route change */
+   useEffect(() => {
+     setMenuOpen(false);
+     setProfileOpen(false);
+   }, [pathname]);
+ 
+   /* Header shadow */
+   useEffect(() => {
+     const onScroll = () => setScrolled(window.scrollY > 10);
+     window.addEventListener("scroll", onScroll);
+     return () => window.removeEventListener("scroll", onScroll);
+   }, []);
+ 
+   /* Lock body scroll on mobile */
+   useEffect(() => {
+     document.body.style.overflow = menuOpen ? "hidden" : "auto";
+@@ -38,69 +40,73 @@ export default function Header() {
+   }, [menuOpen]);
+ 
+   const handleLinkClick = () => {
+     setMenuOpen(false);
+     setProfileOpen(false);
+   };
+ 
+   const navLinks = [
+     { href: "/", label: "Home" },
+     { href: "/about", label: "About" },
+     { href: "/packages", label: "Umrah Packages" },
+     { href: "/contact?destination=Turkey", label: "Turkey" },
+     { href: "/contact?destination=Baku", label: "Baku" },
+     { href: "/contact", label: "Contact" },
+   ];
+ 
+   return (
+     <header
+       className={`sticky top-0 z-50 transition-all duration-300 ${
+         scrolled
+           ? "bg-white/90 backdrop-blur-md shadow-lg"
+           : "bg-white"
+       }`}
+     >
+       <div className="bg-primary text-white text-xs sm:text-sm">
+-        <div className="max-w-7xl mx-auto px-6 py-2.5 flex flex-wrap items-center justify-center gap-3">
++        <div className="max-w-7xl mx-auto px-6 py-3 flex flex-wrap items-center justify-center gap-3">
+           <span className="font-semibold">Trusted Umrah & Travel Support</span>
+           <span className="hidden sm:inline">•</span>
+           <span>WhatsApp: +92 318 3548299</span>
+         </div>
+       </div>
+-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-20 md:h-24">
++      <div
++        className={`max-w-7xl mx-auto flex items-center justify-between px-6 transition-all duration-300 ${
++          scrolled ? "h-16 md:h-20" : "h-20 md:h-24"
++        }`}
++      >
+ 
+         {/* Logo */}
+         <Link href="/" onClick={handleLinkClick} className="flex items-center gap-2">
+ <Image
+   src="/newlogo.png"
+   alt="Barakah Travels"
+   width={120}
+   height={120}
+   priority
+   className="
+-    h-20 w-auto
+-    md:h-18
++    h-16 w-auto
++    md:h-16
+     object-contain drop-shadow-x1
+   "
+ />
+ 
+ 
+ 
+ 
+           <span className="text-lg md:text-2xl font-extrabold text-primary">
+   Barakah Travels
+ </span>
+ 
+ 
+ 
+         </Link>
+ 
+         {/* Mobile Hamburger */}
+         <button
+           className="md:hidden text-primary text-2xl z-50"
+           onClick={() => setMenuOpen((v) => !v)}
+           aria-label="Toggle Menu"
+         >
+           {menuOpen ? <FaTimes /> : <FaBars />}
+         </button>
+ 
+         {/* Overlay */}
+@@ -126,64 +132,64 @@ export default function Header() {
+             ${menuOpen ? "block" : "hidden md:flex"}
+           `}
+         >
+           {/* Links */}
+           {navLinks.map((link) => (
+             <Link
+               key={link.href}
+               href={link.href}
+               onClick={handleLinkClick}
+               className="hover:text-primary-dark font-semibold"
+             >
+               {link.label}
+             </Link>
+           ))}
+ 
+           {/* Auth */}
+           {!session ? (
+             <Link
+               href="/login"
+               onClick={handleLinkClick}
+               className="bg-primary text-white font-bold px-4 py-2 rounded-full shadow hover:bg-primary-dark transition"
+             >
+               Sign In
+             </Link>
+           ) : (
+-            <div className="relative">
++            <div className="relative flex items-center gap-3">
++              <NotificationBell
++                mode="user"
++                userId={(session.user as { id?: string })?.id}
++              />
+               <button
+                 onClick={() => setProfileOpen((v) => !v)}
+                 className="flex items-center gap-2 bg-primary/10 px-3 py-2 rounded-full hover:bg-primary/20"
+               >
+-                {session.user?.image && (
+-                  <Image
+-                    src={session.user.image}
+-                    alt={session.user.name || "User"}
+-                    width={28}
+-                    height={28}
+-                    className="rounded-full"
+-                  />
+-                )}
++                <UserAvatar
++                  src={session.user?.image}
++                  name={session.user?.name}
++                  size={32}
++                />
+                 <span className="text-primary font-bold">
+                   {session.user?.name?.split(" ")[0]}
+                 </span>
+               </button>
+ 
+               {profileOpen && (
+   <div className="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg overflow-hidden text-primary">
+ {session.user?.email === "info@barakahtravels.online" && (
+   <Link
+     href="/admin"
+     onClick={handleLinkClick}
+     className="block px-4 py-2 hover:bg-yellow-100 font-semibold"
+   >
+     Admin Panel
+   </Link>
+ )}
+ 
+     <Link
+       href="/dashboard"
+       onClick={handleLinkClick}
+       className="block px-4 py-2 hover:bg-yellow-100 font-semibold"
+     >
+       Dashboard
+     </Link>
+ 
+diff --git a/src/components/NotificationBell.tsx b/src/components/NotificationBell.tsx
+new file mode 100644
+index 0000000000000000000000000000000000000000..aa7b4242dac36281d21cfb541d7b25829d2c7b48
+--- /dev/null
++++ b/src/components/NotificationBell.tsx
+@@ -0,0 +1,122 @@
++"use client";
++
++import { useEffect, useMemo, useRef, useState } from "react";
++import {
++  getNotifications,
++  markAllRead,
++  NotificationItem,
++} from "@/lib/notifications";
++
++const SOUND_SRC = "/notification.wav";
++
++type NotificationBellProps = {
++  mode: "admin" | "user";
++  userId?: string;
++  align?: "left" | "right";
++};
++
++export default function NotificationBell({
++  mode,
++  userId,
++  align = "right",
++}: NotificationBellProps) {
++  const [open, setOpen] = useState(false);
++  const [items, setItems] = useState<NotificationItem[]>([]);
++  const audioRef = useRef<HTMLAudioElement | null>(null);
++  const prevUnreadRef = useRef(0);
++
++  const unreadCount = useMemo(
++    () => items.filter((item) => !item.read).length,
++    [items]
++  );
++
++  useEffect(() => {
++    if (typeof window === "undefined") return;
++    audioRef.current = new Audio(SOUND_SRC);
++  }, []);
++
++  useEffect(() => {
++    if (typeof window === "undefined") return;
++    const load = () => {
++      setItems(getNotifications(mode, userId));
++    };
++    load();
++    window.addEventListener("notifications-updated", load);
++    return () => window.removeEventListener("notifications-updated", load);
++  }, [mode, userId]);
++
++  useEffect(() => {
++    if (unreadCount > prevUnreadRef.current && audioRef.current) {
++      audioRef.current.volume = 0.2;
++      audioRef.current.play().catch(() => null);
++    }
++    prevUnreadRef.current = unreadCount;
++  }, [unreadCount]);
++
++  const handleToggle = () => {
++    setOpen((prev) => !prev);
++    if (!open) {
++      markAllRead(mode, userId);
++    }
++  };
++
++  return (
++    <div className="relative">
++      <button
++        onClick={handleToggle}
++        className="relative rounded-full border border-primary/20 p-2 bg-white/80 hover:bg-white shadow-sm transition"
++        aria-label="Notifications"
++      >
++        <svg
++          width="20"
++          height="20"
++          viewBox="0 0 24 24"
++          fill="none"
++          stroke="currentColor"
++          strokeWidth="1.6"
++          strokeLinecap="round"
++          strokeLinejoin="round"
++          className="text-primary"
++        >
++          <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9" />
++          <path d="M13.73 21a2 2 0 0 1-3.46 0" />
++        </svg>
++        {unreadCount > 0 && (
++          <span className="absolute -top-1 -right-1 h-5 min-w-[20px] px-1 rounded-full bg-primary text-white text-[10px] font-semibold flex items-center justify-center">
++            {unreadCount}
++          </span>
++        )}
++      </button>
++
++      {open && (
++        <div
++          className={`absolute mt-3 w-72 max-h-72 overflow-auto rounded-2xl bg-white shadow-lg border border-primary/10 p-3 text-sm ${
++            align === "left" ? "left-0" : "right-0"
++          }`}
++        >
++          <div className="flex items-center justify-between mb-2">
++            <span className="font-semibold text-primary">Notifications</span>
++            <span className="text-xs text-gray-400">{items.length}</span>
++          </div>
++          {items.length === 0 ? (
++            <p className="text-gray-500 text-xs">No notifications yet.</p>
++          ) : (
++            <ul className="space-y-2">
++              {items.map((item) => (
++                <li
++                  key={item.id}
++                  className="rounded-xl border border-primary/10 p-3 bg-primary/5"
++                >
++                  <p className="font-medium text-secondary">{item.message}</p>
++                  <p className="text-xs text-gray-500">
++                    {new Date(item.createdAt).toLocaleString()}
++                  </p>
++                </li>
++              ))}
++            </ul>
++          )}
++        </div>
++      )}
++    </div>
++  );
++}
+diff --git a/src/components/PageLoader.tsx b/src/components/PageLoader.tsx
+new file mode 100644
+index 0000000000000000000000000000000000000000..25a5de48694f3ad14cd02cbd8be52b97b567a71f
+--- /dev/null
++++ b/src/components/PageLoader.tsx
+@@ -0,0 +1,38 @@
++"use client";
++
++import { useEffect, useState } from "react";
++import { usePathname } from "next/navigation";
++
++export default function PageLoader() {
++  const pathname = usePathname();
++  const [loading, setLoading] = useState(true);
++
++  useEffect(() => {
++    setLoading(true);
++    const timer = setTimeout(() => setLoading(false), 700);
++    return () => clearTimeout(timer);
++  }, [pathname]);
++
++  if (!loading) return null;
++
++  return (
++    <div className="plane-loader-overlay" role="status" aria-live="polite">
++      <div className="plane-loader">
++        <svg
++          width="56"
++          height="56"
++          viewBox="0 0 24 24"
++          fill="none"
++          stroke="currentColor"
++          strokeWidth="1.6"
++          strokeLinecap="round"
++          strokeLinejoin="round"
++        >
++          <path d="M22 2 11 13" />
++          <path d="m22 2-7 20-4-9-9-4z" />
++        </svg>
++        <span>Preparing your journey...</span>
++      </div>
++    </div>
++  );
++}
+diff --git a/src/components/PageTransition.tsx b/src/components/PageTransition.tsx
+new file mode 100644
+index 0000000000000000000000000000000000000000..72c21971edd6d8cbdf72bb08c755b05969cf3685
+--- /dev/null
++++ b/src/components/PageTransition.tsx
+@@ -0,0 +1,16 @@
++"use client";
++
++import { usePathname } from "next/navigation";
++
++export default function PageTransition({
++  children,
++}: {
++  children: React.ReactNode;
++}) {
++  const pathname = usePathname();
++  return (
++    <div key={pathname} className="page-fade">
++      {children}
++    </div>
++  );
++}
+diff --git a/src/components/UserAvatar.tsx b/src/components/UserAvatar.tsx
+new file mode 100644
+index 0000000000000000000000000000000000000000..0f7194551af129399c1cd697ee49c3d9c8b26571
+--- /dev/null
++++ b/src/components/UserAvatar.tsx
+@@ -0,0 +1,47 @@
++"use client";
++
++import Image from "next/image";
++
++type UserAvatarProps = {
++  src?: string | null;
++  name?: string | null;
++  size?: number;
++};
++
++export default function UserAvatar({ src, name, size = 36 }: UserAvatarProps) {
++  if (src) {
++    return (
++      <Image
++        src={src}
++        alt={name || "User"}
++        width={size}
++        height={size}
++        className="rounded-full border border-primary/20 shadow-sm object-cover"
++      />
++    );
++  }
++
++  return (
++    <div
++      className="rounded-full border border-primary/20 shadow-sm bg-primary/10 text-primary flex items-center justify-center"
++      style={{ width: size, height: size }}
++      aria-label="Default avatar"
++      role="img"
++    >
++      <svg
++        width={size * 0.55}
++        height={size * 0.55}
++        viewBox="0 0 24 24"
++        fill="none"
++        stroke="currentColor"
++        strokeWidth="1.8"
++        strokeLinecap="round"
++        strokeLinejoin="round"
++      >
++        <path d="M20 21v-2a4 4 0 0 0-3-3.87" />
++        <path d="M4 21v-2a4 4 0 0 1 3-3.87" />
++        <circle cx="12" cy="7" r="4" />
++      </svg>
++    </div>
++  );
++}
+diff --git a/src/lib/notifications.ts b/src/lib/notifications.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..1ad786c8f9bd9f9eb2c40a711e2b8d285c6b3e00
+--- /dev/null
++++ b/src/lib/notifications.ts
+@@ -0,0 +1,60 @@
++export type NotificationItem = {
++  id: string;
++  type: string;
++  message: string;
++  createdAt: string;
++  read?: boolean;
++};
++
++const ADMIN_KEY = "admin-notifications";
++const USER_PREFIX = "user-notifications-";
++
++const dispatchUpdate = () => {
++  if (typeof window === "undefined") return;
++  window.dispatchEvent(new Event("notifications-updated"));
++};
++
++const readStore = (key: string): NotificationItem[] => {
++  if (typeof window === "undefined") return [];
++  const raw = window.localStorage.getItem(key);
++  if (!raw) return [];
++  try {
++    return JSON.parse(raw) as NotificationItem[];
++  } catch {
++    return [];
++  }
++};
++
++const writeStore = (key: string, items: NotificationItem[]) => {
++  if (typeof window === "undefined") return;
++  window.localStorage.setItem(key, JSON.stringify(items));
++  dispatchUpdate();
++};
++
++const addItem = (key: string, item: NotificationItem) => {
++  const existing = readStore(key);
++  const next = [item, ...existing].slice(0, 50);
++  writeStore(key, next);
++};
++
++export const getNotificationKey = (mode: "admin" | "user", userId?: string) =>
++  mode === "admin" ? ADMIN_KEY : `${USER_PREFIX}${userId || "unknown"}`;
++
++export const getNotifications = (
++  mode: "admin" | "user",
++  userId?: string
++) => readStore(getNotificationKey(mode, userId));
++
++export const addAdminNotification = (item: NotificationItem) =>
++  addItem(ADMIN_KEY, item);
++
++export const addUserNotification = (userId: string, item: NotificationItem) =>
++  addItem(`${USER_PREFIX}${userId}`, item);
++
++export const markAllRead = (mode: "admin" | "user", userId?: string) => {
++  const key = getNotificationKey(mode, userId);
++  const existing = readStore(key);
++  if (!existing.length) return;
++  const next = existing.map((item) => ({ ...item, read: true }));
++  writeStore(key, next);
++};
+diff --git a/src/models/Inquiry.ts b/src/models/Inquiry.ts
+index 3544b8e9f08a8a5b90a4497c74746df86054b41f..cd47095ee111429fb4b2cc9fecc7cedd11872e86 100644
+--- a/src/models/Inquiry.ts
++++ b/src/models/Inquiry.ts
+@@ -1,14 +1,15 @@
+ import mongoose, { Schema } from 'mongoose';
+ 
+ const InquirySchema = new Schema({
++  userId: String,
+   name: String,
+   phone: String,
+   email: String,
+   service: String,
+   from: String,
+   to: String,
+   notes: String,
+   createdAt: { type: Date, default: Date.now },
+ });
+ 
+ export default mongoose.models.Inquiry || mongoose.model('Inquiry', InquirySchema);
